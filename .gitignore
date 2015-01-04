@@ -1,12 +1,32 @@
-*.class
+bin/
+impl/coverage.ec
+*.DS_Store
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Java Clas Files #
+*.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# IDE Files #
+.classpath
+.project
+.settings
+*.iml
+*.ipr
+*.iws
+*.swp
+.idea
+nb-configuration.xml
+
+# OS Specific folders/Files#
+.DS_Store
+
+# Build tool specific files/Folders #
+.gradle/
+dist/
+build/
+target/
+tests/target/
