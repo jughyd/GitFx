@@ -8,16 +8,16 @@
 
 <AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="569.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.FXMLController">
    <children>
-      <SplitPane dividerPositions="0.3" layoutX="7.0" layoutY="26.0" prefHeight="592.0" prefWidth="689.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.4462081128747795" layoutX="7.0" layoutY="26.0" prefHeight="592.0" prefWidth="689.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane prefHeight="553.0" prefWidth="188.0" SplitPane.resizableWithParent="false">
                <children>
-                  <TextField layoutX="7.0" layoutY="52.0" promptText="Search Repositories" />
-                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                  <TextField layoutX="7.0" layoutY="52.0" prefHeight="26.0" prefWidth="230.0" promptText="Search Repositories" />
+                  <ToolBar prefHeight="38.0" prefWidth="249.0">
                     <items>
                       <Button fx:id="gitinit" mnemonicParsing="false" text="Init" />
                         <Button fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Clone" />
-                        <Button layoutX="53.0" layoutY="11.0" mnemonicParsing="false" text="Open" />
+                        <Button fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" text="Open" />
                     </items>
                   </ToolBar>
                </children>
@@ -26,8 +26,8 @@
                <children>
                   <ToolBar maxWidth="1.7976931348623157E308" prefHeight="38.0">
                     <items>
-                      <Button mnemonicParsing="false" text="Settings" />
-                        <Button mnemonicParsing="false" text="Sync" />
+                      <Button fx:id="gitsettings" mnemonicParsing="false" text="Settings" />
+                        <Button fx:id="gitsync" mnemonicParsing="false" text="Sync" />
                     </items>
                   </ToolBar>
                   <TabPane layoutX="14.0" layoutY="41.0" prefHeight="512.0" prefWidth="359.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="41.0">
