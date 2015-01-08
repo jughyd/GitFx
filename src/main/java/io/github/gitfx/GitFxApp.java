@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import static io.github.gitfx.util.WorkbenchUtil.initializeWorkbench;
 
 
 public class GitFxApp extends Application {
@@ -31,6 +32,8 @@ public class GitFxApp extends Application {
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
+        
+        initializeWorkbench();
         
         stage.setTitle("GitFX");
         stage.setScene(scene);
