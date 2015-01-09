@@ -20,6 +20,7 @@ impl/coverage.ec
 *.swp
 .idea
 nb-configuration.xml
+nbactions.xml
 
 # OS Specific folders/Files#
 .DS_Store
