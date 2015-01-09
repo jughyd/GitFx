@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="openDialog" prefHeight="104.0" prefWidth="374.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.controller.GitOpenDialogController">
+    <stylesheets>
+        <URL value="@/styles/gitopendialog.css" />
+    </stylesheets>
+   <children>
+      <Button fx:id="chooseRepo" layoutX="267.0" layoutY="35.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="86.0" text="Choose" />
+      <TextField layoutX="96.0" layoutY="35.0" />
+      <Label layoutX="23.0" layoutY="40.0" text="Local Path" />
+      <Button fx:id="ok" layoutX="96.0" layoutY="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Ok" />
+      <Button fx:id="cancel" layoutX="187.0" layoutY="64.0" mnemonicParsing="false" onAction="#onCancelClicked" text="Cancel" />
+   </children>
+</AnchorPane>

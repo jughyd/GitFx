@@ -15,6 +15,7 @@
  */
 package io.github.gitfx.controller;
 
+import io.github.gitfx.GitFxApp;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -38,6 +39,9 @@ public class GitFxController implements Initializable {
     @FXML
     private Button gitopen;
     
+    // Reference to the main application
+    private GitFxApp gitFxApp;
+
     /*@FXML
     private Label label;
     
@@ -46,6 +50,14 @@ public class GitFxController implements Initializable {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
     }*/
+    
+    /**
+     * Reference to GitFxApp. 
+     * @param gitFxApp 
+     */
+    public void setMainApp(GitFxApp gitFxApp) {
+            this.gitFxApp = gitFxApp;
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,6 +85,7 @@ public class GitFxController implements Initializable {
     
     @FXML
     public void onGitOpenClicked(ActionEvent event){
+        gitFxApp.showGitOpenDialog();
     }
     
     @FXML
