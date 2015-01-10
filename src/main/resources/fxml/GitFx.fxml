@@ -15,9 +15,9 @@
                   <TextField layoutX="7.0" layoutY="52.0" prefHeight="26.0" prefWidth="230.0" promptText="Search Repositories" />
                   <ToolBar prefHeight="38.0" prefWidth="249.0">
                     <items>
-                      <Button fx:id="gitinit" mnemonicParsing="false" text="Init" onAction="#onGitInitClicked"  />
-                        <Button fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Clone" onAction="#onGitCloneClicked"  />
-                        <Button fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" text="Open" onAction="#onGitOpenClicked"  />
+                      <Button fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" text="Init" />
+                        <Button fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" text="Clone" />
+                        <Button fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" text="Open" />
                     </items>
                   </ToolBar>
                </children>
@@ -26,8 +26,13 @@
                <children>
                   <ToolBar maxWidth="1.7976931348623157E308" prefHeight="38.0">
                     <items>
-                      <Button fx:id="gitsettings" mnemonicParsing="false" text="Settings" onAction="#onGitSettingsClicked"  />
-                        <Button fx:id="gitsync" mnemonicParsing="false" text="Sync" onAction="#onGitSyncClicked"  />
+                      <Button fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" text="Settings" />
+                        <MenuButton fx:id="gitsync" mnemonicParsing="false" text="Sync">
+                          <items>
+                            <MenuItem id="gitSyncEverything" mnemonicParsing="false" text="Sync Everything" />
+                            <MenuItem id="gitSpecific" mnemonicParsing="false" text="Particular Repository" />
+                          </items>
+                        </MenuButton>
                     </items>
                   </ToolBar>
                   <TabPane layoutX="14.0" layoutY="41.0" prefHeight="512.0" prefWidth="359.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="41.0">

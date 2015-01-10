@@ -22,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -33,7 +34,7 @@ public class GitFxController implements Initializable {
     @FXML 
     private Button gitsettings;
     @FXML
-    private Button gitsync;
+    private MenuButton gitsync;
     @FXML
     private Button gitinit;
     @FXML

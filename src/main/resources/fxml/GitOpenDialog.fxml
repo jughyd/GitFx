@@ -12,10 +12,10 @@
         <URL value="@/styles/gitopendialog.css" />
     </stylesheets>
    <children>
-      <Button fx:id="chooseRepo" layoutX="267.0" layoutY="35.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="86.0" text="Choose" />
-      <TextField layoutX="96.0" layoutY="35.0" />
-      <Label layoutX="23.0" layoutY="40.0" text="Local Path" />
-      <Button fx:id="ok" layoutX="96.0" layoutY="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Ok" />
+      <Button fx:id="chooseRepo" layoutX="267.0" layoutY="26.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="86.0" text="Choose" />
+      <TextField editable="false" layoutX="96.0" layoutY="26.0" />
+      <Label layoutX="18.0" layoutY="30.0" text="Local Repo." />
+      <Button fx:id="ok" layoutX="96.0" layoutY="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Open" />
       <Button fx:id="cancel" layoutX="187.0" layoutY="64.0" mnemonicParsing="false" onAction="#onCancelClicked" text="Cancel" />
    </children>
 </AnchorPane>

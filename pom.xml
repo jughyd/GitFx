@@ -55,7 +55,25 @@
             <version>1.6.1</version>
             <scope>compile</scope>
         </dependency>
+        
+            <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>3.7.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit.archive</artifactId>
+      <version>3.7.0-SNAPSHOT</version>
+    </dependency>
     </dependencies>
+    
+    <repositories>
+    <repository>
+      <id>jgit-repository</id>
+      <url>https://repo.eclipse.org/content/groups/releases/</url>
+    </repository>
+  </repositories>
 
     <organization>
         <name>GitFx</name>
