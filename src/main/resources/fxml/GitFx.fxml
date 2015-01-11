@@ -29,8 +29,8 @@
                       <Button fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" text="Settings" />
                         <MenuButton fx:id="gitsync" mnemonicParsing="false" text="Sync">
                           <items>
-                            <MenuItem id="gitSyncEverything" mnemonicParsing="false" text="Sync Everything" />
-                            <MenuItem id="gitSpecific" mnemonicParsing="false" text="Particular Repository" />
+                            <MenuItem mnemonicParsing="false" text="Sync Everything" />
+                            <MenuItem fx:id="gitSpecific" mnemonicParsing="false" onAction="#onGitParticularRepositoryClicked" text="Particular Repository" />
                           </items>
                         </MenuButton>
                     </items>

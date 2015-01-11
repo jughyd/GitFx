@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -34,11 +35,15 @@ public class GitFxController implements Initializable {
     @FXML 
     private Button gitsettings;
     @FXML
-    private MenuButton gitsync;
+    private MenuItem gitSyncEverything;
     @FXML
     private Button gitinit;
     @FXML
     private Button gitopen;
+    @FXML
+    private MenuItem gitSpecific;
+    @FXML
+    private MenuButton gitsync;
     
     // Reference to the main application
     private GitFxApp gitFxApp;
@@ -82,6 +87,7 @@ public class GitFxController implements Initializable {
     
     @FXML
     public void onGitCloneClicked(ActionEvent event){
+        gitFxApp.showGitCloneDialog();
     }
     
     @FXML
@@ -95,9 +101,12 @@ public class GitFxController implements Initializable {
     
     @FXML
     public void onGitInitClicked(ActionEvent event){
+        gitFxApp.showGitInitDialog();
     }
     
-    
-    
-    
+    @FXML
+    public void onGitParticularRepositoryClicked(ActionEvent event){
+        gitFxApp.showSyncDialog();
+    }
+
 }

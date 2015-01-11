@@ -7,8 +7,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.controller.GitSyncController">
+<AnchorPane id="AnchorPane" prefHeight="372.0" prefWidth="298.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="io.github.gitfx.controller.GitSyncController">
     <stylesheets>
-        <URL value="@/styles/gitsyncdialog.css"/>
+        <URL value="@/styles/gitsyncdialog.css" />
     </stylesheets>
+   <children>
+      <Label layoutX="91.0" layoutY="14.0" text="Repositories" />
+      <ListView layoutX="42.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" />
+   </children>
 </AnchorPane>

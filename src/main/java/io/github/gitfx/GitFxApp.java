@@ -15,6 +15,7 @@
  */
 package io.github.gitfx;
 
+import io.github.gitfx.controller.GitCloneDialogController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,9 @@ import java.io.IOException;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import io.github.gitfx.controller.GitFxController;
+import io.github.gitfx.controller.GitInitDialogController;
 import io.github.gitfx.controller.GitOpenDialogController;
+import io.github.gitfx.controller.GitSyncController;
 
 public class GitFxApp extends Application {
 
@@ -49,6 +52,7 @@ public class GitFxApp extends Application {
         stage.setScene(scene);
         stage.show();
     }
+   
     /**
       * Returns the main stage.
       * @return
@@ -82,6 +86,80 @@ public class GitFxApp extends Application {
             return false;
         }
     }
+    
+     /**
+     * Opens a Dialog to Open a existing or new GIT repository.
+     * @return 
+     */
+    public boolean showGitInitDialog(){
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GitInitDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Initialize Repository");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(stage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            GitInitDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+            return true;
+        }
+        catch(IOException io){
+            io.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Opens a Dialog to Open a existing or new GIT repository.
+     * @return 
+     */
+    public boolean showGitCloneDialog(){
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GitCloneDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Clone Repository");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(stage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            GitCloneDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+            return true;
+        }
+        catch(IOException io){
+            io.printStackTrace();
+            return false;
+        }
+    }
+    public boolean showSyncDialog(){
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GitSyncDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Sync Repository");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(stage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            GitSyncController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+            return true;
+        }
+        catch(IOException io){
+            io.printStackTrace();
+            return false;
+        }
+    }
+   
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
      * main() serves only as fallback in case the application can not be

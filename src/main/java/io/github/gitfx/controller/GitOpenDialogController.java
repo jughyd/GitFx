@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 /**
  * FXML Controller class
@@ -36,6 +37,8 @@ public class GitOpenDialogController implements Initializable {
     private Button chooseRepo;
     
     private Stage dialogStage;
+    @FXML
+    private AnchorPane openDialog;
     /**
      * Initializes the controller class.
      */

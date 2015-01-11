@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="openDialog" prefHeight="147.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.controller.GitOpenDialogController">
+<AnchorPane id="AnchorPane" fx:id="openDialog" prefHeight="147.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.controller.GitCloneDialogController">
     <stylesheets>
         <URL value="@/styles/gitopendialog.css" />
     </stylesheets>
