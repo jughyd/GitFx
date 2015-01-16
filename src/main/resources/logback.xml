@@ -7,7 +7,7 @@
     </appender>
     
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>${USER_HOME}\.gitfx\log\gitfx.log</file>
+    <file>../logs/gitfx.log</file>
     <append>true</append>
     <!-- encoders are assigned the type
          ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
