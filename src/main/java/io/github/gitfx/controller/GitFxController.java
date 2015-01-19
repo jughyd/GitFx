@@ -15,6 +15,9 @@
  */
 package io.github.gitfx.controller;
 
+import io.github.gitfx.Dialog.GitFxDialog;
+import io.github.gitfx.Dialog.GitFxDialogResponse;
+import io.github.gitfx.Dialog.GitFxDialogType;
 import io.github.gitfx.GitFxApp;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -92,13 +95,33 @@ public class GitFxController implements Initializable {
     
     @FXML
     public void onGitOpenClicked(ActionEvent event){
-        gitFxApp.showGitOpenDialog();
+        GitFxDialog dialog=new GitFxDialog();
+        dialog.GitDialog(GitFxDialogType.GIT_OPEN, 
+              "Open Repository",
+              "Local Repository");
+        if(dialog.getResponse()==GitFxDialogResponse.CHOOSE){
+            System.out.println("Choose clicked");
+        }
     }
     
     @FXML
     public void onGitSyncClicked(ActionEvent event){
     }
     
+    @FXML
+    public void syncEveryThingClicked(ActionEvent event){
+      GitFxDialog dialog=new GitFxDialog();
+      dialog.GitDialog(GitFxDialogType.CONFIRMATION, 
+              "Sync Everything",
+              "Are you Sure?");
+      if(dialog.getResponse()==GitFxDialogResponse.YES){
+          System.out.println("Yes clicked");
+      }
+      if(dialog.getResponse()==GitFxDialogResponse.NO){
+          System.out.println("No Clicked");
+      }
+    }
+  
     @FXML
     public void onGitInitClicked(ActionEvent event){
         gitFxApp.showGitInitDialog();
@@ -108,5 +131,5 @@ public class GitFxController implements Initializable {
     public void onGitParticularRepositoryClicked(ActionEvent event){
         gitFxApp.showSyncDialog();
     }
-
+    
 }
