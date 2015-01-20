@@ -1,12 +1,13 @@
 GitFx
 =====
 
-Gitfx Java FX application
+Gitfx is a Git client built using JavaFX
 
-$git clone [URL].git</br>
-Steps using NetBeans:</br>
-1) File -> Open Project</br>
-2) Select the Projects cloned folder GitFx</br>
-3) Clean Build the Project and Run</br>
-
+To clone $git clone [URL].git. This is a maven project<br>
+Get the build running in three simple steps using NetBeans IDE.<br>
+<ol>
+<li> File -> Open Project </li>
+<li>Select the Projects cloned folder GitFx</li>
+<li> Clean Build the Project and Run</li>
+</ol>
 
