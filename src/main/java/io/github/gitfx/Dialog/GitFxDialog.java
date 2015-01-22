@@ -81,7 +81,8 @@ public class GitFxDialog extends Stage implements Initializable,GitDialog   {
                 });
                 
                 dialog.showAndWait();
-                tempResponse=this.getResponse().toString();
+                tempResponse=dialog.getResponse().toString();
+                System.out.println(tempResponse);
                 this.response=GitFxDialogResponse.valueOf(tempResponse);
                 close();
                 break;
