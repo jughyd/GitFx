@@ -11,3 +11,5 @@ Get the build running in three simple steps using NetBeans IDE.<br>
 <li> Clean Build the Project and Run</li>
 </ol>
 
+<a href="https://jdk8.java.net/download.html">Download JDK 8u40</a> pre release to run the application.
+
