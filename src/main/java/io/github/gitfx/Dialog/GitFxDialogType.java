@@ -15,6 +15,8 @@
  */
 
 package io.github.gitfx.Dialog;
+
+
 /**
  *
  * @author rvvaidya
@@ -24,10 +26,12 @@ public enum GitFxDialogType {
     /**
      * Confirmation dialog
      */
-    CONFIRMATION,
+    ALERT,
     /**
      * Information dialog
      */
+    TEXT_INPUT_DIALOG,
+    
     INFORMATION,
     /**
      * Warning dialog

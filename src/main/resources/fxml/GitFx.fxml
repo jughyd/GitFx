@@ -24,10 +24,10 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="564.0" prefWidth="472.0">
                <children>
-                  <ToolBar maxWidth="1.7976931348623157E308" prefHeight="38.0">
+                  <ToolBar maxWidth="1.7976931348623157E308" prefHeight="38.0" prefWidth="310.0">
                     <items>
                       <Button fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" text="Settings" />
-                        <MenuButton fx:id="gitsync" mnemonicParsing="false" text="Sync">
+                        <MenuButton fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0" prefWidth="93.0" text="Sync">
                           <items>
                             <MenuItem fx:id="syncEveryThing" mnemonicParsing="false" onAction="#syncEveryThingClicked" text="Sync Everything" />
                             <MenuItem fx:id="gitSpecific" mnemonicParsing="false" onAction="#onGitParticularRepositoryClicked" text="Particular Repository" />
@@ -44,7 +44,11 @@
                       </Tab>
                       <Tab text="History">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Accordion layoutX="47.0" layoutY="102.0" />
+                                 </children>
+                              </AnchorPane>
                         </content>
                       </Tab>
                         <Tab text="Others">

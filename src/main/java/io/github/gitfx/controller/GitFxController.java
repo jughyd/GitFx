@@ -15,27 +15,20 @@
  */
 package io.github.gitfx.controller;
 
+import io.github.gitfx.Dialog.GitFxDialog;
+import io.github.gitfx.Dialog.GitFxDialogResponse;
 import io.github.gitfx.GitFxApp;
+import io.github.gitfx.GitResourceBundle;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 public class GitFxController implements Initializable {
@@ -56,24 +49,17 @@ public class GitFxController implements Initializable {
     @FXML
     private MenuButton gitsync;
     
+    private GitFxDialog dialog;  
     // Reference to the main application
     private GitFxApp gitFxApp;
-
-    /*@FXML
-    private Label label;
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }*/
-    
+    private GitResourceBundle resourceBundle;
     /**
      * Reference to GitFxApp. 
      * @param gitFxApp 
      */
     public void setMainApp(GitFxApp gitFxApp) {
-            this.gitFxApp = gitFxApp;
+        this.gitFxApp = gitFxApp;
+        resourceBundle=new GitResourceBundle();
     }
     
     @Override
@@ -95,46 +81,34 @@ public class GitFxController implements Initializable {
     public void onGitSettingsClicked(ActionEvent event){
     }
     
-    
     @FXML
     public void onGitCloneClicked(ActionEvent event){
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Clone Repository");
-        dialog.setHeaderText("Clone Repository");
-        ImageView icon = new ImageView(this.getClass().getResource("/icons/init.png").toString());
-        icon.setFitHeight(20);
-        icon.setFitWidth(20);
-        dialog.setGraphic(icon);
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-        TextField projectName = new TextField();
-        projectName.setPromptText("Remote Repo URL");
-        TextField localPath = new TextField();
-        localPath.setPromptText("Local Path");
-        grid.add(new Label("Remote Repo URL:"), 0, 0);
-        grid.add(projectName, 1, 0);
-        grid.add(new Label("Local Path:"), 0, 1);
-        grid.add(localPath, 1, 1);
-        ButtonType choose = new ButtonType("Choose");
-        ButtonType clone = new ButtonType("Clone");
-        ButtonType cancel = new ButtonType("Cancel");
-        dialog.getDialogPane().setContent(grid);
-        dialog.getDialogPane().getButtonTypes().addAll(choose,clone,cancel);
-        dialog.showAndWait();
+        dialog = new GitFxDialog();
+        Pair<String,String> clonedRepo = dialog.GitCloneDialog(resourceBundle.getString("cloneRepo"), 
+                          resourceBundle.getString("cloneRepo"),
+                          null);
+        if(dialog.getResponse()==GitFxDialogResponse.OK&&clonedRepo!=null){
+            System.out.println("Response Ok Repo Path");
+            System.out.println("Project Name"+clonedRepo.getKey());
+            System.out.println("Local Path"+clonedRepo.getValue());
+        }
+        else{
+            System.out.println("Response Cancel");
+        }
     }
     
     @FXML
     public void onGitOpenClicked(ActionEvent event){
-        TextInputDialog dialog = new TextInputDialog("Repository Path");
-        dialog.setTitle("Open Repository");
-        dialog.setHeaderText("Choose the repsitory path");
-        dialog.setContentText("Repo:");
-        ButtonType choose = new ButtonType("Choose");
-        dialog.getDialogPane().getButtonTypes().add(choose);
-        Optional<String> result=dialog.showAndWait();
-        result.ifPresent(name -> System.out.println("Selected repo: " + name));
+        dialog = new GitFxDialog();
+        String repoPath = dialog.GitOpenDialog(resourceBundle.getString("openRepo"), 
+                          resourceBundle.getString("chooseRepo"),
+                          resourceBundle.getString("repo"));
+        if(dialog.getResponse()==GitFxDialogResponse.OK){
+            System.out.println("Response Ok Repo Path"+repoPath);
+        }
+        else{
+            System.out.println("Response Cancel");
+        }
     }
     
     @FXML
@@ -143,51 +117,39 @@ public class GitFxController implements Initializable {
     
     @FXML
     public void syncEveryThingClicked(ActionEvent event){
-        Alert syncEverything = new Alert(AlertType.CONFIRMATION);
-        Image syncGraphic = new Image(getClass().getResourceAsStream("/icons/gitsync.png"));
-        syncEverything.setGraphic(new ImageView(syncGraphic));
-        syncEverything.setTitle("Sync");
-        syncEverything.setHeaderText("Sync Everything");
-        syncEverything.setContentText("This will sync all repositories on all servers");
-        Optional<ButtonType> result = syncEverything.showAndWait();
-        if(result.get()==ButtonType.OK){
-            //Sync Action
+        dialog = new GitFxDialog();
+        dialog.GitConfirmationDialog(resourceBundle.getString("sync"),
+                                     resourceBundle.getString("syncAll"),
+                                     resourceBundle.getString("syncAllDesc"));
+        if(dialog.getResponse()==GitFxDialogResponse.OK){
+            System.out.println("Sync all clicked");
+        }
+        else{
+            System.out.println("Cancelled");
         }
     }
   
     @FXML
     public void onGitInitClicked(ActionEvent event){
-        //gitFxApp.showGitInitDialog();
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Initialize Repository");
-        dialog.setHeaderText("Initialize Repository");
-        ImageView icon = new ImageView(this.getClass().getResource("/icons/init.png").toString());
-        icon.setFitHeight(20);
-        icon.setFitWidth(20);
-        dialog.setGraphic(icon);
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-        TextField projectName = new TextField();
-        projectName.setPromptText("Project Name");
-        TextField localPath = new TextField();
-        localPath.setPromptText("Local Path");
-        grid.add(new Label("Project Name:"), 0, 0);
-        grid.add(projectName, 1, 0);
-        grid.add(new Label("Local Path:"), 0, 1);
-        grid.add(localPath, 1, 1);
-        ButtonType choose = new ButtonType("Choose");
-        ButtonType initRepo = new ButtonType("Initialize Repository");
-        ButtonType cancel = new ButtonType("Cancel");
-        dialog.getDialogPane().setContent(grid);
-        dialog.getDialogPane().getButtonTypes().addAll(choose,initRepo,cancel);
-        dialog.showAndWait();
+        dialog = new GitFxDialog();
+        Pair<String,String> newRepo=dialog.GitInitDialog(resourceBundle.getString("initRepo"),
+                             resourceBundle.getString("initRepo"),
+                             null);
+        if(dialog.getResponse()==GitFxDialogResponse.OK&&newRepo!=null){
+            System.out.println("Git init clicked");
+            System.out.println("Project Name"+newRepo.getKey());
+            System.out.println("Local Path"+newRepo.getValue());
+        }
+        else{
+            System.out.println("Cancelled");
+        }
     } 
     
     @FXML
     public void onGitParticularRepositoryClicked(ActionEvent event){
-        gitFxApp.showSyncDialog();
+        //TODO Implement this feature in GitFxDialog
+        dialog = new GitFxDialog();
+        dialog.GitInformationDialog("Sync Repositories", "Repositories", null);
     }
     
 }
