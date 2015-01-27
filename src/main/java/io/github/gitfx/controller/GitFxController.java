@@ -15,10 +15,12 @@
  */
 package io.github.gitfx.controller;
 
+import com.google.gson.Gson;
 import io.github.gitfx.Dialog.GitFxDialog;
 import io.github.gitfx.Dialog.GitFxDialogResponse;
 import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
+import io.github.gitfx.data.RepositoryData;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -139,6 +141,16 @@ public class GitFxController implements Initializable {
             System.out.println("Git init clicked");
             System.out.println("Project Name"+newRepo.getKey());
             System.out.println("Local Path"+newRepo.getValue());
+            
+            Gson gson=new Gson(); 
+            RepositoryData obj=new RepositoryData();
+            //TODO
+            //Validation call back to flag errors
+            //Get the server name from initialize repo dialog
+            obj.setServerName("github");
+            obj.setProjectData(newRepo.getKey(),newRepo.getValue());
+            System.out.println(gson.toJson(obj));
+            
         }
         else{
             System.out.println("Cancelled");
@@ -149,6 +161,7 @@ public class GitFxController implements Initializable {
     public void onGitParticularRepositoryClicked(ActionEvent event){
         //TODO Implement this feature in GitFxDialog
         dialog = new GitFxDialog();
+        //TODO Get the string from the resource bundle
         dialog.GitInformationDialog("Sync Repositories", "Repositories", null);
     }
     
