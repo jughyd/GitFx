@@ -52,5 +52,13 @@ public enum GitFxDialogResponse{
     /*
      * Choose 
     */
-    CHOOSE;
+    CHOOSE,
+    /*
+     * Initialize
+     */
+    INITIALIZE,
+    /*
+    * CLONE
+    */
+    CLONE;
 }

@@ -17,6 +17,8 @@
 package io.github.gitfx.Dialog;
 
 
+import io.github.gitfx.GitResourceBundle;
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
@@ -32,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.DirectoryChooser;
 import javafx.util.Duration;
 import javafx.util.Pair;
 /**
@@ -42,7 +45,10 @@ public class GitFxDialog implements GitDialog   {
 
     private GitFxDialogResponse response;
     private String tempResponse;
+    private GitResourceBundle resourceBundle;
+  
     public GitFxDialog(){
+        resourceBundle=new GitResourceBundle();
     }
    /*
     *Implementaiton of Generic Information dialog
@@ -118,6 +124,7 @@ public class GitFxDialog implements GitDialog   {
    @Override
    public String GitOpenDialog(String title,String header,String content){
         String repo;
+        DirectoryChooser chooser = new DirectoryChooser();
         Dialog<Pair<String,GitFxDialogResponse>> dialog = new Dialog<>(); 
         dialog.setTitle(title);
         dialog.setHeaderText(header);
@@ -144,14 +151,24 @@ public class GitFxDialog implements GitDialog   {
       
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == chooseButtonType){
-                 System.out.println("Choose clicked");
+                 File path=chooser.showDialog(dialog.getOwner());
+                 if(path!=null)
+                    repository.setText(path.getPath());
+                 chooser.setTitle(resourceBundle.getString("repo"));
                  setResponse(GitFxDialogResponse.CHOOSE);
                  return null;
             }
             if(dialogButton == okButton){
-                System.out.println("Ok clicked");
-                setResponse(GitFxDialogResponse.OK);
-                return new Pair<>(repository.getText(),GitFxDialogResponse.OK);
+                String filePath=repository.getText();
+                if(!filePath.isEmpty()){
+                   setResponse(GitFxDialogResponse.OK);
+                   return new Pair<>(repository.getText(),GitFxDialogResponse.OK); 
+                }
+                else
+                    this.GitErrorDialog(resourceBundle.getString("errorOpen"),
+                                   resourceBundle.getString("errorOpenTitle"),
+                                   resourceBundle.getString("errorOpenDesc"));
+                  
             }
             if(dialogButton == cancelButton){
                 System.out.println("Cancel clicked");
@@ -204,17 +221,27 @@ public class GitFxDialog implements GitDialog   {
         
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == chooseButtonType){
-                 System.out.println("Choose clicked");
+                 DirectoryChooser chooser = new DirectoryChooser();
+                 chooser.setTitle(resourceBundle.getString("selectRepo"));
+                 File initialRepo=chooser.showDialog(dialog.getOwner());
+                 localPath.setText(initialRepo.getPath());
+                 dialog.getDialogPane();
                  setResponse(GitFxDialogResponse.CHOOSE);
                  return null;
             }
             if(dialogButton == initRepo){
-                System.out.println("Ok clicked");
-                setResponse(GitFxDialogResponse.OK);
-                return new Pair<>(projectName.getText(),localPath.getText());
+                setResponse(GitFxDialogResponse.INITIALIZE);
+                String project=projectName.getText();
+                String path= projectName.getText();
+                System.out.println("project"+project+project.isEmpty()+"path"+path+path.isEmpty());
+                if(!project.isEmpty()&&!path.isEmpty())
+                    return new Pair<>(projectName.getText(),localPath.getText());
+                else 
+                    this.GitErrorDialog(resourceBundle.getString("errorInit"),
+                                    resourceBundle.getString("errorInitTitle"),
+                                    resourceBundle.getString("errorInitDesc"));
             }
             if(dialogButton == cancelButtonType){
-                System.out.println("Cancel clicked");
                 setResponse(GitFxDialogResponse.CANCEL);               
                 return new Pair<>(null,null);
             }
@@ -230,6 +257,7 @@ public class GitFxDialog implements GitDialog   {
    public Pair<String,String> GitCloneDialog(String title,String header,
            String content){
         Dialog<Pair<String, String>> dialog = new Dialog<>();
+        DirectoryChooser chooser = new DirectoryChooser();
         dialog.setTitle(title);
         dialog.setHeaderText(header);
         ImageView icon = new ImageView(this.getClass().getResource("/icons/init.png").toString());
@@ -258,13 +286,22 @@ public class GitFxDialog implements GitDialog   {
         dialog.setResultConverter(dialogButton -> {
            if (dialogButton == chooseButtonType){
                 System.out.println("Choose clicked");
+                chooser.setTitle(resourceBundle.getString("cloneRepo"));
+                File cloneRepo=chooser.showDialog(dialog.getOwner());
+                localPath.setText(cloneRepo.getPath());
                 setResponse(GitFxDialogResponse.CHOOSE);
                 return null;
            }
            if(dialogButton == cloneButtonType){
-               System.out.println("Clone Clicked");
-               setResponse(GitFxDialogResponse.OK);
-               return new Pair<>(remoteRepo.getText(),localPath.getText());
+               setResponse(GitFxDialogResponse.CLONE);
+               String remoteRepoURL=remoteRepo.getText();
+               String localRepoPath=localPath.getText();
+               if(!remoteRepoURL.isEmpty()&&!localRepoPath.isEmpty())
+                    return new Pair<>(remoteRepo.getText(),localPath.getText());
+               else
+                    this.GitErrorDialog(resourceBundle.getString("errorClone"),
+                                    resourceBundle.getString("errorCloneTitle"),
+                                    resourceBundle.getString("errorCloneDesc"));
            }
            if(dialogButton == cancelButtonType){
                System.out.println("Cancel clicked");

@@ -89,7 +89,7 @@ public class GitFxController implements Initializable {
         Pair<String,String> clonedRepo = dialog.GitCloneDialog(resourceBundle.getString("cloneRepo"), 
                           resourceBundle.getString("cloneRepo"),
                           null);
-        if(dialog.getResponse()==GitFxDialogResponse.OK&&clonedRepo!=null){
+        if(dialog.getResponse()==GitFxDialogResponse.CLONE&&clonedRepo!=null){
             System.out.println("Response Ok Repo Path");
             System.out.println("Project Name"+clonedRepo.getKey());
             System.out.println("Local Path"+clonedRepo.getValue());
@@ -137,7 +137,7 @@ public class GitFxController implements Initializable {
         Pair<String,String> newRepo=dialog.GitInitDialog(resourceBundle.getString("initRepo"),
                              resourceBundle.getString("initRepo"),
                              null);
-        if(dialog.getResponse()==GitFxDialogResponse.OK&&newRepo!=null){
+        if(dialog.getResponse()==GitFxDialogResponse.INITIALIZE&&newRepo!=null){
             System.out.println("Git init clicked");
             System.out.println("Project Name"+newRepo.getKey());
             System.out.println("Local Path"+newRepo.getValue());

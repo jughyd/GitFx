@@ -27,10 +27,22 @@ public class GitResourceBundle extends ListResourceBundle{
              {"openRepo", "Open Repostiory"},
              {"chooseRepo", "Choose the Repository Path"},
              {"cloneRepo","Clone Repository"},
+             {"errorInit","Error Initializing"},
+             {"errorClone","Error Cloning"},
+             {"errorInitTitle","Enter valid Project Name or Repository Path"},
+             {"errorInitDesc","You either entered invalid Project Name or "
+                 + "repository path"},
+             {"errorCloneTitle","Enter valid Remote Repository URL or Local Path "},
+             {"errorCloneDesc","You either entered invalid Remote Repo URL "
+                 + "or Local path"},
+             {"errorOpen","Error Opening"},
+             {"errorOpenTitle","Error Opening the Repsitory"},
+             {"errorOpenDesc","Not a valid Git Repsitory"},
              {"initRepo","Initialize Repository"},
              {"repo","Repsitory"},
              {"sync","Sync"},
              {"syncAll","Sync Everything"},
+             {"selectRepo","Select Repository"},
              {"syncAllDesc","This will sync all repositories on all servers"}
         };
      }
