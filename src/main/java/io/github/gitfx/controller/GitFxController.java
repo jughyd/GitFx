@@ -21,6 +21,8 @@ import io.github.gitfx.Dialog.GitFxDialogResponse;
 import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
 import io.github.gitfx.data.RepositoryData;
+import io.github.gitfx.util.GitFXGsonUtil;
+import io.github.gitfx.util.WorkbenchUtil;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -149,6 +151,8 @@ public class GitFxController implements Initializable {
             //Get the server name from initialize repo dialog
             obj.setServerName("github");
             obj.setProjectData(newRepo.getKey(),newRepo.getValue());
+            String path = WorkbenchUtil.getGitFxWorkbenchPath();
+            GitFXGsonUtil.passivateJSON(gson.toJson(obj));
             System.out.println(gson.toJson(obj));
             
         }
