@@ -19,9 +19,11 @@ import io.github.gitfx.Dialog.GitFxDialog;
 import io.github.gitfx.Dialog.GitFxDialogResponse;
 import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
+import io.github.gitfx.data.RepositoryData;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +31,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Pair;
@@ -50,6 +54,8 @@ public class GitFxController implements Initializable {
     private MenuItem gitSpecific;
     @FXML
     private MenuButton gitsync;
+    @FXML
+    private TreeView<String> RepositoryTree;
     
     private GitFxDialog dialog;  
     // Reference to the main application
@@ -76,8 +82,24 @@ public class GitFxController implements Initializable {
         gitopen.setGraphic(new ImageView(gitOpenGraphic));
         Image gitInitGraphic = new Image(getClass().getResourceAsStream("/icons/git.gif"));
         gitinit.setGraphic(new ImageView(gitInitGraphic));
+        initializeTree();
     }    
-    
+   /*
+    * Method which initializes the Repository Tree Panel
+    * Possible clients calls from
+    * 1) Applicaiton Initialize event
+    * 2) Initialization of a New Repository
+    */
+    private void initializeTree(){
+        RepositoryData metaData=GitFXGsonUtil.getRepositoryMetaData();
+        TreeItem<String> treeRoot= new TreeItem<String>(metaData.getServerName());
+        List<RepositoryData.ProjectData> projectData=metaData.getRepositories();
+        for(RepositoryData.ProjectData project:projectData){
+             treeRoot.getChildren().add(new TreeItem<String>(project.getProjectName()));
+        }
+        RepositoryTree.setShowRoot(true);
+        RepositoryTree.setRoot(treeRoot);
+    }
     
     @FXML
     public void onGitSettingsClicked(ActionEvent event){

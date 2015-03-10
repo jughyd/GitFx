@@ -12,7 +12,7 @@
         <items>
           <AnchorPane prefHeight="553.0" prefWidth="188.0" SplitPane.resizableWithParent="false">
                <children>
-                  <TextField layoutX="7.0" layoutY="52.0" prefHeight="26.0" prefWidth="230.0" promptText="Search Repositories" />
+                  <TextField layoutX="14.0" layoutY="52.0" prefHeight="26.0" prefWidth="230.0" promptText="Search Repositories" />
                   <ToolBar prefHeight="38.0" prefWidth="301.0">
                     <items>
                       <Button fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" text="Init" />
@@ -20,6 +20,7 @@
                         <Button fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" text="Open" />
                     </items>
                   </ToolBar>
+                  <TreeView fx:id="RepositoryTree" layoutX="14.0" layoutY="98.0" prefHeight="442.0" prefWidth="244.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="564.0" prefWidth="472.0">

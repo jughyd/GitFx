@@ -53,7 +53,7 @@ public class RepositoryData {
         this.repositories.add(obj);
     }
     //Inner class that maintains ProjectData  
-    class ProjectData{
+    public class ProjectData{
         String projectName;
         String projectPath;
         

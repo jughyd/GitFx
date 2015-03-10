@@ -1,7 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright 2015 GitFx
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package io.github.gitfx.util;
 
@@ -40,12 +50,25 @@ public final class GitFXGsonUtil {
     * Utility method which saves Repo meta data to file on disk. 
     */
     public static void saveRepositoryInformation(String serverName,
-             String projectName,String projectPath){
-             Gson gson= new Gson();
-             RepositoryData repoMetaData=new RepositoryData();
-             repoMetaData.setServerName("github");
-             repoMetaData.setProjectData(projectName,projectPath); 
-             passivateJSON(gson.toJson(repoMetaData));
+        String projectName,String projectPath){
+        Gson gson= new Gson();
+        RepositoryData repoMetaData=new RepositoryData();
+        repoMetaData.setServerName("github");
+        repoMetaData.setProjectData(projectName,projectPath); 
+        passivateJSON(gson.toJson(repoMetaData));
     }
-
+   /*
+    * Utility method which returns the server details 
+    * TODO: Parse actual JSON and build the metadata. 
+    */
+    public static RepositoryData getRepositoryMetaData(){
+        RepositoryData repoMetaData=new RepositoryData();
+        repoMetaData.setServerName("GitHub");
+        repoMetaData.setProjectData("SampleProject", "/dummy/location");
+        repoMetaData.setProjectData("Calculator", "/dummy/location");
+        repoMetaData.setProjectData("Foo", "/dummy/location");
+        repoMetaData.setProjectData("Bar", "/dummy/location");
+        return repoMetaData;
+    }
+   
 }
