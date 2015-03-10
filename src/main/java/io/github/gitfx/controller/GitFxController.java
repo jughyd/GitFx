@@ -15,12 +15,10 @@
  */
 package io.github.gitfx.controller;
 
-import com.google.gson.Gson;
 import io.github.gitfx.Dialog.GitFxDialog;
 import io.github.gitfx.Dialog.GitFxDialogResponse;
 import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
-import io.github.gitfx.data.RepositoryData;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
 import java.net.URL;
@@ -144,17 +142,10 @@ public class GitFxController implements Initializable {
             System.out.println("Project Name"+newRepo.getKey());
             System.out.println("Local Path"+newRepo.getValue());
             
-            Gson gson=new Gson(); 
-            RepositoryData obj=new RepositoryData();
-            //TODO
-            //Validation call back to flag errors
-            //Get the server name from initialize repo dialog
-            obj.setServerName("github");
-            obj.setProjectData(newRepo.getKey(),newRepo.getValue());
+         
             String path = WorkbenchUtil.getGitFxWorkbenchPath();
-            GitFXGsonUtil.passivateJSON(gson.toJson(obj));
-            System.out.println(gson.toJson(obj));
-            
+            GitFXGsonUtil.saveRepositoryInformation("github",newRepo.getKey(),
+                                              newRepo.getValue());
         }
         else{
             System.out.println("Cancelled");

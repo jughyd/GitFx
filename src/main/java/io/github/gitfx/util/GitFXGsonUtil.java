@@ -7,6 +7,9 @@ package io.github.gitfx.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import com.google.gson.Gson;
+import io.github.gitfx.data.RepositoryData;
+
 
 /**
  *
@@ -14,7 +17,10 @@ import java.io.FileOutputStream;
  */
 public final class GitFXGsonUtil {
     public static final String GitFxRepo="GitFxRepo.json";
-    
+   /*
+    *  Passivate the String JSON to a file on disk to store repository 
+    *  information. 
+    */
     public static void passivateJSON(String json){
         FileOutputStream outputStream=null;
         File file=new File(GitFxRepo);
@@ -30,5 +36,16 @@ public final class GitFXGsonUtil {
             e.printStackTrace();
         }
     }
-  
+   /*
+    * Utility method which saves Repo meta data to file on disk. 
+    */
+    public static void saveRepositoryInformation(String serverName,
+             String projectName,String projectPath){
+             Gson gson= new Gson();
+             RepositoryData repoMetaData=new RepositoryData();
+             repoMetaData.setServerName("github");
+             repoMetaData.setProjectData(projectName,projectPath); 
+             passivateJSON(gson.toJson(repoMetaData));
+    }
+
 }
