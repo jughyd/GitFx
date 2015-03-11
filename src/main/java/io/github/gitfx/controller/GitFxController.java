@@ -19,6 +19,7 @@ import io.github.gitfx.Dialog.GitFxDialog;
 import io.github.gitfx.Dialog.GitFxDialogResponse;
 import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
+import io.github.gitfx.data.ProjectData;
 import io.github.gitfx.data.RepositoryData;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
@@ -92,13 +93,15 @@ public class GitFxController implements Initializable {
     */
     private void initializeTree(){
         RepositoryData metaData=GitFXGsonUtil.getRepositoryMetaData();
-        TreeItem<String> treeRoot= new TreeItem<String>(metaData.getServerName());
-        List<RepositoryData.ProjectData> projectData=metaData.getRepositories();
-        for(RepositoryData.ProjectData project:projectData){
-             treeRoot.getChildren().add(new TreeItem<String>(project.getProjectName()));
-        }
-        RepositoryTree.setShowRoot(true);
-        RepositoryTree.setRoot(treeRoot);
+        if(metaData!=null){
+            TreeItem<String> treeRoot= new TreeItem<String>(metaData.getServerName());
+            List<ProjectData> projectData=metaData.getRepositories();
+            for(ProjectData project:projectData){
+                 treeRoot.getChildren().add(new TreeItem<String>(project.getProjectName()));
+            }
+            RepositoryTree.setShowRoot(true);
+            RepositoryTree.setRoot(treeRoot);
+        } 
     }
     
     @FXML
@@ -168,6 +171,7 @@ public class GitFxController implements Initializable {
             String path = WorkbenchUtil.getGitFxWorkbenchPath();
             GitFXGsonUtil.saveRepositoryInformation("github",newRepo.getKey(),
                                               newRepo.getValue());
+            initializeTree();
         }
         else{
             System.out.println("Cancelled");

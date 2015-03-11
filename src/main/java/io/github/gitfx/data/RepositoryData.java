@@ -47,31 +47,9 @@ public class RepositoryData {
     } 
    
     public void setProjectData(String projectName,String projectPath){
-        ProjectData obj=new ProjectData();
-        obj.setProjectName(projectName);
-        obj.setProjectPath(projectPath);
+        ProjectData obj=new ProjectData(projectName,projectPath);
+        //obj.setProjectName(projectName);
+        //obj.setProjectPath(projectPath);
         this.repositories.add(obj);
     }
-    //Inner class that maintains ProjectData  
-    public class ProjectData{
-        String projectName;
-        String projectPath;
-        
-        public String getProjectName(){
-            return projectName;
-        }
-        
-        public String getprojectPath(){
-            return projectPath;
-        }
-        
-        public void setProjectName(String projectName){
-           this.projectName=projectName;
-        }
-        
-        public void setProjectPath(String projectPath){
-            this.projectPath=projectPath;
-        }
-    }
 }
-
