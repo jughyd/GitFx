@@ -260,10 +260,6 @@ public class GitFxDialog implements GitDialog   {
         DirectoryChooser chooser = new DirectoryChooser();
         dialog.setTitle(title);
         dialog.setHeaderText(header);
-        ImageView icon = new ImageView(this.getClass().getResource("/icons/init.png").toString());
-        icon.setFitHeight(20);
-        icon.setFitWidth(20);
-        dialog.setGraphic(icon);
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);

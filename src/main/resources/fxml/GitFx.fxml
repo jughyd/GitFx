@@ -46,11 +46,11 @@
             </SplitPane>
             <ToolBar prefHeight="74.0" prefWidth="1445.0" snapToPixel="false">
               <items>
-                <Button fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" text="Init" />
-                  <Button fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" text="Clone" />
-                  <Button fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" text="Open" />
-                <Button fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" text="Settings" />
-                  <MenuButton fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0" prefWidth="93.0" text="Sync">
+                <Button id="gitinit" fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" prefHeight="62.0" prefWidth="92.0" text="Initialize" />
+                  <Button id="clone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" prefHeight="60.0" prefWidth="101.0" text="Clone" />
+                  <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" prefHeight="61.0" prefWidth="102.0" text="Open" />
+                <Button id="setting" fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" prefHeight="62.0" prefWidth="98.0" text="Settings" />
+                  <MenuButton id="gitsync" fx:id="gitsync" mnemonicParsing="false" prefHeight="61.0" prefWidth="96.0" text="Sync">
                     <items>
                       <MenuItem fx:id="syncEveryThing" mnemonicParsing="false" onAction="#syncEveryThingClicked" text="Sync Everything" />
                       <MenuItem fx:id="gitSpecific" mnemonicParsing="false" onAction="#onGitParticularRepositoryClicked" text="Particular Repository" />

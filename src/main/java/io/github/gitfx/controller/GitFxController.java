@@ -34,8 +34,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.util.Pair;
 
 public class GitFxController implements Initializable {
@@ -73,16 +72,12 @@ public class GitFxController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image gitCloneGraphic = new Image(getClass().getResourceAsStream("/icons/clone.gif"));
-        gitclone.setGraphic(new ImageView(gitCloneGraphic));
-        Image gitSettingsGraphic = new Image(getClass().getResourceAsStream("/icons/settings.gif"));
-        gitsettings.setGraphic(new ImageView(gitSettingsGraphic));
-        Image gitSyncGraphic = new Image(getClass().getResourceAsStream("/icons/sync.gif"));
-        gitsync.setGraphic(new ImageView(gitSyncGraphic));
-        Image gitOpenGraphic = new Image(getClass().getResourceAsStream("/icons/open.gif"));
-        gitopen.setGraphic(new ImageView(gitOpenGraphic));
-        Image gitInitGraphic = new Image(getClass().getResourceAsStream("/icons/git.gif"));
-        gitinit.setGraphic(new ImageView(gitInitGraphic));
+        Font.loadFont(GitFxController.class.getResource("/fonts/fontawesome-webfont.ttf").toExternalForm(),12);
+        gitinit.setText('\uf04b'+"");
+        gitopen.setText('\uf07c'+"");
+        gitsettings.setText('\uf013'+"");
+        gitsync.setText('\uf021'+"");
+        gitclone.setText('\uf0c5'+"");
         initializeTree();
     }    
    /*
