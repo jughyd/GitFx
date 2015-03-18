@@ -6,61 +6,59 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="569.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.controller.GitFxController">
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.controller.GitFxController">
    <children>
-      <SplitPane dividerPositions="0.5379188712522046" layoutX="7.0" layoutY="26.0" prefHeight="592.0" prefWidth="689.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane prefHeight="553.0" prefWidth="188.0" SplitPane.resizableWithParent="false">
-               <children>
-                  <TextField layoutX="14.0" layoutY="52.0" prefHeight="26.0" prefWidth="230.0" promptText="Search Repositories" />
-                  <ToolBar prefHeight="38.0" prefWidth="301.0">
+      <AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <SplitPane dividerPositions="0.1774081774081774" prefHeight="515.0" prefWidth="569.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="74.0">
+               <items>
+                  <AnchorPane prefHeight="510.0" prefWidth="260.0">
+                     <children>
+                        <TreeView fx:id="RepositoryTree" layoutX="14.0" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="410.0" prefWidth="224.0" />
+                        <TextField layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="212.0" promptText="Search Repositories" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="539.0" prefWidth="302.0">
+                     <children>
+                        <TabPane prefHeight="510.0" prefWidth="279.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <tabs>
+                            <Tab text="Changes">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="307.0" />
+                              </content>
+                            </Tab>
+                            <Tab text="History">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </Tab>
+                              <Tab text="Others">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="1030.0" />
+                                </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+            <ToolBar prefHeight="74.0" prefWidth="1445.0" snapToPixel="false">
+              <items>
+                <Button fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" text="Init" />
+                  <Button fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" text="Clone" />
+                  <Button fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" text="Open" />
+                <Button fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" text="Settings" />
+                  <MenuButton fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0" prefWidth="93.0" text="Sync">
                     <items>
-                      <Button fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" text="Init" />
-                        <Button fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" text="Clone" />
-                        <Button fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" text="Open" />
+                      <MenuItem fx:id="syncEveryThing" mnemonicParsing="false" onAction="#syncEveryThingClicked" text="Sync Everything" />
+                      <MenuItem fx:id="gitSpecific" mnemonicParsing="false" onAction="#onGitParticularRepositoryClicked" text="Particular Repository" />
                     </items>
-                  </ToolBar>
-                  <TreeView fx:id="RepositoryTree" layoutX="14.0" layoutY="98.0" prefHeight="442.0" prefWidth="244.0" />
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="564.0" prefWidth="472.0">
-               <children>
-                  <ToolBar maxWidth="1.7976931348623157E308" prefHeight="38.0" prefWidth="310.0">
-                    <items>
-                      <Button fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" text="Settings" />
-                        <MenuButton fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0" prefWidth="93.0" text="Sync">
-                          <items>
-                            <MenuItem fx:id="syncEveryThing" mnemonicParsing="false" onAction="#syncEveryThingClicked" text="Sync Everything" />
-                            <MenuItem fx:id="gitSpecific" mnemonicParsing="false" onAction="#onGitParticularRepositoryClicked" text="Particular Repository" />
-                          </items>
-                        </MenuButton>
-                    </items>
-                  </ToolBar>
-                  <TabPane layoutX="14.0" layoutY="41.0" prefHeight="512.0" prefWidth="359.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="41.0">
-                    <tabs>
-                      <Tab text="Changes">
-                        <content>
-                          <AnchorPane />
-                        </content>
-                      </Tab>
-                      <Tab text="History">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <Accordion layoutX="47.0" layoutY="102.0" />
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                        <Tab text="Others">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                          </content>
-                        </Tab>
-                    </tabs>
-                  </TabPane>
-               </children></AnchorPane>
-        </items>
-      </SplitPane>
+                  </MenuButton>
+              </items>
+            </ToolBar>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

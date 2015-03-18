@@ -37,12 +37,11 @@ public class GitFxApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
+        stage.setResizable(true);
         //Give controller access to GitFxApp
         GitFxController controller= loader.getController();
         controller.setMainApp(this);
         initializeWorkbench();
-        
-        stage.setTitle("GitFX");
         stage.setScene(scene);
         stage.show();
     }
