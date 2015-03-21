@@ -1,6 +1,8 @@
 GitFx
 =====
 
+[![Join the chat at https://gitter.im/jughyd/GitFx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jughyd/GitFx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Gitfx is a Git client built using JavaFX
 
 To clone $git clone [URL].git. This is a maven project<br>
