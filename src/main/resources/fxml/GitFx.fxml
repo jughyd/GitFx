@@ -11,9 +11,9 @@
    <children>
       <AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <SplitPane dividerPositions="0.1774081774081774" prefHeight="515.0" prefWidth="569.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="74.0">
+            <SplitPane dividerPositions="0.1774081774081774" layoutY="55.0" prefHeight="534.0" prefWidth="1445.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
                <items>
-                  <AnchorPane prefHeight="510.0" prefWidth="260.0">
+                  <AnchorPane prefHeight="543.0" prefWidth="252.0">
                      <children>
                         <TreeView fx:id="RepositoryTree" layoutX="14.0" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="410.0" prefWidth="224.0" />
                         <TextField layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="212.0" promptText="Search Repositories" />
@@ -35,7 +35,7 @@
                             </Tab>
                               <Tab text="Others">
                                 <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="1030.0" />
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="1183.0" />
                                 </content>
                               </Tab>
                           </tabs>
@@ -44,13 +44,13 @@
                   </AnchorPane>
                </items>
             </SplitPane>
-            <ToolBar prefHeight="74.0" prefWidth="1445.0" snapToPixel="false">
+            <ToolBar prefHeight="41.0" prefWidth="1445.0" snapToPixel="false">
               <items>
-                <Button id="gitinit" fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" prefHeight="62.0" prefWidth="92.0" text="Initialize" />
-                  <Button id="clone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" prefHeight="60.0" prefWidth="101.0" text="Clone" />
-                  <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" prefHeight="61.0" prefWidth="102.0" text="Open" />
-                <Button id="setting" fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" prefHeight="62.0" prefWidth="98.0" text="Settings" />
-                  <MenuButton id="gitsync" fx:id="gitsync" mnemonicParsing="false" prefHeight="61.0" prefWidth="96.0" text="Sync">
+                <Button id="gitinit" fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" prefHeight="40.0" prefWidth="92.0" text="Initialize" />
+                  <Button id="clone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" prefHeight="42.0" prefWidth="101.0" text="Clone" />
+                  <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" prefHeight="43.0" prefWidth="102.0" text="Open" />
+                <Button id="setting" fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" prefHeight="46.0" prefWidth="98.0" text="Settings" />
+                  <MenuButton id="gitsync" fx:id="gitsync" mnemonicParsing="false" prefHeight="46.0" prefWidth="96.0" text="Sync">
                     <items>
                       <MenuItem fx:id="syncEveryThing" mnemonicParsing="false" onAction="#syncEveryThingClicked" text="Sync Everything" />
                       <MenuItem fx:id="gitSpecific" mnemonicParsing="false" onAction="#onGitParticularRepositoryClicked" text="Particular Repository" />

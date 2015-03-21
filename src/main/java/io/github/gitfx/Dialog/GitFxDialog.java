@@ -232,9 +232,9 @@ public class GitFxDialog implements GitDialog   {
             if(dialogButton == initRepo){
                 setResponse(GitFxDialogResponse.INITIALIZE);
                 String project=projectName.getText();
-                String path= projectName.getText();
+                String path= localPath.getText();
                 System.out.println("project"+project+project.isEmpty()+"path"+path+path.isEmpty());
-                if(!project.isEmpty()&&!path.isEmpty())
+                if(!project.isEmpty()&&!path.isEmpty()&&new File(path).exists())
                     return new Pair<>(projectName.getText(),localPath.getText());
                 else 
                     this.GitErrorDialog(resourceBundle.getString("errorInit"),
