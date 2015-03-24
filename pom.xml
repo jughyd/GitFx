@@ -6,7 +6,7 @@
     <artifactId>GitFx</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
+  
     <name>GitFx</name>
 
     <properties>
@@ -16,7 +16,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -64,23 +63,50 @@
             <artifactId>controlsfx</artifactId>
             <version>8.20.8</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.eclipse.jgit</groupId>
-            <artifactId>org.eclipse.jgit</artifactId>
-            <version>3.7.0-SNAPSHOT</version>
-        </dependency>
+        <!-- Core Library -->
+       
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
-            <artifactId>org.eclipse.jgit.archive</artifactId>
-            <version>3.7.0-SNAPSHOT</version>
-        </dependency>-->
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>3.7.0.201502260915-r</version>
+        </dependency>
+       
+
+        <!-- Smart HTTP Servlet -->
+     
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.http.server</artifactId>
+            <version>3.7.0.201502260915-r</version>
+        </dependency>
+        
+
+        <!-- AWT UI Helpers -->
+     
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.ui</artifactId>
+            <version>3.7.0.201502260915-r</version>
+        </dependency>
+       
+
+        <!-- JUnit Test Support -->
+     
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.junit</artifactId>
+            <version>3.7.0.201502260915-r</version>
+        </dependency>
+        
     </dependencies>
     
     <repositories>
+    
         <repository>
             <id>jgit-repository</id>
             <url>https://repo.eclipse.org/content/groups/releases/</url>
         </repository>
+    
         <repository>
             <id>maven-central-repo</id>
             <url>http://repo1.maven.org/maven2</url>
@@ -116,8 +142,11 @@
                         </goals>
                         <configuration>
                             <excludeScope>system</excludeScope>
-                            <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>
-                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                            <excludes>META-INF/*.SF</excludes>
+                            <excludes>META-INF/*.DSA</excludes>
+                            <excludes>META-INF/*.RSA</excludes>
+                        <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>
+                        <outputDirectory>${project.build.directory}/classes</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -129,7 +158,6 @@
                 <executions>
                     <execution>
                         <id>unpack-dependencies</id>
-                        
                         <phase>package</phase>
                         <goals>
                             <goal>exec</goal>
