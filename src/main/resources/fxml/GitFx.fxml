@@ -6,7 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.controller.GitFxController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -23,14 +22,26 @@
                      <children>
                         <TabPane prefHeight="510.0" prefWidth="279.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <tabs>
+                            <Tab text="History">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <SplitPane dividerPositions="0.1922099915325995" layoutX="1.0" prefHeight="499.0" prefWidth="1183.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <items>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Accordion fx:id="historyAccordion" layoutX="6.0" prefHeight="491.0" prefWidth="212.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="497.0" prefWidth="917.0" />
+                                            </items>
+                                          </SplitPane>
+                                       </children></AnchorPane>
+                              </content>
+                            </Tab>
                             <Tab text="Changes">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="307.0" />
-                              </content>
-                            </Tab>
-                            <Tab text="History">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                               </content>
                             </Tab>
                               <Tab text="Others">

@@ -19,19 +19,24 @@ import io.github.gitfx.Dialog.GitFxDialog;
 import io.github.gitfx.Dialog.GitFxDialogResponse;
 import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
+import io.github.gitfx.data.GitRepoMetaData;
 import io.github.gitfx.data.ProjectData;
 import io.github.gitfx.data.RepositoryData;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.text.Font;
@@ -56,7 +61,9 @@ public class GitFxController implements Initializable {
     private MenuButton gitsync;
     @FXML
     private TreeView<String> RepositoryTree;
-    
+    @FXML
+    private Accordion historyAccordion;
+   
     private GitFxDialog dialog;  
     // Reference to the main application
     private GitFxApp gitFxApp;
@@ -98,7 +105,18 @@ public class GitFxController implements Initializable {
             RepositoryTree.setRoot(treeRoot);
         } 
     }
-    
+    private void initializeHistoryAccordion(GitRepoMetaData metaData){
+        ObservableList<TitledPane> panes= historyAccordion.getPanes();
+        if(panes!=null){
+            historyAccordion.getPanes().removeAll(panes);
+        }
+        ArrayList<String> list=metaData.getShortMessage();
+        TitledPane pane;
+        for(String str:list){
+          pane= new TitledPane(str,null);
+          historyAccordion.getPanes().add(pane);
+        }
+    }
     @FXML
     public void onGitSettingsClicked(ActionEvent event){
     }
@@ -127,6 +145,12 @@ public class GitFxController implements Initializable {
                           resourceBundle.getString("repo"));
         if(dialog.getResponse()==GitFxDialogResponse.OK){
             System.out.println("Response Ok Repo Path"+repoPath);
+            GitRepoMetaData metaData=GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
+            initializeHistoryAccordion(metaData);
+            /*ArrayList<String> list=metaData.getShortMessage();
+            for(String str:list){
+                System.out.println(str);
+            }*/
         }
         else{
             System.out.println("Response Cancel");

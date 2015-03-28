@@ -160,7 +160,9 @@ public class GitFxDialog implements GitDialog   {
             }
             if(dialogButton == okButton){
                 String filePath=repository.getText();
-                if(!filePath.isEmpty()){
+                filePath=filePath.concat("/.git");
+                System.out.println(filePath);
+                if(!filePath.isEmpty()&&new File(filePath).exists()){
                    setResponse(GitFxDialogResponse.OK);
                    return new Pair<>(repository.getText(),GitFxDialogResponse.OK); 
                 }
@@ -187,7 +189,7 @@ public class GitFxDialog implements GitDialog   {
         Pair<String,GitFxDialogResponse> temp=null;
         if(result.isPresent())
               temp=result.get();
-        return temp.getKey();
+        return temp.getKey()+"/.git";
    }
    
    /*
