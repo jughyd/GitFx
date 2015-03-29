@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,12 +38,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 
 public class GitFxController implements Initializable {
@@ -156,11 +161,18 @@ public class GitFxController implements Initializable {
             historyAccordion.getPanes().removeAll(panes);
         }
         ArrayList<String> list=metaData.getShortMessage();
+        ArrayList<ArrayList<String>> commitFiles = metaData.getCommitFiles();
         TitledPane pane;
-        for(String str:list){
-          pane= new TitledPane(str,null);
-          historyAccordion.getPanes().add(pane);
+        int i=0;
+        for (String str : list) {
+            ListView<String> changedFiles = new ListView<>();
+            changedFiles.autosize();
+            changedFiles.setItems(FXCollections.observableArrayList(commitFiles.get(i)));
+            changedFiles.maxHeight(Double.MAX_VALUE);
+            pane = new TitledPane(str, changedFiles);
+            historyAccordion.getPanes().add(pane);
         }
+        //Show number of commits on top of history accordion
         commits.setText(metaData.getCommitCount()+" commits");
     }
     

@@ -31,7 +31,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.DirectoryChooser;
@@ -66,6 +65,7 @@ public class GitFxDialog implements GitDialog   {
    /*
     *Implementation of Generic Error dialog
     */
+    @Override
     public void GitErrorDialog(String title,String error,String content){
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
@@ -77,6 +77,7 @@ public class GitFxDialog implements GitDialog   {
    /*
     * Implementation of Generic Warning Dialog
     */
+    @Override
     public void GitWarningDialog(String title,String header,String content){
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle(title);
@@ -88,6 +89,7 @@ public class GitFxDialog implements GitDialog   {
    /*
     * Implementation of Generic Exception Dialog
     */
+    @Override
     public void GitExceptionDialog(String title,String header,String content
             ,Exception e){
         
@@ -256,6 +258,7 @@ public class GitFxDialog implements GitDialog   {
         return temp;
    }
    
+   @Override
    public Pair<String,String> GitCloneDialog(String title,String header,
            String content){
         Dialog<Pair<String, String>> dialog = new Dialog<>();
@@ -342,6 +345,10 @@ public class GitFxDialog implements GitDialog   {
         }
     }
     
+    /**
+     *
+     * @return response
+     */
     @Override
     public GitFxDialogResponse getResponse(){
         return response;
