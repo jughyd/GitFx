@@ -28,12 +28,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TitledPane;
@@ -63,6 +66,8 @@ public class GitFxController implements Initializable {
     private TreeView<String> RepositoryTree;
     @FXML
     private Accordion historyAccordion;
+    @FXML
+    private Label commits;
    
     private GitFxDialog dialog;  
     // Reference to the main application
@@ -85,8 +90,18 @@ public class GitFxController implements Initializable {
         gitsettings.setText('\uf013'+"");
         gitsync.setText('\uf021'+"");
         gitclone.setText('\uf0c5'+"");
+        RepositoryTree.getSelectionModel().selectedItemProperty().addListener(
+         new ChangeListener() {
+         @Override
+          public void changed(ObservableValue observable, Object oldValue,
+                Object newValue) {
+            TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+            System.out.println("Selected Text : " + selectedItem.getValue());
+            initializeHistoryAccordion(selectedItem.getValue());
+        }});
         initializeTree();
-    }    
+        initializeHistoryAccordion();
+    }  
    /*
     * Method which initializes the Repository Tree Panel
     * Possible clients calls from
@@ -95,8 +110,10 @@ public class GitFxController implements Initializable {
     */
     private void initializeTree(){
         RepositoryData metaData=GitFXGsonUtil.getRepositoryMetaData();
+        
         if(metaData!=null){
             TreeItem<String> treeRoot= new TreeItem<String>(metaData.getServerName());
+            treeRoot.setExpanded(true);
             List<ProjectData> projectData=metaData.getRepositories();
             for(ProjectData project:projectData){
                  treeRoot.getChildren().add(new TreeItem<String>(project.getProjectName()));
@@ -105,6 +122,34 @@ public class GitFxController implements Initializable {
             RepositoryTree.setRoot(treeRoot);
         } 
     }
+    
+   /*
+    * By default load the first repository in the first server listed in tree
+    */
+    private void initializeHistoryAccordion(){
+        RepositoryData repoData = GitFXGsonUtil.getRepositoryMetaData();
+        //If application is loaded for the first time the metaData will be missing
+        if(repoData!=null){
+            GitRepoMetaData metaData=GitFXGsonUtil.getGitRepositoryMetaData(repoData.getFirstRepoPath());
+            initializeHistoryAccordion(metaData);
+        }
+    }
+  
+    /*
+     * Given a projectName find the repoPath from the JSON and initialize the
+     * History accordion accordingly
+     */
+    private void initializeHistoryAccordion(String projectName){
+        RepositoryData repoData = GitFXGsonUtil.getRepositoryMetaData();
+        String repoPath = repoData.getRepoPath(projectName);
+        GitRepoMetaData metaData=GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
+        initializeHistoryAccordion(metaData);
+    }
+   
+   /*
+    *  Given the GitRepoMetaData load the accordion with the repository 
+    *  commit history
+    */
     private void initializeHistoryAccordion(GitRepoMetaData metaData){
         ObservableList<TitledPane> panes= historyAccordion.getPanes();
         if(panes!=null){
@@ -116,7 +161,9 @@ public class GitFxController implements Initializable {
           pane= new TitledPane(str,null);
           historyAccordion.getPanes().add(pane);
         }
+        commits.setText(metaData.getCommitCount()+" commits");
     }
+    
     @FXML
     public void onGitSettingsClicked(ActionEvent event){
     }
@@ -147,10 +194,9 @@ public class GitFxController implements Initializable {
             System.out.println("Response Ok Repo Path"+repoPath);
             GitRepoMetaData metaData=GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
             initializeHistoryAccordion(metaData);
-            /*ArrayList<String> list=metaData.getShortMessage();
-            for(String str:list){
-                System.out.println(str);
-            }*/
+            GitFXGsonUtil.saveRepositoryInformation("github",metaData.getRepoName(),
+                                              repoPath);
+            initializeTree();
         }
         else{
             System.out.println("Response Cancel");

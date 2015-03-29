@@ -15,12 +15,16 @@
  */
 package io.github.gitfx.data;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 
 /**
@@ -34,10 +38,10 @@ public class GitRepoMetaData {
     RevWalk walk;
     ArrayList<String> shortMessage;
     ArrayList<ArrayList<String>> changedFile;
-
+    //There should be a better way to get this count
+    int commitCount=0;
     public GitRepoMetaData() {
         shortMessage = new ArrayList<>();
-    
     }
 
     public void setRevWalk(RevWalk walk) {
@@ -55,30 +59,60 @@ public class GitRepoMetaData {
     public ArrayList<String> getShortMessage() {
         for (RevCommit revision : walk) {
             shortMessage.add(revision.getShortMessage());
+            commitCount++;
         }
         walk.reset();
         return shortMessage;
     }
 
     public ArrayList<ArrayList<String>> getCommitFiles() {
-        ArrayList<ArrayList<String>> consolidated=null;
+        ArrayList<ArrayList<String>> consolidated = null;
         ArrayList<String> commitFiles = new ArrayList<String>();
-        TreeWalk treeWalk = new TreeWalk(repository);
-        int i=0;
+        FileRepositoryBuilder builder = new FileRepositoryBuilder();
+        Repository repo = null;
         try {
-            //walk.markStart(walk.parseCommit(repository.resolve("HEAD")));
-            for (RevCommit revision : this.walk) {
+            repo = builder.setGitDir(new File("/Users/rvvaidya/Downloads/GitFx/.git"))
+                    .readEnvironment()
+                    .setMustExist(true)
+                    .findGitDir()
+                    .build();
+        } catch (IOException ex) {
+            Logger.getLogger(GitRepoMetaData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        TreeWalk treeWalk = new TreeWalk(repo);
+        RevWalk localwalk = new RevWalk(repo);
+        System.out.println("Repository Directory: " + repo.getDirectory());
+        try {
+            System.out.println("Full Branch: " + repo.getFullBranch());
+        } catch (IOException ex) {
+            Logger.getLogger(GitRepoMetaData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int i = 0;
+        try {
+            walk.markStart(walk.parseCommit(repo.resolve("HEAD")));
+            for (RevCommit revision : localwalk) {
                 RevTree tree = revision.getTree();
                 treeWalk.addTree(tree);
                 treeWalk.setRecursive(true);
                 while (treeWalk.next()) {
                     commitFiles.add(treeWalk.getPathString());
                 }
-                consolidated.add(i++,commitFiles);
+                consolidated.add(i++, commitFiles);
             }
         } catch (IOException exception) {
             System.out.println("Exception");
         }
         return consolidated;
+    }
+
+    public String getRepoName() {
+        String repoPath = repository.getDirectory().getParent();
+        int index = repoPath.lastIndexOf("/");
+        return repoPath.substring(index + 1);
+    }
+  
+    //Gets commit count for this repository
+    public int getCommitCount(){
+        return commitCount;
     }
 }

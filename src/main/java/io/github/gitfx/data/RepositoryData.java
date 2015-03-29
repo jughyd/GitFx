@@ -46,6 +46,24 @@ public class RepositoryData {
         return this.repositories;
     } 
    
+   /*
+    * Given a project Name(repository name) get the repo path from the JSON. 
+    */
+    public String getRepoPath(String projectName){
+        for(ProjectData obj:repositories){
+            if(obj.projectName.equals(projectName))
+                return obj.projectPath;
+        }
+        return null;
+    }
+  
+   /*
+    * Given a path of the first repository 
+    */
+    public String getFirstRepoPath(){
+        return repositories.get(0).projectPath;
+    }
+   
     public void setProjectData(String projectName,String projectPath){
         ProjectData obj=new ProjectData(projectName,projectPath);
         //obj.setProjectName(projectName);

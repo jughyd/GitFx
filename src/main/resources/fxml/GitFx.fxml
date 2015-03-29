@@ -30,10 +30,19 @@
                                             <items>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                    <children>
-                                                      <Accordion fx:id="historyAccordion" layoutX="6.0" prefHeight="491.0" prefWidth="212.0" />
+                                                      <VBox prefHeight="497.0" prefWidth="223.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <Label fx:id="commits" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="224.0" />
+                                                            <ScrollPane prefHeight="497.0" prefViewportHeight="492.0" prefViewportWidth="224.0" prefWidth="223.0">
+                                                               <content>
+                                                                  <Accordion fx:id="historyAccordion" layoutX="-6.0" layoutY="-1.0" prefHeight="459.0" prefWidth="224.0" />
+                                                               </content>
+                                                            </ScrollPane>
+                                                         </children>
+                                                      </VBox>
                                                    </children>
                                                 </AnchorPane>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="497.0" prefWidth="917.0" />
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="497.0" prefWidth="932.0" />
                                             </items>
                                           </SplitPane>
                                        </children></AnchorPane>
