@@ -44,10 +44,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.util.Pair;
 
 public class GitFxController implements Initializable {
@@ -170,6 +167,9 @@ public class GitFxController implements Initializable {
             changedFiles.setItems(FXCollections.observableArrayList(commitFiles.get(i)));
             changedFiles.maxHeight(Double.MAX_VALUE);
             pane = new TitledPane(str, changedFiles);
+            //Specifying a height here as without height repo's with more commits
+            //were not expanding to show commits
+            pane.setMaxHeight(50);
             historyAccordion.getPanes().add(pane);
         }
         //Show number of commits on top of history accordion
