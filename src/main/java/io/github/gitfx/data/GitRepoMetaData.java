@@ -17,8 +17,6 @@ package io.github.gitfx.data;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Repository;
@@ -26,13 +24,15 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
-
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 /**
  *
  * @author rvvaidya
  */
 public class GitRepoMetaData {
-
+    Logger logger = LoggerFactory.getLogger(GitRepoMetaData.class.getName());
+   
     Repository repository;
     RevCommit commit;
     RevWalk walk;
@@ -74,11 +74,11 @@ public class GitRepoMetaData {
                 }
                 changedFile.add(commitFiles);
             } catch (IncorrectObjectTypeException ex) {
-                Logger.getLogger(GitRepoMetaData.class.getName()).log(Level.SEVERE, null, ex);
+               logger.debug("IncorrectObjectTypeException", ex);
             } catch (CorruptObjectException ex) {
-                Logger.getLogger(GitRepoMetaData.class.getName()).log(Level.SEVERE, null, ex);
+               logger.debug("CorruptObjectException", ex);
             } catch (IOException ex) {
-                Logger.getLogger(GitRepoMetaData.class.getName()).log(Level.SEVERE, null, ex);
+               logger.debug("IOException", ex);
             }
         }
         walk.reset();

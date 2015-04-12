@@ -46,9 +46,12 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GitFxController implements Initializable {
     
+    Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
    
     @FXML 
     private Button gitclone;
@@ -98,7 +101,7 @@ public class GitFxController implements Initializable {
           public void changed(ObservableValue observable, Object oldValue,
                 Object newValue) {
             TreeItem<String> selectedItem = (TreeItem<String>) newValue;
-            System.out.println("Selected Text : " + selectedItem.getValue());
+            logger.debug("Selected Text"+selectedItem.getValue());
             initializeHistoryAccordion(selectedItem.getValue());
         }});
         initializeTree();
@@ -187,12 +190,12 @@ public class GitFxController implements Initializable {
                           resourceBundle.getString("cloneRepo"),
                           null);
         if(dialog.getResponse()==GitFxDialogResponse.CLONE&&clonedRepo!=null){
-            System.out.println("Response Ok Repo Path");
-            System.out.println("Project Name"+clonedRepo.getKey());
-            System.out.println("Local Path"+clonedRepo.getValue());
+            logger.debug("Response Ok Repo Path");
+            logger.debug("Project Name"+clonedRepo.getKey());
+            logger.debug("Local Path"+clonedRepo.getValue());
         }
         else{
-            System.out.println("Response Cancel");
+            logger.debug("Response Cancel");
         }
     }
     
@@ -203,7 +206,7 @@ public class GitFxController implements Initializable {
                           resourceBundle.getString("chooseRepo"),
                           resourceBundle.getString("repo"));
         if(dialog.getResponse()==GitFxDialogResponse.OK){
-            System.out.println("Response Ok Repo Path"+repoPath);
+            logger.debug("Response Ok Repo Path"+repoPath);
             GitRepoMetaData metaData=GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
             initializeHistoryAccordion(metaData);
             GitFXGsonUtil.saveRepositoryInformation("github",metaData.getRepoName(),
@@ -211,7 +214,7 @@ public class GitFxController implements Initializable {
             initializeTree();
         }
         else{
-            System.out.println("Response Cancel");
+            logger.debug("Response Cancel");
         }
     }
     
@@ -226,10 +229,10 @@ public class GitFxController implements Initializable {
                                      resourceBundle.getString("syncAll"),
                                      resourceBundle.getString("syncAllDesc"));
         if(dialog.getResponse()==GitFxDialogResponse.OK){
-            System.out.println("Sync all clicked");
+            logger.debug("Sync all clicked");
         }
         else{
-            System.out.println("Cancelled");
+            logger.debug("Cancelled");
         }
     }
   
@@ -240,9 +243,9 @@ public class GitFxController implements Initializable {
                              resourceBundle.getString("initRepo"),
                              null);
         if(dialog.getResponse()==GitFxDialogResponse.INITIALIZE&&newRepo!=null){
-            System.out.println("Git init clicked");
-            System.out.println("Project Name"+newRepo.getKey());
-            System.out.println("Local Path"+newRepo.getValue());
+            logger.debug("Git init clicked");
+            logger.debug("Project Name"+newRepo.getKey());
+            logger.debug("Local Path"+newRepo.getValue());
             
          
             String path = WorkbenchUtil.getGitFxWorkbenchPath();
@@ -251,7 +254,7 @@ public class GitFxController implements Initializable {
             initializeTree();
         }
         else{
-            System.out.println("Cancelled");
+            logger.debug("Cancelled");
         }
     } 
     

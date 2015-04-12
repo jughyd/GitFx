@@ -23,14 +23,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import static io.github.gitfx.util.WorkbenchUtil.initializeWorkbench;
 import io.github.gitfx.controller.GitFxController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class GitFxApp extends Application {
 
+    Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
     private Stage stage;
     
     @Override
     public void start(Stage stage) throws Exception {
+        logger.debug("Application Starting...");
         FXMLLoader loader= new FXMLLoader(getClass().getResource("/fxml/GitFx.fxml"));
         Parent root = loader.load();
         this.stage=stage;
@@ -65,5 +69,5 @@ public class GitFxApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+    
 }

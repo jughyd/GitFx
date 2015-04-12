@@ -15,11 +15,14 @@
  */
 package io.github.gitfx.data;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 /**
  *
  * @author rvvaidya
  */
 public class ProjectData{
+    Logger logger = LoggerFactory.getLogger(ProjectData.class.getName());
     String projectName;
     String projectPath;
  

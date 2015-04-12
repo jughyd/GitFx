@@ -17,6 +17,7 @@
 package io.github.gitfx.Dialog;
 
 
+import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
 import java.io.File;
 import java.io.PrintWriter;
@@ -36,6 +37,8 @@ import javafx.scene.layout.Priority;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Concrete class which does GitDialog implementation
  * @author rvvaidya
@@ -45,7 +48,8 @@ public class GitFxDialog implements GitDialog   {
     private GitFxDialogResponse response;
     private String tempResponse;
     private GitResourceBundle resourceBundle;
-  
+    Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
+   
     public GitFxDialog(){
         resourceBundle=new GitResourceBundle();
     }
@@ -163,7 +167,7 @@ public class GitFxDialog implements GitDialog   {
             if(dialogButton == okButton){
                 String filePath=repository.getText();
                 filePath=filePath.concat("/.git");
-                System.out.println(filePath);
+                logger.debug(filePath);
                 if(!filePath.isEmpty()&&new File(filePath).exists()){
                    setResponse(GitFxDialogResponse.OK);
                    return new Pair<>(repository.getText(),GitFxDialogResponse.OK); 
@@ -175,7 +179,7 @@ public class GitFxDialog implements GitDialog   {
                   
             }
             if(dialogButton == cancelButton){
-                System.out.println("Cancel clicked");
+                logger.debug("Cancel clicked");
                 setResponse(GitFxDialogResponse.CANCEL);               
                 return new Pair<>(null,GitFxDialogResponse.CANCEL);
             }
@@ -185,7 +189,7 @@ public class GitFxDialog implements GitDialog   {
         Optional<Pair<String,GitFxDialogResponse>> result=dialog.showAndWait();
         
         result.ifPresent(repoPath->{
-            System.out.println(repoPath.getKey()+" "+repoPath.getValue().toString());
+            logger.debug(repoPath.getKey()+" "+repoPath.getValue().toString());
         });
         
         Pair<String,GitFxDialogResponse> temp=null;
@@ -237,7 +241,7 @@ public class GitFxDialog implements GitDialog   {
                 setResponse(GitFxDialogResponse.INITIALIZE);
                 String project=projectName.getText();
                 String path= localPath.getText();
-                System.out.println("project"+project+project.isEmpty()+"path"+path+path.isEmpty());
+                logger.debug("project"+project+project.isEmpty()+"path"+path+path.isEmpty());
                 if(!project.isEmpty()&&!path.isEmpty()&&new File(path).exists())
                     return new Pair<>(projectName.getText(),localPath.getText());
                 else 
@@ -286,7 +290,7 @@ public class GitFxDialog implements GitDialog   {
         
         dialog.setResultConverter(dialogButton -> {
            if (dialogButton == chooseButtonType){
-                System.out.println("Choose clicked");
+                logger.debug("Choose clicked");
                 chooser.setTitle(resourceBundle.getString("cloneRepo"));
                 File cloneRepo=chooser.showDialog(dialog.getOwner());
                 localPath.setText(cloneRepo.getPath());
@@ -305,7 +309,7 @@ public class GitFxDialog implements GitDialog   {
                                     resourceBundle.getString("errorCloneDesc"));
            }
            if(dialogButton == cancelButtonType){
-               System.out.println("Cancel clicked");
+               logger.debug("Cancel clicked");
                setResponse(GitFxDialogResponse.CANCEL);               
                return new Pair<>(null,null);
            }

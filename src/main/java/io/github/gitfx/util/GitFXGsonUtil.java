@@ -15,32 +15,27 @@
  */
 package io.github.gitfx.util;
 
-import java.lang.reflect.Type;
 import java.io.File;
 import java.io.FileOutputStream;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.InstanceCreator;
 import io.github.gitfx.Dialog.GitFxDialog;
 import io.github.gitfx.data.GitRepoMetaData;
-import io.github.gitfx.data.ProjectData;
 import io.github.gitfx.data.RepositoryData;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 /**
  *
  * @author rvvaidya
  */
 public final class GitFXGsonUtil {
 
+    static Logger logger = LoggerFactory.getLogger(GitFXGsonUtil.class.getName());
     public static final String GitFxRepo = "GitFxRepo.json";
     /*
      *  Passivate the String JSON to a file on disk to store repository 
@@ -62,7 +57,7 @@ public final class GitFXGsonUtil {
             outputStream.flush();
             outputStream.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug("Error Passivating JSON",e);
         }
     }
     /*
@@ -109,6 +104,7 @@ public final class GitFXGsonUtil {
             GitFxDialog alert = new GitFxDialog();
             alert.GitInformationDialog("No Repository Linked", "Click Init"
                     + " to add your first Repository", "Have fun!!!");
+            logger.debug("IOException",e);
         }
         return null;
     }
@@ -131,7 +127,7 @@ public final class GitFXGsonUtil {
             gitMetaData.setRevWalk(walk);
             return gitMetaData;
         } catch (IOException exception) {
-            //TODO Add Logging statement and show a dialog
+            logger.debug("IOException getGitRepositoryMetaData",exception);
         };
         return null;
     }
