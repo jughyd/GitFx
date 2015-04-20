@@ -18,6 +18,29 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>5.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>4.0.1-alpha</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit</artifactId>
+            <version>4.0.1-alpha</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>1.7.1</version>
@@ -27,7 +50,6 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.9</version>
         </dependency>
-        
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -38,19 +60,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>1.1.2</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.17</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.airhacks</groupId>
@@ -145,8 +154,8 @@
                             <excludes>META-INF/*.SF</excludes>
                             <excludes>META-INF/*.DSA</excludes>
                             <excludes>META-INF/*.RSA</excludes>
-                        <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>
-                        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                            <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>
+                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
