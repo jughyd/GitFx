@@ -101,14 +101,24 @@ public final class GitFXGsonUtil {
                 return repoMetaData;
             }
         } catch (IOException e) {
-            GitFxDialog alert = new GitFxDialog();
-            alert.GitInformationDialog("No Repository Linked", "Click Init"
-                    + " to add your first Repository", "Have fun!!!");
+           
             logger.debug("IOException",e);
         }
         return null;
     }
-
+    //Utility method that checks for the presence of json on disk
+    public static boolean checkRepoInformation(){
+        File file = new File(GitFxRepo);
+        if(file.exists())
+            return true;
+        else
+        { 
+          GitFxDialog alert = new GitFxDialog();
+          alert.GitInformationDialog("No Repository Linked", "Click Init"
+                    + " to add your first Repository", "Have fun!!!");
+          return false;
+        }
+    }
     /*
      * Utility method which gets repository path and returns GitRepoMetaData object
      */

@@ -104,6 +104,7 @@ public class GitFxController implements Initializable {
             logger.debug("Selected Text"+selectedItem.getValue());
             initializeHistoryAccordion(selectedItem.getValue());
         }});
+        GitFXGsonUtil.checkRepoInformation();
         initializeTree();
         initializeHistoryAccordion();
     }  
