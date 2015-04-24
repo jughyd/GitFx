@@ -27,7 +27,6 @@ public class RepositoryData {
    
     String serverName;
     List<ProjectData> repositories;
-    Logger logger = LoggerFactory.getLogger(RepositoryData.class.getName());
     public RepositoryData(){
         repositories=new ArrayList<ProjectData>();
     }
