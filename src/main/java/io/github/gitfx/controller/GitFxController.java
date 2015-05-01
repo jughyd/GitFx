@@ -1,17 +1,17 @@
 /**
  * Copyright 2015 GitFx
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package io.github.gitfx.controller;
 
@@ -50,12 +50,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GitFxController implements Initializable {
-    
+
     Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
-   
-    @FXML 
+
+    @FXML
     private Button gitclone;
-    @FXML 
+    @FXML
     private Button gitsettings;
     @FXML
     private MenuItem gitSyncEverything;
@@ -73,98 +73,102 @@ public class GitFxController implements Initializable {
     private Accordion historyAccordion;
     @FXML
     private Label commits;
-   
-    private GitFxDialog dialog;  
+
+    private GitFxDialog dialog;
     // Reference to the main application
     private GitFxApp gitFxApp;
     private GitResourceBundle resourceBundle;
+
     /**
-     * Reference to GitFxApp. 
-     * @param gitFxApp 
+     * Reference to GitFxApp.
+     *
+     * @param gitFxApp
      */
     public void setMainApp(GitFxApp gitFxApp) {
         this.gitFxApp = gitFxApp;
-        resourceBundle=new GitResourceBundle();
+        resourceBundle = new GitResourceBundle();
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Font.loadFont(GitFxController.class.getResource("/fonts/fontawesome-webfont.ttf").toExternalForm(),12);
-        gitinit.setText('\uf04b'+"");
-        gitopen.setText('\uf07c'+"");
-        gitsettings.setText('\uf013'+"");
-        gitsync.setText('\uf021'+"");
-        gitclone.setText('\uf0c5'+"");
+        Font.loadFont(GitFxController.class.getResource("/fonts/fontawesome-webfont.ttf").toExternalForm(), 12);
+        gitinit.setText('\uf04b' + "");
+        gitopen.setText('\uf07c' + "");
+        gitsettings.setText('\uf013' + "");
+        gitsync.setText('\uf021' + "");
+        gitclone.setText('\uf0c5' + "");
         RepositoryTree.getSelectionModel().selectedItemProperty().addListener(
-         new ChangeListener() {
-         @Override
-          public void changed(ObservableValue observable, Object oldValue,
-                Object newValue) {
-            TreeItem<String> selectedItem = (TreeItem<String>) newValue;
-            logger.debug("Selected Text"+selectedItem.getValue());
-            initializeHistoryAccordion(selectedItem.getValue());
-        }});
+                new ChangeListener() {
+                    @Override
+                    public void changed(ObservableValue observable, Object oldValue,
+                            Object newValue) {
+                        TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+                        logger.debug("Selected Text" + selectedItem.getValue());
+                        initializeHistoryAccordion(selectedItem.getValue());
+                    }
+                });
         GitFXGsonUtil.checkRepoInformation();
         initializeTree();
         initializeHistoryAccordion();
-    }  
-   /*
-    * Method which initializes the Repository Tree Panel
-    * Possible clients calls from
-    * 1) Applicaiton Initialize event
-    * 2) Initialization of a New Repository
-    */
-    private void initializeTree(){
-        RepositoryData metaData=GitFXGsonUtil.getRepositoryMetaData();
-        
-        if(metaData!=null){
-            TreeItem<String> treeRoot= new TreeItem<String>(metaData.getServerName());
+    }
+    /*
+     * Method which initializes the Repository Tree Panel
+     * Possible clients calls from
+     * 1) Applicaiton Initialize event
+     * 2) Initialization of a New Repository
+     */
+
+    private void initializeTree() {
+        RepositoryData metaData = GitFXGsonUtil.getRepositoryMetaData();
+
+        if (metaData != null) {
+            TreeItem<String> treeRoot = new TreeItem<String>(metaData.getServerName());
             treeRoot.setExpanded(true);
-            List<ProjectData> projectData=metaData.getRepositories();
-            for(ProjectData project:projectData){
-                 treeRoot.getChildren().add(new TreeItem<String>(project.getProjectName()));
+            List<ProjectData> projectData = metaData.getRepositories();
+            for (ProjectData project : projectData) {
+                treeRoot.getChildren().add(new TreeItem<String>(project.getProjectName()));
             }
             RepositoryTree.setShowRoot(true);
             RepositoryTree.setRoot(treeRoot);
-        } 
+        }
     }
-    
-   /*
-    * By default load the first repository in the first server listed in tree
-    */
-    private void initializeHistoryAccordion(){
+
+    /*
+     * By default load the first repository in the first server listed in tree
+     */
+    private void initializeHistoryAccordion() {
         RepositoryData repoData = GitFXGsonUtil.getRepositoryMetaData();
         //If application is loaded for the first time the metaData will be missing
-        if(repoData!=null){
-            GitRepoMetaData metaData=GitFXGsonUtil.getGitRepositoryMetaData(repoData.getFirstRepoPath());
+        if (repoData != null) {
+            GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(repoData.getFirstRepoPath());
             initializeHistoryAccordion(metaData);
         }
     }
-  
+
     /*
      * Given a projectName find the repoPath from the JSON and initialize the
      * History accordion accordingly
      */
-    private void initializeHistoryAccordion(String projectName){
+    private void initializeHistoryAccordion(String projectName) {
         RepositoryData repoData = GitFXGsonUtil.getRepositoryMetaData();
         String repoPath = repoData.getRepoPath(projectName);
-        GitRepoMetaData metaData=GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
+        GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
         initializeHistoryAccordion(metaData);
     }
-   
-   /*
-    *  Given the GitRepoMetaData load the accordion with the repository 
-    *  commit history
-    */
-    private void initializeHistoryAccordion(GitRepoMetaData metaData){
-        ObservableList<TitledPane> panes= historyAccordion.getPanes();
-        if(panes!=null){
+
+    /*
+     *  Given the GitRepoMetaData load the accordion with the repository 
+     *  commit history
+     */
+    private void initializeHistoryAccordion(GitRepoMetaData metaData) {
+        ObservableList<TitledPane> panes = historyAccordion.getPanes();
+        if (panes != null) {
             historyAccordion.getPanes().removeAll(panes);
         }
-        ArrayList<String> list=metaData.getShortMessage();
+        ArrayList<String> list = metaData.getShortMessage();
         ArrayList<ArrayList<String>> commitFiles = metaData.getCommitFiles();
         TitledPane pane;
-        int i=0;
+        int i = 0;
         for (String str : list) {
             ListView<String> changedFiles = new ListView<>();
             changedFiles.autosize();
@@ -177,94 +181,89 @@ public class GitFxController implements Initializable {
             historyAccordion.getPanes().add(pane);
         }
         //Show number of commits on top of history accordion
-        commits.setText(metaData.getCommitCount()+" commits");
+        commits.setText(metaData.getCommitCount() + " commits");
     }
-    
+
     @FXML
-    public void onGitSettingsClicked(ActionEvent event){
+    public void onGitSettingsClicked(ActionEvent event) {
     }
-    
+
     @FXML
-    public void onGitCloneClicked(ActionEvent event){
+    public void onGitCloneClicked(ActionEvent event) {
         dialog = new GitFxDialog();
-        Pair<String,String> clonedRepo = dialog.GitCloneDialog(resourceBundle.getString("cloneRepo"), 
-                          resourceBundle.getString("cloneRepo"),
-                          null);
-        if(dialog.getResponse()==GitFxDialogResponse.CLONE&&clonedRepo!=null){
+        Pair<String, String> clonedRepo = dialog.GitCloneDialog(resourceBundle.getString("cloneRepo"),
+                resourceBundle.getString("cloneRepo"),
+                null);
+        if (dialog.getResponse() == GitFxDialogResponse.CLONE && clonedRepo != null) {
             logger.debug("Response Ok Repo Path");
-            logger.debug("Project Name"+clonedRepo.getKey());
-            logger.debug("Local Path"+clonedRepo.getValue());
-        }
-        else{
+            logger.debug("Project Name" + clonedRepo.getKey());
+            logger.debug("Local Path" + clonedRepo.getValue());
+        } else {
             logger.debug("Response Cancel");
         }
     }
-    
+
     @FXML
-    public void onGitOpenClicked(ActionEvent event){
+    public void onGitOpenClicked(ActionEvent event) {
         dialog = new GitFxDialog();
-        String repoPath = dialog.GitOpenDialog(resourceBundle.getString("openRepo"), 
-                          resourceBundle.getString("chooseRepo"),
-                          resourceBundle.getString("repo"));
-        if(dialog.getResponse()==GitFxDialogResponse.OK){
-            logger.debug("Response Ok Repo Path"+repoPath);
-            GitRepoMetaData metaData=GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
+        String repoPath = dialog.GitOpenDialog(resourceBundle.getString("openRepo"),
+                resourceBundle.getString("chooseRepo"),
+                resourceBundle.getString("repo"));
+        if (dialog.getResponse() == GitFxDialogResponse.OK) {
+            logger.debug("Response Ok Repo Path" + repoPath);
+            GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
             initializeHistoryAccordion(metaData);
-            GitFXGsonUtil.saveRepositoryInformation("github",metaData.getRepoName(),
-                                              repoPath);
+            GitFXGsonUtil.saveRepositoryInformation("github", metaData.getRepoName(),
+                    repoPath);
             initializeTree();
-        }
-        else{
+        } else {
             logger.debug("Response Cancel");
         }
     }
-    
+
     @FXML
-    public void onGitSyncClicked(ActionEvent event){
+    public void onGitSyncClicked(ActionEvent event) {
     }
-    
+
     @FXML
-    public void syncEveryThingClicked(ActionEvent event){
+    public void syncEveryThingClicked(ActionEvent event) {
         dialog = new GitFxDialog();
         dialog.GitConfirmationDialog(resourceBundle.getString("sync"),
-                                     resourceBundle.getString("syncAll"),
-                                     resourceBundle.getString("syncAllDesc"));
-        if(dialog.getResponse()==GitFxDialogResponse.OK){
+                resourceBundle.getString("syncAll"),
+                resourceBundle.getString("syncAllDesc"));
+        if (dialog.getResponse() == GitFxDialogResponse.OK) {
             logger.debug("Sync all clicked");
-        }
-        else{
+        } else {
             logger.debug("Cancelled");
         }
     }
-  
+
     @FXML
-    public void onGitInitClicked(ActionEvent event){
+    public void onGitInitClicked(ActionEvent event) {
         dialog = new GitFxDialog();
-        Pair<String,String> newRepo=dialog.GitInitDialog(resourceBundle.getString("initRepo"),
-                             resourceBundle.getString("initRepo"),
-                             null);
-        if(dialog.getResponse()==GitFxDialogResponse.INITIALIZE&&newRepo!=null){
+        Pair<String, String> newRepo = dialog.GitInitDialog(resourceBundle.getString("initRepo"),
+                resourceBundle.getString("initRepo"),
+                null);
+        if (dialog.getResponse() == GitFxDialogResponse.INITIALIZE && newRepo != null) {
             logger.debug("Git init clicked");
-            logger.debug("Project Name"+newRepo.getKey());
-            logger.debug("Local Path"+newRepo.getValue());
-            
-         
+            logger.debug("Project Name" + newRepo.getKey());
+            logger.debug("Local Path" + newRepo.getValue());
+
             String path = WorkbenchUtil.getGitFxWorkbenchPath();
-            GitFXGsonUtil.saveRepositoryInformation("github",newRepo.getKey(),
-                                              newRepo.getValue());
+            GitFXGsonUtil.saveRepositoryInformation("github", newRepo.getKey(),
+                    newRepo.getValue());
             initializeTree();
-        }
-        else{
+        } else {
             logger.debug("Cancelled");
         }
-    } 
-    
+    }
+
     @FXML
-    public void onGitParticularRepositoryClicked(ActionEvent event){
+    public void onGitParticularRepositoryClicked(ActionEvent event) {
         //TODO Implement this feature in GitFxDialog
         dialog = new GitFxDialog();
         //TODO Get the string from the resource bundle
         dialog.GitInformationDialog("Sync Repositories", "Repositories", null);
     }
-    
+
 }

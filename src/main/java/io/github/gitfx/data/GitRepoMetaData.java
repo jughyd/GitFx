@@ -26,13 +26,15 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+
 /**
  *
  * @author rvvaidya
  */
 public class GitRepoMetaData {
+
     Logger logger = LoggerFactory.getLogger(GitRepoMetaData.class.getName());
-   
+
     Repository repository;
     RevCommit commit;
     RevWalk walk;
@@ -74,11 +76,11 @@ public class GitRepoMetaData {
                 }
                 changedFile.add(commitFiles);
             } catch (IncorrectObjectTypeException ex) {
-               logger.debug("IncorrectObjectTypeException", ex);
+                logger.debug("IncorrectObjectTypeException", ex);
             } catch (CorruptObjectException ex) {
-               logger.debug("CorruptObjectException", ex);
+                logger.debug("CorruptObjectException", ex);
             } catch (IOException ex) {
-               logger.debug("IOException", ex);
+                logger.debug("IOException", ex);
             }
         }
         walk.reset();
