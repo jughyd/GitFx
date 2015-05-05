@@ -19,53 +19,58 @@ import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+
 /**
- * POJO class that maintains the repository metadata 
+ * POJO class that maintains the repository metadata
+ *
  * @author rvvaidya
  */
 public class RepositoryData {
-   
+
     String serverName;
     List<ProjectData> repositories;
-    public RepositoryData(){
-        repositories=new ArrayList<ProjectData>();
+
+    public RepositoryData() {
+        repositories = new ArrayList<ProjectData>();
     }
-    public void setServerName(String serverName){
-        this.serverName=serverName;
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
-  
-    public String getServerName(){
+
+    public String getServerName() {
         return serverName;
     }
-    
-    public void setRepositories(ProjectData projectData){
+
+    public void setRepositories(ProjectData projectData) {
         this.repositories.add(projectData);
     }
-    
-    public List<ProjectData> getRepositories(){
+
+    public List<ProjectData> getRepositories() {
         return this.repositories;
-    } 
-   
-   /*
-    * Given a project Name(repository name) get the repo path from the JSON. 
-    */
-    public String getRepoPath(String projectName){
-        for(ProjectData obj:repositories){
-            if(obj.projectName.equals(projectName))
+    }
+
+    /*
+     * Given a project Name(repository name) get the repo path from the JSON. 
+     */
+    public String getRepoPath(String projectName) {
+        for (ProjectData obj : repositories) {
+            if (obj.projectName.equals(projectName)) {
                 return obj.projectPath;
+            }
         }
         return null;
     }
-  
-   /*
-    * Given a path of the first repository 
-    */
-    public String getFirstRepoPath(){
+
+    /*
+     * Given a path of the first repository 
+     */
+    public String getFirstRepoPath() {
         return repositories.get(0).projectPath;
     }
-   
-    public void setProjectData(String projectName,String projectPath){
-        ProjectData obj=new ProjectData(projectName,projectPath);
+
+    public void setProjectData(String projectName, String projectPath) {
+        ProjectData obj = new ProjectData(projectName, projectPath);
         //obj.setProjectName(projectName);
         //obj.setProjectPath(projectPath);
         this.repositories.add(obj);

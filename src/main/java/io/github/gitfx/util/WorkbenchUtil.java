@@ -24,9 +24,8 @@ import org.slf4j.LoggerFactory;
  * @author rhegde
  */
 public final class WorkbenchUtil {
-    
-     private static final Logger log = LoggerFactory.getLogger(WorkbenchUtil.class);
 
+    private static final Logger log = LoggerFactory.getLogger(WorkbenchUtil.class);
 
     public static final String GITFX_WORKBENCH_DIR = System.getProperty("user.home") + File.separator + ".gitfx";
     public static final String GITFX_WORKBENCH_CONFIG_DIR = GITFX_WORKBENCH_DIR + File.separator + "config";
@@ -48,7 +47,7 @@ public final class WorkbenchUtil {
     public static boolean isWorkbenchLogDirAvailable() {
         return (new File(GITFX_WORKBENCH_LOG_DIR)).exists();
     }
-    
+
     public static boolean isWorkbenchRecentRepoFileAvailable() {
         return (new File(GITFX_WORKBENCH_RECENT_REPO_FILE)).exists();
     }
@@ -66,9 +65,7 @@ public final class WorkbenchUtil {
             (new File(GITFX_WORKBENCH_LOG_DIR)).mkdir();
             log.info(GITFX_WORKBENCH_LOG_DIR + " is created");
         }
-        
-        
-        
+
     }
 
 }

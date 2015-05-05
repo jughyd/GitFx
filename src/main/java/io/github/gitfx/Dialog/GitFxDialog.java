@@ -1,21 +1,19 @@
 /**
  * Copyright 2015 GitFx
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
-
 package io.github.gitfx.Dialog;
-
 
 import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
@@ -39,69 +37,71 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * Concrete class which does GitDialog implementation
+ *
  * @author rvvaidya
  */
-public class GitFxDialog implements GitDialog   {
+public class GitFxDialog implements GitDialog {
 
     private GitFxDialogResponse response;
     private String tempResponse;
     private GitResourceBundle resourceBundle;
     Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
-   
-    public GitFxDialog(){
-        resourceBundle=new GitResourceBundle();
+
+    public GitFxDialog() {
+        resourceBundle = new GitResourceBundle();
     }
-   /*
-    *Implementaiton of Generic Information dialog
-    */
+    /*
+     *Implementaiton of Generic Information dialog
+     */
+
     @Override
-    public Dialog GitInformationDialog(String title,String header,String label){
+    public Dialog GitInformationDialog(String title, String header, String label) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(label);
-        alert.showAndWait(); 
+        alert.showAndWait();
         return alert;
     }
-    
-   /*
-    *Implementation of Generic Error dialog
-    */
+
+    /*
+     *Implementation of Generic Error dialog
+     */
     @Override
-    public void GitErrorDialog(String title,String error,String content){
+    public void GitErrorDialog(String title, String error, String content) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(error);
         alert.setContentText(content);
-        alert.showAndWait();  
+        alert.showAndWait();
     }
-    
-   /*
-    * Implementation of Generic Warning Dialog
-    */
+
+    /*
+     * Implementation of Generic Warning Dialog
+     */
     @Override
-    public void GitWarningDialog(String title,String header,String content){
+    public void GitWarningDialog(String title, String header, String content) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
-        alert.showAndWait(); 
+        alert.showAndWait();
     }
-   
-   /*
-    * Implementation of Generic Exception Dialog
-    */
+
+    /*
+     * Implementation of Generic Exception Dialog
+     */
     @Override
-    public void GitExceptionDialog(String title,String header,String content
-            ,Exception e){
-        
+    public void GitExceptionDialog(String title, String header, String content, Exception e) {
+
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
-        
+
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
@@ -124,87 +124,89 @@ public class GitFxDialog implements GitDialog   {
         alert.getDialogPane().setExpandableContent(expContent);
         alert.showAndWait();
     }
-   /*
-    * Implementation of Git Open Dialog. 
-    */
-   @Override
-   public String GitOpenDialog(String title,String header,String content){
+    /*
+     * Implementation of Git Open Dialog. 
+     */
+
+    @Override
+    public String GitOpenDialog(String title, String header, String content) {
         String repo;
         DirectoryChooser chooser = new DirectoryChooser();
-        Dialog<Pair<String,GitFxDialogResponse>> dialog = new Dialog<>(); 
+        Dialog<Pair<String, GitFxDialogResponse>> dialog = new Dialog<>();
         dialog.setTitle(title);
         dialog.setHeaderText(header);
         dialog.setContentText(content);
-        
-        ButtonType chooseButtonType  = new ButtonType("Choose");
+
+        ButtonType chooseButtonType = new ButtonType("Choose");
         ButtonType okButton = new ButtonType("Ok");
         ButtonType cancelButton = new ButtonType("Canel");
-       
-        dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType,okButton
-                            ,cancelButton);
-        
+
+        dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType, okButton, cancelButton);
+
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
-        
+
         TextField repository = new TextField();
         repository.setPromptText("Repo");
         grid.add(new Label("Repository:"), 0, 0);
         grid.add(repository, 1, 0);
-        
+
         dialog.getDialogPane().setContent(grid);
-      
+
         dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == chooseButtonType){
-                 File path=chooser.showDialog(dialog.getOwner());
-                 if(path!=null)
+            if (dialogButton == chooseButtonType) {
+                File path = chooser.showDialog(dialog.getOwner());
+                if (path != null) {
                     repository.setText(path.getPath());
-                 chooser.setTitle(resourceBundle.getString("repo"));
-                 setResponse(GitFxDialogResponse.CHOOSE);
-                 return null;
-            }
-            if(dialogButton == okButton){
-                String filePath=repository.getText();
-                filePath=filePath.concat("/.git");
-                logger.debug(filePath);
-                if(!filePath.isEmpty()&&new File(filePath).exists()){
-                   setResponse(GitFxDialogResponse.OK);
-                   return new Pair<>(repository.getText(),GitFxDialogResponse.OK); 
                 }
-                else
-                    this.GitErrorDialog(resourceBundle.getString("errorOpen"),
-                                   resourceBundle.getString("errorOpenTitle"),
-                                   resourceBundle.getString("errorOpenDesc"));
-                  
+                chooser.setTitle(resourceBundle.getString("repo"));
+                setResponse(GitFxDialogResponse.CHOOSE);
+                return null;
             }
-            if(dialogButton == cancelButton){
+            if (dialogButton == okButton) {
+                String filePath = repository.getText();
+                filePath = filePath.concat("/.git");
+                logger.debug(filePath);
+                if (!filePath.isEmpty() && new File(filePath).exists()) {
+                    setResponse(GitFxDialogResponse.OK);
+                    return new Pair<>(repository.getText(), GitFxDialogResponse.OK);
+                } else {
+                    this.GitErrorDialog(resourceBundle.getString("errorOpen"),
+                            resourceBundle.getString("errorOpenTitle"),
+                            resourceBundle.getString("errorOpenDesc"));
+                }
+
+            }
+            if (dialogButton == cancelButton) {
                 logger.debug("Cancel clicked");
-                setResponse(GitFxDialogResponse.CANCEL);               
-                return new Pair<>(null,GitFxDialogResponse.CANCEL);
+                setResponse(GitFxDialogResponse.CANCEL);
+                return new Pair<>(null, GitFxDialogResponse.CANCEL);
             }
             return null;
         });
-        
-        Optional<Pair<String,GitFxDialogResponse>> result=dialog.showAndWait();
-        
-        result.ifPresent(repoPath->{
-            logger.debug(repoPath.getKey()+" "+repoPath.getValue().toString());
+
+        Optional<Pair<String, GitFxDialogResponse>> result = dialog.showAndWait();
+
+        result.ifPresent(repoPath -> {
+            logger.debug(repoPath.getKey() + " " + repoPath.getValue().toString());
         });
-        
-        Pair<String,GitFxDialogResponse> temp=null;
-        if(result.isPresent())
-              temp=result.get();
-        return temp.getKey()+"/.git";
-   }
-   
-   /*
-    * Implementation of Git Open Dialog. 
-    */
-   @Override
-   public Pair<String,String> GitInitDialog(String title,String header,String content){
-        Pair<String,String> repo;
-        Dialog<Pair<String,String>> dialog = new Dialog<>(); 
+
+        Pair<String, GitFxDialogResponse> temp = null;
+        if (result.isPresent()) {
+            temp = result.get();
+        }
+        return temp.getKey() + "/.git";
+    }
+
+    /*
+     * Implementation of Git Open Dialog. 
+     */
+    @Override
+    public Pair<String, String> GitInitDialog(String title, String header, String content) {
+        Pair<String, String> repo;
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle(title);
         dialog.setHeaderText(header);
         dialog.setContentText(content);
@@ -224,47 +226,48 @@ public class GitFxDialog implements GitDialog   {
         ButtonType initRepo = new ButtonType("Initialize Repository");
         ButtonType cancelButtonType = new ButtonType("Cancel");
         dialog.getDialogPane().setContent(grid);
-        dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType,initRepo
-                ,cancelButtonType);
-        
+        dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType, initRepo, cancelButtonType);
+
         dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == chooseButtonType){
-                 DirectoryChooser chooser = new DirectoryChooser();
-                 chooser.setTitle(resourceBundle.getString("selectRepo"));
-                 File initialRepo=chooser.showDialog(dialog.getOwner());
-                 localPath.setText(initialRepo.getPath());
-                 dialog.getDialogPane();
-                 setResponse(GitFxDialogResponse.CHOOSE);
-                 return null;
+            if (dialogButton == chooseButtonType) {
+                DirectoryChooser chooser = new DirectoryChooser();
+                chooser.setTitle(resourceBundle.getString("selectRepo"));
+                File initialRepo = chooser.showDialog(dialog.getOwner());
+                localPath.setText(initialRepo.getPath());
+                dialog.getDialogPane();
+                setResponse(GitFxDialogResponse.CHOOSE);
+                return null;
             }
-            if(dialogButton == initRepo){
+            if (dialogButton == initRepo) {
                 setResponse(GitFxDialogResponse.INITIALIZE);
-                String project=projectName.getText();
-                String path= localPath.getText();
-                logger.debug("project"+project+project.isEmpty()+"path"+path+path.isEmpty());
-                if(!project.isEmpty()&&!path.isEmpty()&&new File(path).exists())
-                    return new Pair<>(projectName.getText(),localPath.getText());
-                else 
+                String project = projectName.getText();
+                String path = localPath.getText();
+                logger.debug("project" + project + project.isEmpty() + "path" + path + path.isEmpty());
+                if (!project.isEmpty() && !path.isEmpty() && new File(path).exists()) {
+                    return new Pair<>(projectName.getText(), localPath.getText());
+                } else {
                     this.GitErrorDialog(resourceBundle.getString("errorInit"),
-                                    resourceBundle.getString("errorInitTitle"),
-                                    resourceBundle.getString("errorInitDesc"));
+                            resourceBundle.getString("errorInitTitle"),
+                            resourceBundle.getString("errorInitDesc"));
+                }
             }
-            if(dialogButton == cancelButtonType){
-                setResponse(GitFxDialogResponse.CANCEL);               
-                return new Pair<>(null,null);
+            if (dialogButton == cancelButtonType) {
+                setResponse(GitFxDialogResponse.CANCEL);
+                return new Pair<>(null, null);
             }
             return null;
         });
-        Optional<Pair<String,String>> result= dialog.showAndWait();
-        Pair<String,String> temp=null;
-        if(result.isPresent())
-             temp=result.get();
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+        Pair<String, String> temp = null;
+        if (result.isPresent()) {
+            temp = result.get();
+        }
         return temp;
-   }
-   
-   @Override
-   public Pair<String,String> GitCloneDialog(String title,String header,
-           String content){
+    }
+
+    @Override
+    public Pair<String, String> GitCloneDialog(String title, String header,
+            String content) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         DirectoryChooser chooser = new DirectoryChooser();
         dialog.setTitle(title);
@@ -286,47 +289,48 @@ public class GitFxDialog implements GitDialog   {
         ButtonType cancelButtonType = new ButtonType("Cancel");
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType,
-                cloneButtonType,cancelButtonType);
-        
+                cloneButtonType, cancelButtonType);
+
         dialog.setResultConverter(dialogButton -> {
-           if (dialogButton == chooseButtonType){
+            if (dialogButton == chooseButtonType) {
                 logger.debug("Choose clicked");
                 chooser.setTitle(resourceBundle.getString("cloneRepo"));
-                File cloneRepo=chooser.showDialog(dialog.getOwner());
+                File cloneRepo = chooser.showDialog(dialog.getOwner());
                 localPath.setText(cloneRepo.getPath());
                 setResponse(GitFxDialogResponse.CHOOSE);
                 return null;
-           }
-           if(dialogButton == cloneButtonType){
-               setResponse(GitFxDialogResponse.CLONE);
-               String remoteRepoURL=remoteRepo.getText();
-               String localRepoPath=localPath.getText();
-               if(!remoteRepoURL.isEmpty()&&!localRepoPath.isEmpty())
-                    return new Pair<>(remoteRepo.getText(),localPath.getText());
-               else
+            }
+            if (dialogButton == cloneButtonType) {
+                setResponse(GitFxDialogResponse.CLONE);
+                String remoteRepoURL = remoteRepo.getText();
+                String localRepoPath = localPath.getText();
+                if (!remoteRepoURL.isEmpty() && !localRepoPath.isEmpty()) {
+                    return new Pair<>(remoteRepo.getText(), localPath.getText());
+                } else {
                     this.GitErrorDialog(resourceBundle.getString("errorClone"),
-                                    resourceBundle.getString("errorCloneTitle"),
-                                    resourceBundle.getString("errorCloneDesc"));
-           }
-           if(dialogButton == cancelButtonType){
-               logger.debug("Cancel clicked");
-               setResponse(GitFxDialogResponse.CANCEL);               
-               return new Pair<>(null,null);
-           }
-           return null;
+                            resourceBundle.getString("errorCloneTitle"),
+                            resourceBundle.getString("errorCloneDesc"));
+                }
+            }
+            if (dialogButton == cancelButtonType) {
+                logger.debug("Cancel clicked");
+                setResponse(GitFxDialogResponse.CANCEL);
+                return new Pair<>(null, null);
+            }
+            return null;
         });
-        Optional<Pair<String,String>> result= dialog.showAndWait();
-        Pair<String,String> temp=null;
-        if(result.isPresent())
-             temp=result.get();
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+        Pair<String, String> temp = null;
+        if (result.isPresent()) {
+            temp = result.get();
+        }
         return temp;
-   }
-   
-   
-   /*
-    * Apply fade transition to dialog
-    */
-    public void applyFadeTransition(Dialog node){
+    }
+
+    /*
+     * Apply fade transition to dialog
+     */
+    public void applyFadeTransition(Dialog node) {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.seconds(.5));
         fadeTransition.setNode(node.getDialogPane());
@@ -334,32 +338,32 @@ public class GitFxDialog implements GitDialog   {
         fadeTransition.setToValue(1);
         fadeTransition.play();
     }
-    
-    public void GitConfirmationDialog(String title,String header,String content){
+
+    public void GitConfirmationDialog(String title, String header, String content) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             setResponse(GitFxDialogResponse.OK);
-        }else{
+        } else {
             setResponse(GitFxDialogResponse.CANCEL);
         }
     }
-    
+
     /**
      *
      * @return response
      */
     @Override
-    public GitFxDialogResponse getResponse(){
+    public GitFxDialogResponse getResponse() {
         return response;
     }
-  
-    public void setResponse(GitFxDialogResponse response){
-        this.response=response;
+
+    public void setResponse(GitFxDialogResponse response) {
+        this.response = response;
     }
-    
+
 }

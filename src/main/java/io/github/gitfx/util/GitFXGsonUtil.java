@@ -29,6 +29,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+
 /**
  *
  * @author rvvaidya
@@ -57,7 +58,7 @@ public final class GitFXGsonUtil {
             outputStream.flush();
             outputStream.close();
         } catch (Exception e) {
-            logger.debug("Error Passivating JSON",e);
+            logger.debug("Error Passivating JSON", e);
         }
     }
     /*
@@ -101,27 +102,29 @@ public final class GitFXGsonUtil {
                 return repoMetaData;
             }
         } catch (IOException e) {
-           
-            logger.debug("IOException",e);
+
+            logger.debug("IOException", e);
         }
         return null;
     }
+
     //Utility method that checks for the presence of json on disk
-    public static boolean checkRepoInformation(){
+
+    public static boolean checkRepoInformation() {
         File file = new File(GitFxRepo);
-        if(file.exists())
+        if (file.exists()) {
             return true;
-        else
-        { 
-          GitFxDialog alert = new GitFxDialog();
-          alert.GitInformationDialog("No Repository Linked", "Click Init"
+        } else {
+            GitFxDialog alert = new GitFxDialog();
+            alert.GitInformationDialog("No Repository Linked", "Click Init"
                     + " to add your first Repository", "Have fun!!!");
-          return false;
+            return false;
         }
     }
     /*
      * Utility method which gets repository path and returns GitRepoMetaData object
      */
+
     public static GitRepoMetaData getGitRepositoryMetaData(String repoPath) {
         try {
             GitRepoMetaData gitMetaData = new GitRepoMetaData();
@@ -137,7 +140,7 @@ public final class GitFXGsonUtil {
             gitMetaData.setRevWalk(walk);
             return gitMetaData;
         } catch (IOException exception) {
-            logger.debug("IOException getGitRepositoryMetaData",exception);
+            logger.debug("IOException getGitRepositoryMetaData", exception);
         };
         return null;
     }
