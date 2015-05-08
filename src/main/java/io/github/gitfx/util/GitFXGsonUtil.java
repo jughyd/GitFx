@@ -24,6 +24,8 @@ import io.github.gitfx.data.RepositoryData;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+import javafx.application.Platform;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -115,9 +117,17 @@ public final class GitFXGsonUtil {
         if (file.exists()) {
             return true;
         } else {
-            GitFxDialog alert = new GitFxDialog();
+
+            new Thread(){
+                public void run(){
+                    Platform.runLater(() -> {
+                      GitFxDialog  dialog = new GitFxDialog();
+                        dialog.GitInformationDialog("Information Title", "SampleHeader", "Test Label");
+                    });
+                }
+            }.start();/*  GitFxDialog alert = new GitFxDialog();
             alert.GitInformationDialog("No Repository Linked", "Click Init"
-                    + " to add your first Repository", "Have fun!!!");
+                    + " to add your first Repository", "Have fun!!!");*/
             return false;
         }
     }

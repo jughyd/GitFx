@@ -15,11 +15,15 @@
  * the License.
  */
 import io.github.gitfx.Dialog.GitFxDialog;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.application.Platform;
+import javafx.scene.control.Dialog;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -27,21 +31,26 @@ import org.testfx.framework.junit.ApplicationTest;
  */
 public class DialogBoxTest extends ApplicationTest {
 
-    AnchorPane anchor;
     GitFxDialog dialog;
-
+    Dialog dialogHandle;
     @Override
     public void start(Stage stage) throws Exception {
-        anchor = new AnchorPane();
-        Scene scene = new Scene(anchor, 400, 400);
-        dialog = new GitFxDialog();
-        dialog.GitInformationDialog("Information Title", "SampleHeader", "Test Label");
-        stage.setScene(scene);
-        stage.show();
+        new Thread(){
+             public void run(){
+                 Platform.runLater(()->{
+                     dialog = new GitFxDialog();
+                     dialogHandle=dialog.GitInformationDialog("Information Title", "SampleHeader", "Test Label");});
+             }
+        }.start();
     }
 
     @Test
     public void testDialog() throws Exception {
-        //TODO test code to test dialog. 
+        //Initial sleep to wait for the UI to load
+        Thread.sleep(2000);
+        clickOn("OK");
+        assertTrue("Title Incorrect","Information Title".equals(dialogHandle.getTitle()));
+        assertTrue("Header Incorrect","SampleHeader".equals(dialogHandle.getHeaderText()));
+        assertTrue("Label Incorrect","Test Label".equals(dialogHandle.getContentText()));
     }
 }

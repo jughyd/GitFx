@@ -19,7 +19,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
-
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.control.TextMatchers.hasText;
 /**
  *
  * @author rvvaidya
@@ -36,7 +37,12 @@ public class GitFxAppTest extends FxRobot {
 
     @Test
     public void launchApplication() throws Exception {
-        //TODO Write test to test the GitFx application flows
+        Thread.sleep(2000);
+        when:
+        clickOn("OK");
+        then:
+        clickOn("#gitsync");
+        clickOn("#gitinit");
     }
 
 }
