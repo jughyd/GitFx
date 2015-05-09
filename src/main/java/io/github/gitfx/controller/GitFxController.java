@@ -252,6 +252,7 @@ public class GitFxController implements Initializable {
             String path = WorkbenchUtil.getGitFxWorkbenchPath();
             GitFXGsonUtil.saveRepositoryInformation("github", newRepo.getKey(),
                     newRepo.getValue());
+            //Call a utility method to intitilize a repository
             initializeTree();
         } else {
             logger.debug("Cancelled");

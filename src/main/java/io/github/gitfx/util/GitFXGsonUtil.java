@@ -24,8 +24,11 @@ import io.github.gitfx.data.RepositoryData;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javafx.application.Platform;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -81,8 +84,22 @@ public final class GitFXGsonUtil {
          for(ProjectData project:projectDetails){
             
          }*/
+        initializeGitRepository(serverName, projectName, projectPath);
         passivatedMetaData.setProjectData(projectName, projectPath);
         passivateJSON(gson.toJson(passivatedMetaData));
+    }
+    
+    public static void initializeGitRepository(String serverName,
+            String projectName,String projectPath){
+        try{
+        File localPath = new File(projectPath);
+        Git git;
+                git = Git.init().setDirectory(localPath).call();
+        git.close();
+        }
+        catch(GitAPIException e){
+            logger.debug("Error creating Git repository",e.getMessage());
+        }
     }
 
     /*
