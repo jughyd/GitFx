@@ -19,8 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
-import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.control.TextMatchers.hasText;
+import org.testfx.util.WaitForAsyncUtils;
 /**
  *
  * @author rvvaidya
@@ -29,20 +28,31 @@ public class GitFxAppTest extends FxRobot {
 
     @Before
     public void before() throws Exception {
-        System.out.println("before test");
         FxToolkit.registerPrimaryStage();
         FxToolkit.setupApplication(GitFxApp.class);
-        FxToolkit.showStage();
     }
 
     @Test
     public void launchApplication() throws Exception {
-        Thread.sleep(2000);
+        WaitForAsyncUtils.waitForFxEvents();
         when:
+        //Need to conditionally execute this based on presence of dialog box
         clickOn("OK");
+        FxToolkit.showStage();
         then:
         clickOn("#gitsync");
         clickOn("#gitinit");
+        clickOn("Cancel");
+        clickOn("#gitinit");
+        clickOn("Cancel");
+        clickOn("#gitsync");
+        clickOn("Sync Everything");
+        clickOn("OK");
+        clickOn("#gitsync");
+        clickOn("Sync Everything");
+        clickOn("Cancel");
+        clickOn("#gitsync");
+        clickOn("Particular Repository");
+        clickOn("OK");
     }
-
 }

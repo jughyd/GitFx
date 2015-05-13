@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.assertTrue;
+import org.testfx.util.WaitForAsyncUtils;
 
 /**
  *
@@ -39,15 +40,13 @@ public class DialogBoxTest extends ApplicationTest {
              public void run(){
                  Platform.runLater(()->{
                      dialog = new GitFxDialog();
-                     dialogHandle=dialog.GitInformationDialog("Information Title", "SampleHeader", "Test Label");});
-             }
+                     dialogHandle=dialog.GitInformationDialog("Information Title", "SampleHeader", "Test Label");});}
         }.start();
     }
 
     @Test
     public void testDialog() throws Exception {
-        //Initial sleep to wait for the UI to load
-        Thread.sleep(2000);
+        WaitForAsyncUtils.waitForFxEvents();
         clickOn("OK");
         assertTrue("Title Incorrect","Information Title".equals(dialogHandle.getTitle()));
         assertTrue("Header Incorrect","SampleHeader".equals(dialogHandle.getHeaderText()));
