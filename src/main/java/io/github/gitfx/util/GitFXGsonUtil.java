@@ -128,23 +128,19 @@ public final class GitFXGsonUtil {
     }
 
     //Utility method that checks for the presence of json on disk
-
     public static boolean checkRepoInformation() {
         File file = new File(GitFxRepo);
         if (file.exists()) {
             return true;
         } else {
-
-            new Thread(){
-                public void run(){
+            new Thread() {
+                public void run() {
                     Platform.runLater(() -> {
-                      GitFxDialog  dialog = new GitFxDialog();
-                        dialog.GitInformationDialog("Information Title", "SampleHeader", "Test Label");
+                        GitFxDialog dialog = new GitFxDialog();
+                        dialog.GitInformationDialog("No Repository Linked", "Click Init to add your first Repository", "Have fun!!!");
                     });
                 }
-            }.start();/*  GitFxDialog alert = new GitFxDialog();
-            alert.GitInformationDialog("No Repository Linked", "Click Init"
-                    + " to add your first Repository", "Have fun!!!");*/
+            }.start();
             return false;
         }
     }

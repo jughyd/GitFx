@@ -214,14 +214,10 @@ public class GitFxDialog implements GitDialog {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
-        TextField projectName = new TextField();
-        projectName.setPromptText("Project Name");
         TextField localPath = new TextField();
         localPath.setPromptText("Local Path");
-        grid.add(new Label("Project Name:"), 0, 0);
-        grid.add(projectName, 1, 0);
-        grid.add(new Label("Local Path:"), 0, 1);
-        grid.add(localPath, 1, 1);
+        grid.add(new Label("Local Path:"), 0, 0);
+        grid.add(localPath, 1,0);
         ButtonType chooseButtonType = new ButtonType("Choose");
         ButtonType initRepo = new ButtonType("Initialize Repository");
         ButtonType cancelButtonType = new ButtonType("Cancel");
@@ -240,11 +236,12 @@ public class GitFxDialog implements GitDialog {
             }
             if (dialogButton == initRepo) {
                 setResponse(GitFxDialogResponse.INITIALIZE);
-                String project = projectName.getText();
                 String path = localPath.getText();
-                logger.debug("project" + project + project.isEmpty() + "path" + path + path.isEmpty());
-                if (!project.isEmpty() && !path.isEmpty() && new File(path).exists()) {
-                    return new Pair<>(projectName.getText(), localPath.getText());
+                logger.debug( "path" + path + path.isEmpty());
+                if (new File(path).exists()) {
+                   logger.debug(path.substring(localPath.getText().lastIndexOf(File.separator)));
+                   String projectName= path.substring(localPath.getText().lastIndexOf(File.separator)+1);
+                    return new Pair<>(projectName, localPath.getText());
                 } else {
                     this.GitErrorDialog(resourceBundle.getString("errorInit"),
                             resourceBundle.getString("errorInitTitle"),

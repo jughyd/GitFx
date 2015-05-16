@@ -17,9 +17,7 @@
 import io.github.gitfx.Dialog.GitFxDialog;
 import javafx.application.Platform;
 import javafx.scene.control.Dialog;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
