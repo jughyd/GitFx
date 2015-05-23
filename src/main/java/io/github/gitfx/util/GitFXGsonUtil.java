@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import io.github.gitfx.Dialog.GitFxDialog;
 import io.github.gitfx.data.GitRepoMetaData;
 import io.github.gitfx.data.RepositoryData;
+import static io.github.gitfx.util.WorkbenchUtil.GITFX_WORKBENCH_RECENT_REPO_FILE;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,7 +35,6 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-
 /**
  *
  * @author rvvaidya
@@ -42,7 +42,7 @@ import org.slf4j.Logger;
 public final class GitFXGsonUtil {
 
     static Logger logger = LoggerFactory.getLogger(GitFXGsonUtil.class.getName());
-    public static final String GitFxRepo = "GitFxRepo.json";
+    //public static final String GitFxRepo = "GitFxRepo.json";
     /*
      *  Passivate the String JSON to a file on disk to store repository 
      *  information. 
@@ -50,7 +50,7 @@ public final class GitFXGsonUtil {
 
     public static void passivateJSON(String json) {
         FileOutputStream outputStream = null;
-        File file = new File(GitFxRepo);
+        File file = new File(GITFX_WORKBENCH_RECENT_REPO_FILE);
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -108,7 +108,7 @@ public final class GitFXGsonUtil {
     public static RepositoryData getRepositoryMetaData() {
         RepositoryData repoMetaData = new RepositoryData();
         Gson gson = new Gson();
-        try (BufferedReader br = new BufferedReader(new FileReader("GitFxRepo.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(GITFX_WORKBENCH_RECENT_REPO_FILE))) {
             StringBuffer buffer = new StringBuffer();
             String temp;
             //Read JSON from Disk
@@ -129,7 +129,7 @@ public final class GitFXGsonUtil {
 
     //Utility method that checks for the presence of json on disk
     public static boolean checkRepoInformation() {
-        File file = new File(GitFxRepo);
+        File file = new File(GITFX_WORKBENCH_RECENT_REPO_FILE);
         if (file.exists()) {
             return true;
         } else {

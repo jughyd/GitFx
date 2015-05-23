@@ -17,6 +17,7 @@ package io.github.gitfx.util;
 
 import org.slf4j.Logger;
 import java.io.File;
+import java.io.IOException;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -65,7 +66,16 @@ public final class WorkbenchUtil {
             (new File(GITFX_WORKBENCH_LOG_DIR)).mkdir();
             log.info(GITFX_WORKBENCH_LOG_DIR + " is created");
         }
-
+        if(!isWorkbenchRecentRepoFileAvailable()){
+            try{
+            (new File(GITFX_WORKBENCH_RECENT_REPO_FILE)).createNewFile();
+            }
+            catch(IOException io){
+                //log.info(GITFX_WORKBENCH_LOG_DIR);
+                System.out.println("Exception while creating Repo file"+io.getMessage());
+            }
+            
+        }    
     }
 
 }

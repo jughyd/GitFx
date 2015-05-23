@@ -39,7 +39,7 @@ public class GitFxAppTest extends FxRobot {
         when:
         //Conditionally executing as the initial dialog box is shown only of
         //no repositories are linked with the application
-        metaDataJSON = new File("GitFxRepo.json");
+        metaDataJSON = new File(io.github.gitfx.util.WorkbenchUtil.GITFX_WORKBENCH_RECENT_REPO_FILE);
         if(!metaDataJSON.exists())
           clickOn("OK");
         FxToolkit.showStage();
