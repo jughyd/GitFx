@@ -30,7 +30,9 @@ import java.util.logging.Level;
 import javafx.application.Platform;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.slf4j.LoggerFactory;
@@ -150,6 +152,9 @@ public final class GitFXGsonUtil {
 
     public static GitRepoMetaData getGitRepositoryMetaData(String repoPath) {
         try {
+            if(!repoPath.endsWith(".git"))
+                repoPath = repoPath+"/.git";
+            System.out.println("repopath:  "+repoPath);
             GitRepoMetaData gitMetaData = new GitRepoMetaData();
             FileRepositoryBuilder builder = new FileRepositoryBuilder();
             Repository repository = builder.setGitDir(new File(repoPath))
@@ -158,7 +163,11 @@ public final class GitFXGsonUtil {
                     .findGitDir()
                     .build();
             RevWalk walk = new RevWalk(repository);
-            walk.markStart(walk.parseCommit(repository.resolve("HEAD")));
+            AnyObjectId id = repository.resolve("HEAD");
+            if(id == null)
+                return null;//Empty repository
+            RevCommit rCommit =walk.parseCommit(id);
+            walk.markStart(rCommit);
             gitMetaData.setRepository(repository);
             gitMetaData.setRevWalk(walk);
             return gitMetaData;
