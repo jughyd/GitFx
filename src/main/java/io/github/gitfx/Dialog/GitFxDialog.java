@@ -167,7 +167,7 @@ public class GitFxDialog implements GitDialog {
             }
             if (dialogButton == okButton) {
                 String filePath = repository.getText();
-                filePath = filePath.concat("/.git");
+                //filePath = filePath.concat("/.git");
                 logger.debug(filePath);
                 if (!filePath.isEmpty() && new File(filePath).exists()) {
                     setResponse(GitFxDialogResponse.OK);

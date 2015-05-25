@@ -220,7 +220,8 @@ public class GitFxController implements Initializable {
             logger.debug("Response Ok Repo Path" + repoPath);
             GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
             initializeHistoryAccordion(metaData);
-            GitFXGsonUtil.saveRepositoryInformation("github", metaData.getRepoName(),
+            String repoName =repoPath.replace("/.git", "");
+            GitFXGsonUtil.saveRepositoryInformation("github", repoName,
                     repoPath);
             initializeTree();
         } else {
