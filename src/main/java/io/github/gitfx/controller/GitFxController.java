@@ -104,6 +104,7 @@ public class GitFxController implements Initializable {
                             Object newValue) {
                         TreeItem<String> selectedItem = (TreeItem<String>) newValue;
                         logger.debug("Selected Text" + selectedItem.getValue());
+                        if(!selectedItem.getValue().equals("github"))
                         initializeHistoryAccordion(selectedItem.getValue());
                     }
                 });
@@ -165,6 +166,10 @@ public class GitFxController implements Initializable {
         if (panes != null) {
             historyAccordion.getPanes().removeAll(panes);
         }
+        if(metaData == null){
+        commits.setText("Empty Repository!");    
+        }
+        else{
         ArrayList<String> list = metaData.getShortMessage();
         ArrayList<ArrayList<String>> commitFiles = metaData.getCommitFiles();
         TitledPane pane;
@@ -182,6 +187,8 @@ public class GitFxController implements Initializable {
         }
         //Show number of commits on top of history accordion
         commits.setText(metaData.getCommitCount() + " commits");
+        }
+        
     }
 
     @FXML
@@ -213,7 +220,8 @@ public class GitFxController implements Initializable {
             logger.debug("Response Ok Repo Path" + repoPath);
             GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
             initializeHistoryAccordion(metaData);
-            GitFXGsonUtil.saveRepositoryInformation("github", metaData.getRepoName(),
+            String repoName =repoPath.replace("/.git", "");
+            GitFXGsonUtil.saveRepositoryInformation("github", repoName,
                     repoPath);
             initializeTree();
         } else {
