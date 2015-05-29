@@ -28,10 +28,10 @@ public final class WorkbenchUtil {
 
     private static final Logger log = LoggerFactory.getLogger(WorkbenchUtil.class);
 
-    public static final String GITFX_WORKBENCH_DIR = System.getProperty("user.home") + File.separator + ".gitfx";
+    public static String GITFX_WORKBENCH_DIR = System.getProperty("user.home") + File.separator + ".gitfx";
     public static final String GITFX_WORKBENCH_CONFIG_DIR = GITFX_WORKBENCH_DIR + File.separator + "config";
     public static final String GITFX_WORKBENCH_LOG_DIR = GITFX_WORKBENCH_DIR + File.separator + "log";
-    public static final String GITFX_WORKBENCH_RECENT_REPO_FILE = GITFX_WORKBENCH_DIR + File.separator + "recent_repos.json";
+    public static String GITFX_WORKBENCH_RECENT_REPO_FILE = GITFX_WORKBENCH_DIR + File.separator + "recent_repos.json";
 
     public static String getGitFxWorkbenchPath() {
         return GITFX_WORKBENCH_DIR;
@@ -53,7 +53,9 @@ public final class WorkbenchUtil {
         return (new File(GITFX_WORKBENCH_RECENT_REPO_FILE)).exists();
     }
 
-    public static void initializeWorkbench() {
+    public static void initializeWorkbench(String workbenchdir) {
+        GITFX_WORKBENCH_DIR = System.getProperty(workbenchdir) + File.separator + ".gitfx";
+        GITFX_WORKBENCH_RECENT_REPO_FILE = GITFX_WORKBENCH_DIR + File.separator + "recent_repos.json";
         if (!isWorkbenchAvailable()) {
             (new File(GITFX_WORKBENCH_DIR)).mkdir();
             log.info(GITFX_WORKBENCH_DIR + " is created");

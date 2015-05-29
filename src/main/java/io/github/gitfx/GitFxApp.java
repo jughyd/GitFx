@@ -44,7 +44,7 @@ public class GitFxApp extends Application {
         //Give controller access to GitFxApp
         GitFxController controller = loader.getController();
         controller.setMainApp(this);
-        initializeWorkbench();
+        initializeWorkbench("user.home");
         stage.setScene(scene);
         stage.show();
     }
