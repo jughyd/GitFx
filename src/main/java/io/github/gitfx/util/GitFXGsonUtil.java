@@ -103,6 +103,20 @@ public final class GitFXGsonUtil {
             logger.debug("Error creating Git repository",e.getMessage());
         }
     }
+    public static boolean cloneGitRepository(String repoURL,String localPath){
+        try{
+        Git result = Git.cloneRepository()
+                .setURI(repoURL)
+                .setDirectory(new File(localPath))
+                .call();
+        result.close();
+        return true;
+        }
+        catch(GitAPIException e){
+            logger.debug("Error creating Git repository",e.getMessage());
+            return false;
+        }
+    }
 
     /*
      * Utility method which parses JSON on disk returns the server details 
