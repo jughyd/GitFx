@@ -24,6 +24,7 @@ import io.github.gitfx.data.ProjectData;
 import io.github.gitfx.data.RepositoryData;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -203,8 +204,21 @@ public class GitFxController implements Initializable {
                 null);
         if (dialog.getResponse() == GitFxDialogResponse.CLONE && clonedRepo != null) {
             logger.debug("Response Ok Repo Path");
-            logger.debug("Project Name" + clonedRepo.getKey());
-            logger.debug("Local Path" + clonedRepo.getValue());
+            String repoURL =clonedRepo.getKey();
+            String repoName = repoURL.substring(repoURL.lastIndexOf("/")+1,repoURL.length()-4);
+            String localPath = clonedRepo.getValue();
+            logger.debug("Clone URL" + repoURL );
+            logger.debug("Local Path" + localPath);
+            if(GitFXGsonUtil.cloneGitRepository(repoURL,localPath)){
+            GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(localPath);    
+            initializeHistoryAccordion(metaData);
+            GitFXGsonUtil.saveRepositoryInformation("github", repoName,localPath);
+            initializeTree();
+            }
+            else{
+                System.out.println("Its not a Valid URL");
+            }
+                
         } else {
             logger.debug("Response Cancel");
         }
