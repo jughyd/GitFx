@@ -45,7 +45,8 @@ public class GitResourceBundle extends ListResourceBundle {
             {"sync", "Sync"},
             {"syncAll", "Sync Everything"},
             {"selectRepo", "Select Repository"},
-            {"syncAllDesc", "This will sync all repositories on all servers"}
+            {"syncAllDesc", "This will sync all repositories on all servers"},
+            {"syncRepo","Sync Repositories"},
         };
     }
 }

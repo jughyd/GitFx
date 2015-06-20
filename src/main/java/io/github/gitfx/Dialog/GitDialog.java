@@ -15,6 +15,7 @@
  */
 package io.github.gitfx.Dialog;
 
+import java.util.List;
 import javafx.scene.control.Dialog;
 import javafx.util.Pair;
 
@@ -68,6 +69,10 @@ public interface GitDialog {
     /*
      * GitFxDialogResponse to capture responses from all dialog types
      */
-
+  
     public GitFxDialogResponse getResponse();
+    /*
+     * GitFxInformationListDialog 
+     */
+    public String GitFxInformationListDialog(String title, String header, String content,List list);
 }

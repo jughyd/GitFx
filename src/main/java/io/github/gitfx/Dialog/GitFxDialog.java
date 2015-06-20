@@ -20,14 +20,19 @@ import io.github.gitfx.GitResourceBundle;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.Optional;
 import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -65,6 +70,33 @@ public class GitFxDialog implements GitDialog {
         alert.setContentText(label);
         alert.showAndWait();
         return alert;
+    }
+   
+    /*
+     *Implementaiton of Information List Dialog
+     *A dialog box which returns the selected items once clicked on Ok
+     */
+    @Override
+    public String GitFxInformationListDialog(String title, String header, String label,List list){
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(label);
+        ListView<String> listView = new ListView<String>();
+        listView.setItems(FXCollections.observableArrayList(list));
+        alert.getDialogPane().setContent(listView);
+        listView.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observable, Object oldValue,
+                        Object newValue) {
+                  logger.debug(newValue.toString());        
+                }
+         });
+        alert.showAndWait();
+        //TODO Need to return the logged newValue for further JGit code to sync
+        //a repository
+        return null ;
     }
 
     /*

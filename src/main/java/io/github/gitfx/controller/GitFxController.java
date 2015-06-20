@@ -24,7 +24,6 @@ import io.github.gitfx.data.ProjectData;
 import io.github.gitfx.data.RepositoryData;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +73,7 @@ public class GitFxController implements Initializable {
     private Accordion historyAccordion;
     @FXML
     private Label commits;
-
+    
     private GitFxDialog dialog;
     // Reference to the main application
     private GitFxApp gitFxApp;
@@ -245,8 +244,9 @@ public class GitFxController implements Initializable {
 
     @FXML
     public void onGitSyncClicked(ActionEvent event) {
+       logger.debug("Sync particular repository");
     }
-
+    
     @FXML
     public void syncEveryThingClicked(ActionEvent event) {
         dialog = new GitFxDialog();
@@ -283,10 +283,17 @@ public class GitFxController implements Initializable {
 
     @FXML
     public void onGitParticularRepositoryClicked(ActionEvent event) {
-        //TODO Implement this feature in GitFxDialog
+        logger.debug("Git Particular Repository clicked");
         dialog = new GitFxDialog();
-        //TODO Get the string from the resource bundle
-        dialog.GitInformationDialog("Sync Repositories", "Repositories", null);
+        RepositoryData metaData = GitFXGsonUtil.getRepositoryMetaData();
+        List<String> list = new ArrayList<String>();
+        List<ProjectData> projectData = metaData.getRepositories();
+            for (ProjectData project : projectData) {
+                list.add(project.getProjectName());
+            }
+        dialog.GitFxInformationListDialog(resourceBundle.getString("syncRepo"), resourceBundle.getString("repo"),null,list);
+        
+                
     }
 
 }
