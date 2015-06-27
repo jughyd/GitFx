@@ -98,16 +98,12 @@ public class GitFxController implements Initializable {
         gitsync.setText('\uf021' + "");
         gitclone.setText('\uf0c5' + "");
         RepositoryTree.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ObservableValue observable, Object oldValue,
-                            Object newValue) {
+                ( observable,  oldValue,   newValue) -> {
                         TreeItem<String> selectedItem = (TreeItem<String>) newValue;
                         logger.debug("Selected Text" + selectedItem.getValue());
                         if(!selectedItem.getValue().equals("github"))
                         initializeHistoryAccordion(selectedItem.getValue());
-                    }
-                });
+                    } );
         GitFXGsonUtil.checkRepoInformation();
         initializeTree();
         initializeHistoryAccordion();
@@ -123,12 +119,12 @@ public class GitFxController implements Initializable {
         RepositoryData metaData = GitFXGsonUtil.getRepositoryMetaData();
 
         if (metaData != null) {
-            TreeItem<String> treeRoot = new TreeItem<String>(metaData.getServerName());
+            TreeItem<String> treeRoot = new TreeItem<>(metaData.getServerName());
             treeRoot.setExpanded(true);
             List<ProjectData> projectData = metaData.getRepositories();
-            for (ProjectData project : projectData) {
-                treeRoot.getChildren().add(new TreeItem<String>(project.getProjectName()));
-            }
+            projectData.stream().forEach((project) -> {
+                treeRoot.getChildren().add(new TreeItem<>(project.getProjectName()));
+            });
             RepositoryTree.setShowRoot(true);
             RepositoryTree.setRoot(treeRoot);
         }
@@ -286,11 +282,11 @@ public class GitFxController implements Initializable {
         logger.debug("Git Particular Repository clicked");
         dialog = new GitFxDialog();
         RepositoryData metaData = GitFXGsonUtil.getRepositoryMetaData();
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         List<ProjectData> projectData = metaData.getRepositories();
-            for (ProjectData project : projectData) {
-                list.add(project.getProjectName());
-            }
+        projectData.stream().forEach((project) -> 
+            list.add(project.getProjectName())
+        );
         dialog.GitFxInformationListDialog(resourceBundle.getString("syncRepo"), resourceBundle.getString("repo"),null,list);
         
                 
