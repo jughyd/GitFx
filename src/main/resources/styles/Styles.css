@@ -20,23 +20,23 @@
 #gitinit {
     -fx-font-family: FontAwesome;
     -fx-icon-text: "\uf1d3";
-    -fx-font-size: 20;   
+    -fx-font-size: 15;   
 }
 #open{
     -fx-font-family: FontAwesome;
     -fx-icon-text: "\uf07c";
-    -fx-font-size: 20;  
+    -fx-font-size: 13;  
 }
 #setting{
     -fx-font-family: FontAwesome;
     -fx-icon-text: "\uf013";
-    -fx-font-size: 20;
+    -fx-font-size: 13;
 }
 #gitsync{
     -fx-font-family: FontAwesome;
-    -fx-font-size: 20;
+    -fx-font-size: 15;
 }
 #clone{
    -fx-font-family: FontAwesome;
-   -fx-font-size: 20;
+   -fx-font-size: 15;
 }

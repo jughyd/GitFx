@@ -47,6 +47,7 @@ public class GitFxAppTest extends FxRobot {
         //Temprarily these clickOn are also working as asserts for presence of
         //UI element. Need to add some more TestFX asserts. 
         clickOn("#gitsync");
+        clickOn("#gitclone");
         clickOn("#gitinit");
         clickOn("Cancel");
         clickOn("#gitinit");
