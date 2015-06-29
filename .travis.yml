@@ -1,4 +1,6 @@
 language: java
+before_install:
+  - "export MAVEN_OPTS='-Dglass.platform=Monocle -Dmonocle.platform=Headless -Dprism.order=sw'"
 jdk:
   - oraclejdk8
 
