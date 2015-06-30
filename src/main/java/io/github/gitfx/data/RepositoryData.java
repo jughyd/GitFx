@@ -31,7 +31,7 @@ public class RepositoryData {
     List<ProjectData> repositories;
 
     public RepositoryData() {
-        repositories = new ArrayList<ProjectData>();
+        repositories = new ArrayList<>();
     }
 
     public void setServerName(String serverName) {
