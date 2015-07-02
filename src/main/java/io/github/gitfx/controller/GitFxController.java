@@ -15,8 +15,8 @@
  */
 package io.github.gitfx.controller;
 
-import io.github.gitfx.Dialog.GitFxDialog;
-import io.github.gitfx.Dialog.GitFxDialogResponse;
+import io.github.gitfx.dialog.GitFxDialog;
+import io.github.gitfx.dialog.GitFxDialogResponse;
 import io.github.gitfx.GitFxApp;
 import io.github.gitfx.GitResourceBundle;
 import io.github.gitfx.data.GitRepoMetaData;

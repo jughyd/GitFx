@@ -18,7 +18,7 @@ package io.github.gitfx.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import com.google.gson.Gson;
-import io.github.gitfx.Dialog.GitFxDialog;
+import io.github.gitfx.dialog.GitFxDialog;
 import io.github.gitfx.data.GitRepoMetaData;
 import io.github.gitfx.data.RepositoryData;
 import static io.github.gitfx.util.WorkbenchUtil.GITFX_WORKBENCH_RECENT_REPO_FILE;

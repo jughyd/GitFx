@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.github.gitfx.Dialog;
+package io.github.gitfx.dialog;
 
 import java.util.List;
 import javafx.scene.control.Dialog;
