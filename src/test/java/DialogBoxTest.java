@@ -14,7 +14,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-import io.github.gitfx.Dialog.GitFxDialog;
+import io.github.gitfx.dialog.GitFxDialog;
 import javafx.application.Platform;
 import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
