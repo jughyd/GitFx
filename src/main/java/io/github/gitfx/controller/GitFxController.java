@@ -194,7 +194,7 @@ public class GitFxController implements Initializable {
     @FXML
     public void onGitCloneClicked(ActionEvent event) {
         dialog = new GitFxDialog();
-        Pair<String, String> clonedRepo = dialog.GitCloneDialog(resourceBundle.getString("cloneRepo"),
+        Pair<String, String> clonedRepo = dialog.gitCloneDialog(resourceBundle.getString("cloneRepo"),
                 resourceBundle.getString("cloneRepo"),
                 null);
         if (dialog.getResponse() == GitFxDialogResponse.CLONE && clonedRepo != null) {
@@ -222,7 +222,7 @@ public class GitFxController implements Initializable {
     @FXML
     public void onGitOpenClicked(ActionEvent event) {
         dialog = new GitFxDialog();
-        String repoPath = dialog.GitOpenDialog(resourceBundle.getString("openRepo"),
+        String repoPath = dialog.gitOpenDialog(resourceBundle.getString("openRepo"),
                 resourceBundle.getString("chooseRepo"),
                 resourceBundle.getString("repo"));
         if (dialog.getResponse() == GitFxDialogResponse.OK) {
@@ -246,7 +246,7 @@ public class GitFxController implements Initializable {
     @FXML
     public void syncEveryThingClicked(ActionEvent event) {
         dialog = new GitFxDialog();
-        dialog.GitConfirmationDialog(resourceBundle.getString("sync"),
+        dialog.gitConfirmationDialog(resourceBundle.getString("sync"),
                 resourceBundle.getString("syncAll"),
                 resourceBundle.getString("syncAllDesc"));
         if (dialog.getResponse() == GitFxDialogResponse.OK) {
@@ -259,7 +259,7 @@ public class GitFxController implements Initializable {
     @FXML
     public void onGitInitClicked(ActionEvent event) {
         dialog = new GitFxDialog();
-        Pair<String, String> newRepo = dialog.GitInitDialog(resourceBundle.getString("initRepo"),
+        Pair<String, String> newRepo = dialog.gitInitDialog(resourceBundle.getString("initRepo"),
                 resourceBundle.getString("initRepo"),
                 null);
         if (dialog.getResponse() == GitFxDialogResponse.INITIALIZE && newRepo != null) {
@@ -287,7 +287,7 @@ public class GitFxController implements Initializable {
         projectData.stream().forEach((project) -> 
             list.add(project.getProjectName())
         );
-        dialog.GitFxInformationListDialog(resourceBundle.getString("syncRepo"), resourceBundle.getString("repo"),null,list);
+        dialog.gitFxInformationListDialog(resourceBundle.getString("syncRepo"), resourceBundle.getString("repo"),null,list);
         
                 
     }

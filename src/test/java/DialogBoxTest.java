@@ -38,7 +38,7 @@ public class DialogBoxTest extends ApplicationTest {
              public void run(){
                  Platform.runLater(()->{
                      dialog = new GitFxDialog();
-                     dialogHandle=dialog.GitInformationDialog("Information Title", "SampleHeader", "Test Label");});}
+                     dialogHandle=dialog.gitInformationDialog("Information Title", "SampleHeader", "Test Label");});}
         }.start();
     }
 
