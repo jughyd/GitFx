@@ -63,7 +63,7 @@ public class GitFxDialog implements GitDialog {
      */
 
     @Override
-    public Dialog GitInformationDialog(String title, String header, String label) {
+    public Dialog gitInformationDialog(String title, String header, String label) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
@@ -77,7 +77,7 @@ public class GitFxDialog implements GitDialog {
      *A dialog box which returns the selected items once clicked on Ok
      */
     @Override
-    public String GitFxInformationListDialog(String title, String header, String label,List list){
+    public String gitFxInformationListDialog(String title, String header, String label,List list){
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
@@ -103,7 +103,7 @@ public class GitFxDialog implements GitDialog {
      *Implementation of Generic Error dialog
      */
     @Override
-    public void GitErrorDialog(String title, String error, String content) {
+    public void gitErrorDialog(String title, String error, String content) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(error);
@@ -115,7 +115,7 @@ public class GitFxDialog implements GitDialog {
      * Implementation of Generic Warning Dialog
      */
     @Override
-    public void GitWarningDialog(String title, String header, String content) {
+    public void gitWarningDialog(String title, String header, String content) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(header);
@@ -127,7 +127,7 @@ public class GitFxDialog implements GitDialog {
      * Implementation of Generic Exception Dialog
      */
     @Override
-    public void GitExceptionDialog(String title, String header, String content, Exception e) {
+    public void gitExceptionDialog(String title, String header, String content, Exception e) {
 
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
@@ -161,7 +161,7 @@ public class GitFxDialog implements GitDialog {
      */
 
     @Override
-    public String GitOpenDialog(String title, String header, String content) {
+    public String gitOpenDialog(String title, String header, String content) {
         String repo;
         DirectoryChooser chooser = new DirectoryChooser();
         Dialog<Pair<String, GitFxDialogResponse>> dialog = new Dialog<>();
@@ -205,7 +205,7 @@ public class GitFxDialog implements GitDialog {
                     setResponse(GitFxDialogResponse.OK);
                     return new Pair<>(repository.getText(), GitFxDialogResponse.OK);
                 } else {
-                    this.GitErrorDialog(resourceBundle.getString("errorOpen"),
+                    this.gitErrorDialog(resourceBundle.getString("errorOpen"),
                             resourceBundle.getString("errorOpenTitle"),
                             resourceBundle.getString("errorOpenDesc"));
                 }
@@ -236,7 +236,7 @@ public class GitFxDialog implements GitDialog {
      * Implementation of Git Open Dialog. 
      */
     @Override
-    public Pair<String, String> GitInitDialog(String title, String header, String content) {
+    public Pair<String, String> gitInitDialog(String title, String header, String content) {
         Pair<String, String> repo;
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle(title);
@@ -275,7 +275,7 @@ public class GitFxDialog implements GitDialog {
                    String projectName= path.substring(localPath.getText().lastIndexOf(File.separator)+1);
                     return new Pair<>(projectName, localPath.getText());
                 } else {
-                    this.GitErrorDialog(resourceBundle.getString("errorInit"),
+                    this.gitErrorDialog(resourceBundle.getString("errorInit"),
                             resourceBundle.getString("errorInitTitle"),
                             resourceBundle.getString("errorInitDesc"));
                 }
@@ -295,7 +295,7 @@ public class GitFxDialog implements GitDialog {
     }
 
     @Override
-    public Pair<String, String> GitCloneDialog(String title, String header,
+    public Pair<String, String> gitCloneDialog(String title, String header,
             String content) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         DirectoryChooser chooser = new DirectoryChooser();
@@ -336,7 +336,7 @@ public class GitFxDialog implements GitDialog {
                 if (!remoteRepoURL.isEmpty() && !localRepoPath.isEmpty()) {
                     return new Pair<>(remoteRepo.getText(), localPath.getText());
                 } else {
-                    this.GitErrorDialog(resourceBundle.getString("errorClone"),
+                    this.gitErrorDialog(resourceBundle.getString("errorClone"),
                             resourceBundle.getString("errorCloneTitle"),
                             resourceBundle.getString("errorCloneDesc"));
                 }
@@ -368,7 +368,7 @@ public class GitFxDialog implements GitDialog {
         fadeTransition.play();
     }
 
-    public void GitConfirmationDialog(String title, String header, String content) {
+    public void gitConfirmationDialog(String title, String header, String content) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);

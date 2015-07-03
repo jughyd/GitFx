@@ -30,49 +30,49 @@ public interface GitDialog {
      *Generic Exception Dialog 
      */
 
-    public void GitExceptionDialog(String title, String header, String content, Exception e);
+    public void gitExceptionDialog(String title, String header, String content, Exception e);
     /*
      *Generic information dialog
      */
 
-    public Dialog GitInformationDialog(String title, String header, String content);
+    public Dialog gitInformationDialog(String title, String header, String content);
     /*
      *Generic Error dialog 
      */
 
-    public void GitErrorDialog(String title, String error, String content);
+    public void gitErrorDialog(String title, String error, String content);
     /*
      *Generic Alert dialog
      */
 
-    public void GitWarningDialog(String title, String header, String content);
+    public void gitWarningDialog(String title, String header, String content);
     /*
      * Git Open Dialog. This is a specific dialog for Git Open functionality
      */
 
-    public String GitOpenDialog(String title, String header, String content);
+    public String gitOpenDialog(String title, String header, String content);
     /*
      * Implementation of Git Open Dialog. 
      */
 
-    public Pair<String, String> GitInitDialog(String title, String header, String content);
+    public Pair<String, String> gitInitDialog(String title, String header, String content);
     /*
      * Implementation of Git Open Dialog. 
      */
 
-    public Pair<String, String> GitCloneDialog(String title, String header, String content);
+    public Pair<String, String> gitCloneDialog(String title, String header, String content);
     /*
      * Generic confirmation dialog
      */
 
-    public void GitConfirmationDialog(String title, String header, String content);
+    public void gitConfirmationDialog(String title, String header, String content);
     /*
      * GitFxDialogResponse to capture responses from all dialog types
      */
   
     public GitFxDialogResponse getResponse();
     /*
-     * GitFxInformationListDialog 
+     * gitFxInformationListDialog 
      */
-    public String GitFxInformationListDialog(String title, String header, String content,List list);
+    public String gitFxInformationListDialog(String title, String header, String content,List list);
 }

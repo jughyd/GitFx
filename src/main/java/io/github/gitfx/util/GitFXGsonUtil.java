@@ -153,7 +153,7 @@ public final class GitFXGsonUtil {
                 public void run() {
                     Platform.runLater(() -> {
                         GitFxDialog dialog = new GitFxDialog();
-                        dialog.GitInformationDialog("No Repository Linked", "Click Init to add your first Repository", "Have fun!!!");
+                        dialog.gitInformationDialog("No Repository Linked", "Click Init to add your first Repository", "Have fun!!!");
                     });
                 }
             }.start();
