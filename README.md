@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/jughyd/gitfx.png?label=ready&title=Ready)](https://waffle.io/jughyd/gitfx)
 GitFx
 =====
 
