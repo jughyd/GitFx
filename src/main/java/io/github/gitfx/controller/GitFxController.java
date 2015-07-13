@@ -24,6 +24,7 @@ import io.github.gitfx.data.ProjectData;
 import io.github.gitfx.data.RepositoryData;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,9 +101,11 @@ public class GitFxController implements Initializable {
         RepositoryTree.getSelectionModel().selectedItemProperty().addListener(
                 ( observable,  oldValue,   newValue) -> {
                         TreeItem<String> selectedItem = (TreeItem<String>) newValue;
-                        logger.debug("Selected Text" + selectedItem.getValue());
-                        if(!selectedItem.getValue().equals("github"))
+                        if(selectedItem!=null){
+                            logger.debug("Selected Text" + selectedItem.getValue());
+                            if(!selectedItem.getValue().equals("github"))
                         initializeHistoryAccordion(selectedItem.getValue());
+                        }
                     } );
         GitFXGsonUtil.checkRepoInformation();
         initializeTree();
@@ -200,8 +203,13 @@ public class GitFxController implements Initializable {
         if (dialog.getResponse() == GitFxDialogResponse.CLONE && clonedRepo != null) {
             logger.debug("Response Ok Repo Path");
             String repoURL =clonedRepo.getKey();
-            String repoName = repoURL.substring(repoURL.lastIndexOf("/")+1,repoURL.length()-4);
+            String repoName="";
+            if(repoURL.contains(".git"))
+             repoName = repoURL.substring(repoURL.lastIndexOf("/")+1,repoURL.indexOf(".git"));
+            else
+             repoName = repoURL.substring(repoURL.lastIndexOf("/")+1);   
             String localPath = clonedRepo.getValue();
+            localPath = localPath +File.separator+repoName;
             logger.debug("Clone URL" + repoURL );
             logger.debug("Local Path" + localPath);
             if(GitFXGsonUtil.cloneGitRepository(repoURL,localPath)){
@@ -229,7 +237,7 @@ public class GitFxController implements Initializable {
             logger.debug("Response Ok Repo Path" + repoPath);
             GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
             initializeHistoryAccordion(metaData);
-            String repoName =repoPath.replace("/.git", "");
+            String repoName =repoPath.substring(repoPath.lastIndexOf(File.separator)+1);
             GitFXGsonUtil.saveRepositoryInformation("github", repoName,
                     repoPath);
             initializeTree();
