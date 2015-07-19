@@ -41,6 +41,7 @@ public class GitFxApp extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
         stage.setResizable(true);
+        stage.setTitle("GitFX - Alpha");
         //Give controller access to GitFxApp
         GitFxController controller = loader.getController();
         controller.setMainApp(this);
