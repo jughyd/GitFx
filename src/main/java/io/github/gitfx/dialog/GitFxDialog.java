@@ -229,7 +229,7 @@ public class GitFxDialog implements GitDialog {
         if (result.isPresent()) {
             temp = result.get();
         }
-        return temp.getKey() + "/.git";
+        return temp.getKey();// + "/.git";
     }
 
     /*

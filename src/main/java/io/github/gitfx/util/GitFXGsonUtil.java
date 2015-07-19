@@ -167,7 +167,7 @@ public final class GitFXGsonUtil {
     public static GitRepoMetaData getGitRepositoryMetaData(String repoPath) {
         try {
             if(!repoPath.endsWith(".git"))
-                repoPath = repoPath+"/.git";
+                repoPath = repoPath+File.separator+".git";
             System.out.println("repopath:  "+repoPath);
             GitRepoMetaData gitMetaData = new GitRepoMetaData();
             FileRepositoryBuilder builder = new FileRepositoryBuilder();
