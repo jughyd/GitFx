@@ -15,8 +15,8 @@ cache:
 
 # setup jobs.
 env:
-  - USE_FRAMEBUFFER=false
-  - JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
+  - USE_FRAMEBUFFER=true
+  - USE_FRAMEBUFFER=false _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
 
 # allow job to fail without framebuffer
 matrix:
