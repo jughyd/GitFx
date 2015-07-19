@@ -283,10 +283,12 @@ public class GitFxController implements Initializable {
         dialog = new GitFxDialog();
         RepositoryData metaData = GitFXGsonUtil.getRepositoryMetaData();
         List<String> list = new ArrayList<>();
+        if(metaData!=null){  
         List<ProjectData> projectData = metaData.getRepositories();
-        projectData.stream().forEach((project) -> 
-            list.add(project.getProjectName())
-        );
+            projectData.stream().forEach((project) -> 
+                list.add(project.getProjectName())
+            );
+         }
         dialog.gitFxInformationListDialog(resourceBundle.getString("syncRepo"), resourceBundle.getString("repo"),null,list);
         
                 
