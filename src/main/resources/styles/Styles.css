@@ -20,7 +20,7 @@
 #gitinit {
     -fx-font-family: FontAwesome;
     -fx-icon-text: "\uf1d3";
-    -fx-font-size: 15;   
+    -fx-font-size: 13;
 }
 #open{
     -fx-font-family: FontAwesome;
@@ -34,9 +34,9 @@
 }
 #gitsync{
     -fx-font-family: FontAwesome;
-    -fx-font-size: 15;
+    -fx-font-size: 13;
 }
-#clone{
+#gitclone{
    -fx-font-family: FontAwesome;
-   -fx-font-size: 15;
+   -fx-font-size: 13;
 }
