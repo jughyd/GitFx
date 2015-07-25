@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -12,23 +13,29 @@
          <children>
             <SplitPane dividerPositions="0.1774081774081774" layoutY="35.0" prefHeight="554.0" prefWidth="1445.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
                <items>
-                  <AnchorPane prefHeight="543.0" prefWidth="252.0">
+                  <AnchorPane fx:id="treeContainer" opacity="0.59" prefHeight="543.0" prefWidth="252.0">
                      <children>
-                        <TreeView fx:id="RepositoryTree" layoutX="14.0" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="410.0" prefWidth="224.0" />
-                        <TextField layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="212.0" promptText="Search Repositories" />
+                        <TreeView fx:id="RepositoryTree" layoutX="14.0" layoutY="22.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="552.0" prefWidth="252.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
+                     <effect>
+                        <Lighting bumpInput="$null" diffuseConstant="1.19" specularConstant="0.01" surfaceScale="2.81">
+                           <light>
+                              <Light.Distant color="#f0f0fc" />
+                           </light>
+                        </Lighting>
+                     </effect>
                   </AnchorPane>
                   <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="552.0" prefWidth="1183.0">
                      <children>
                         <TabPane prefHeight="510.0" prefWidth="279.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <tabs>
-                            <Tab text="History">
+                            <Tab fx:id="historyTab" text="History">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
                                           <SplitPane dividerPositions="0.1922099915325995" layoutX="1.0" prefHeight="499.0" prefWidth="1183.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <items>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                              <AnchorPane fx:id="historyContainer" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                    <children>
                                                       <VBox prefHeight="497.0" prefWidth="223.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <children>
@@ -48,12 +55,12 @@
                                        </children></AnchorPane>
                               </content>
                             </Tab>
-                            <Tab text="Changes">
+                            <Tab fx:id="changesTab" text="Changes">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="307.0" />
                               </content>
                             </Tab>
-                              <Tab text="Others">
+                              <Tab fx:id="othersTab" text="Others">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="1183.0" />
                                 </content>
@@ -67,16 +74,26 @@
             <ToolBar prefHeight="26.0" prefWidth="1445.0" snapToPixel="false">
               <items>
                 <Button id="gitinit" fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" prefHeight="26.0" prefWidth="40.0" text="Initialize" />
-                  <Button id="gitclone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" prefHeight="26.0" prefWidth="40.0" text="Clone" />
-                  <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" prefHeight="26.0" prefWidth="40.0" text="Open" />
+                  <Button id="gitclone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" prefHeight="26.0" prefWidth="43.0" text="Clone" />
+                  <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" prefHeight="26.0" prefWidth="48.0" text="Open" />
                 <Button id="setting" fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" prefHeight="26.0" prefWidth="40.0" text="Settings" />
-                  <MenuButton id="gitsync" fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0" prefWidth="40.0" text="Sync">
+                  <MenuButton id="gitsync" fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0" prefWidth="51.0" text="Sync">
                     <items>
                       <MenuItem fx:id="syncEveryThing" mnemonicParsing="false" onAction="#syncEveryThingClicked" text="Sync Everything" />
                       <MenuItem fx:id="gitSpecific" mnemonicParsing="false" onAction="#onGitParticularRepositoryClicked" text="Particular Repository" />
                     </items>
                   </MenuButton>
               </items>
+               <effect>
+                  <Lighting diffuseConstant="1.19" specularConstant="0.01" surfaceScale="2.81">
+                     <bumpInput>
+                        <Blend />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant color="#f6f6ff" />
+                     </light>
+                  </Lighting>
+               </effect>
             </ToolBar>
          </children>
       </AnchorPane>

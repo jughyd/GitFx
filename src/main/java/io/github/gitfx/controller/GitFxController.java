@@ -29,26 +29,28 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.event.EventHandler;
+import javafx.event.Event;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javafx.scene.layout.Pane;
 
 public class GitFxController implements Initializable {
 
@@ -74,7 +76,12 @@ public class GitFxController implements Initializable {
     private Accordion historyAccordion;
     @FXML
     private Label commits;
-    
+    @FXML
+    private AnchorPane treeContainer;
+    @FXML
+    private AnchorPane historyContainer;
+
+    private ProgressIndicator pi;
     private GitFxDialog dialog;
     // Reference to the main application
     private GitFxApp gitFxApp;
@@ -99,14 +106,15 @@ public class GitFxController implements Initializable {
         gitsync.setText('\uf021' + "");
         gitclone.setText('\uf0c5' + "");
         RepositoryTree.getSelectionModel().selectedItemProperty().addListener(
-                ( observable,  oldValue,   newValue) -> {
-                        TreeItem<String> selectedItem = (TreeItem<String>) newValue;
-                        if(selectedItem!=null){
-                            logger.debug("Selected Text" + selectedItem.getValue());
-                            if(!selectedItem.getValue().equals("github"))
-                        initializeHistoryAccordion(selectedItem.getValue());
-                        }
-                    } );
+                (observable, oldValue, newValue) -> {
+                    TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+                    if (selectedItem != null) {
+                        logger.debug("Selected Text" + selectedItem.getValue());
+                        addProgressIndicator(historyContainer);
+                        if (!selectedItem.getValue().equals("github"))
+                            initializeHistoryAccordion(selectedItem.getValue());
+                    }
+                });
         GitFXGsonUtil.checkRepoInformation();
         initializeTree();
         initializeHistoryAccordion();
@@ -120,7 +128,6 @@ public class GitFxController implements Initializable {
 
     private void initializeTree() {
         RepositoryData metaData = GitFXGsonUtil.getRepositoryMetaData();
-
         if (metaData != null) {
             TreeItem<String> treeRoot = new TreeItem<>(metaData.getServerName());
             treeRoot.setExpanded(true);
@@ -131,6 +138,38 @@ public class GitFxController implements Initializable {
             RepositoryTree.setShowRoot(true);
             RepositoryTree.setRoot(treeRoot);
         }
+    }
+
+    //Method adds a progress indicator to a container of type Pane
+    private void addProgressIndicator(Pane container) {
+        ProgressIndicator pi = new ProgressIndicator();
+        container.getChildren().add(pi);
+        pi.setLayoutX(container.getWidth() / 2 - 20);
+        pi.setLayoutY(container.getHeight() / 2) ;
+        logger.debug(String.valueOf(container.getWidth()));
+        pi.setPrefSize(50, 50);
+        delayProgressIndicator(pi);
+    }
+
+    //Method simulates a delay on the progress indicator
+    private void delayProgressIndicator(ProgressIndicator pi) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    pi.setVisible(true);
+                    Thread.sleep(500);
+                } catch (InterruptedException exception) {
+                  logger.debug("Interruped Exception"+exception.getMessage());
+                } finally {
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            pi.setVisible(false);
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     /*
@@ -153,6 +192,7 @@ public class GitFxController implements Initializable {
         RepositoryData repoData = GitFXGsonUtil.getRepositoryMetaData();
         String repoPath = repoData.getRepoPath(projectName);
         GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
+        //addProgressIndicator();
         initializeHistoryAccordion(metaData);
     }
 
@@ -219,7 +259,7 @@ public class GitFxController implements Initializable {
             initializeTree();
             }
             else{
-                System.out.println("Its not a Valid URL");
+                logger.debug("Its not a Valid URL");
             }
                 
         } else {
