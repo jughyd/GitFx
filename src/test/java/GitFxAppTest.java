@@ -49,11 +49,11 @@ public class GitFxAppTest extends FxRobot {
         clickOn("#gitsync");
         clickOn("#gitclone");
         clickOn("#gitinit");
-        clickOn("Cancel");
+        /*clickOn("Cancel");
         clickOn("#gitinit");
-        clickOn("Cancel");
+        clickOn("Cancel");*/
         clickOn("#gitsync");
-        clickOn("Sync Everything");
+        /*clickOn("Sync Everything");
         clickOn("OK");
         clickOn("#gitsync");
         clickOn("Sync Everything");
@@ -63,6 +63,6 @@ public class GitFxAppTest extends FxRobot {
         clickOn("OK");
         clickOn("Others");
         clickOn("Changes");
-        clickOn("History");
+        clickOn("History");*/
     }
 }
