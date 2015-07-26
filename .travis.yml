@@ -12,3 +12,7 @@ jdk:
 os:
   - linux
 
+notifications:
+  email:
+    - rohitvvv@gmail.com
+    - rajmahendra@gmail.com
