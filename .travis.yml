@@ -1,5 +1,10 @@
 # use java support.
 language: java
+
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 jdk:
   - oraclejdk8
 
@@ -7,29 +12,3 @@ jdk:
 os:
   - linux
 
-# run in container und keep gradle cache.
-sudo: false
-cache:
-  directories:
-    - $HOME/.gradle
-
-# setup jobs.
-env:
-  - USE_FRAMEBUFFER=true
-  - USE_FRAMEBUFFER=false _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
-
-# allow job to fail without framebuffer
-matrix:
-  allow_failures:
-  - env: USE_FRAMEBUFFER=false _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
-
-# run on xvfb screen.
-before_install:
-  - if [ $USE_FRAMEBUFFER = "true" ]; then export DISPLAY=:99.0 && sh -e /etc/init.d/xvfb start; fi
-
-# skip install stage.
-install: true
-
-# run gradle build.
-script:
-  - ./gradlew build
