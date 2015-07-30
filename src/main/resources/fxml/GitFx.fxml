@@ -11,7 +11,7 @@
    <children>
       <AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <SplitPane dividerPositions="0.1774081774081774" layoutY="35.0" prefHeight="554.0" prefWidth="1445.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+            <SplitPane dividerPositions="0.22970903522205208" layoutY="35.0" prefHeight="554.0" prefWidth="1445.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
                <items>
                   <AnchorPane fx:id="treeContainer" opacity="0.59" prefHeight="543.0" prefWidth="252.0">
                      <children>
@@ -33,16 +33,16 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <SplitPane dividerPositions="0.1922099915325995" layoutX="1.0" prefHeight="499.0" prefWidth="1183.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <SplitPane dividerPositions="0.30181086519114686" layoutX="1.0" prefHeight="499.0" prefWidth="1183.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <items>
                                               <AnchorPane fx:id="historyContainer" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                    <children>
-                                                      <VBox prefHeight="497.0" prefWidth="223.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <VBox fx:id="historyVBox" prefHeight="517.0" prefWidth="146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <children>
                                                             <Label fx:id="commits" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="224.0" />
-                                                            <ScrollPane prefHeight="497.0" prefViewportHeight="492.0" prefViewportWidth="224.0" prefWidth="223.0">
+                                                            <ScrollPane fx:id="historyScrollPane" fitToHeight="true" fitToWidth="true" prefViewportWidth="224.0" prefWidth="146.0" VBox.vgrow="ALWAYS">
                                                                <content>
-                                                                  <Accordion fx:id="historyAccordion" layoutX="-6.0" layoutY="-1.0" minHeight="-Infinity" prefWidth="224.0" />
+                                                                  <Accordion fx:id="historyAccordion" layoutX="-6.0" layoutY="-1.0" />
                                                                </content>
                                                             </ScrollPane>
                                                          </children>
@@ -71,11 +71,11 @@
                   </AnchorPane>
                </items>
             </SplitPane>
-            <ToolBar prefHeight="26.0" prefWidth="1445.0" snapToPixel="false">
+            <ToolBar fx:id="gitToolBar" prefHeight="26.0" prefWidth="1445.0" snapToPixel="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
                 <Button id="gitinit" fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" prefHeight="26.0" prefWidth="40.0" text="Initialize" />
-                  <Button id="gitclone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" prefHeight="26.0" prefWidth="43.0" text="Clone" />
-                  <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" prefHeight="26.0" prefWidth="48.0" text="Open" />
+                  <Button id="gitclone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" prefHeight="26.0" prefWidth="40.0" text="Clone" />
+                  <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" prefHeight="26.0" prefWidth="40.0" text="Open" />
                 <Button id="setting" fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" prefHeight="26.0" prefWidth="40.0" text="Settings" />
                   <MenuButton id="gitsync" fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0" prefWidth="51.0" text="Sync">
                     <items>
