@@ -15,6 +15,10 @@
  */
 import io.github.gitfx.GitFxApp;
 import java.io.File;
+
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxRobot;
@@ -24,14 +28,35 @@ import org.testfx.util.WaitForAsyncUtils;
  *
  * @author rvvaidya
  */
-public class GitFxAppTest extends FxRobot {
+public class GitFxAppTest extends ApplicationTest {
     File metaDataJSON;
+    Stage stage;
+    Scene scene;
+    @Override
+    public void init()
+            throws Exception{
+        stage=launch(GitFxApp.class,null);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+    }
+
+    @Override
+    public void stop() throws Exception{
+        FxToolkit.hideStage();
+    }
+    /*
     @Before
     public void before() throws Exception {
         FxToolkit.registerPrimaryStage();
         FxToolkit.setupApplication(GitFxApp.class);
     }
-
+    @After
+    public void cleanup() throws Exception {
+        FxToolkit.cleanupStages();
+    }*/
     @Test
     public void launchApplication() throws Exception {
         WaitForAsyncUtils.waitForFxEvents();

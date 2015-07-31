@@ -31,18 +31,18 @@ import org.testfx.util.WaitForAsyncUtils;
 /**
  * Created by rvvaidya on 31/07/15.
  */
-public class GitFxTestToolBar  extends FxRobot {
+public class GitFxTestToolBar  extends ApplicationTest {
     Stage stage;
     Scene scene;
-    @Before
-    public void before() throws Exception {
-        stage= FxToolkit.registerPrimaryStage();
-        FxToolkit.setupApplication(GitFxApp.class);
-        scene= stage.getScene();
+
+    @Override
+    public void init()
+            throws Exception{
+        stage=launch(GitFxApp.class,null);
     }
-    @After
-    public void cleanup() throws Exception {
-        FxToolkit.cleanupStages();
+    @Override
+    public void stop() throws Exception{
+        FxToolkit.hideStage();
     }
     @Test
     public void  launchApplication() throws Exception {
@@ -56,7 +56,10 @@ public class GitFxTestToolBar  extends FxRobot {
         Double anchorPaneConstraint = new Double(0.0);
         Assert.assertEquals("Left Anchor Test",anchorPaneConstraint, anchor.getLeftAnchor(toolbar));
         Assert.assertEquals("Right Anchor Test",anchorPaneConstraint,anchor.getRightAnchor(toolbar));
-        Assert.assertEquals("Top Anchor Test",anchorPaneConstraint,anchor.getTopAnchor(toolbar));
+        Assert.assertEquals("Top Anchor Test", anchorPaneConstraint, anchor.getTopAnchor(toolbar));
     }
-
+    @Override
+    public void start(Stage stage) throws Exception {
+        scene=stage.getScene();
+    }
 }

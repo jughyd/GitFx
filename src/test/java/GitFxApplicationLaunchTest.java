@@ -26,27 +26,29 @@ import org.junit.After;
 import org.testfx.util.WaitForAsyncUtils;
 import org.junit.Assert;
 import javafx.scene.Node;
-public class GitFxApplicationLaunchTest extends FxRobot {
+public class GitFxApplicationLaunchTest extends ApplicationTest {
     Stage stage;
     Scene scene;
-    Node root;
-    @Before
-    public void before() throws Exception {
-        stage=FxToolkit.registerPrimaryStage();
-        FxToolkit.setupApplication(GitFxApp.class);
-        scene= stage.getScene();
-
+    @Override
+    public void init()
+            throws Exception{
+        stage=launch(GitFxApp.class,null);
     }
-    @After
-    public void cleanup() throws Exception {
-        FxToolkit.cleanupStages();
+    @Override
+    public void stop() throws Exception{
+        FxToolkit.hideStage();
     }
     @Test
-    public void  launchApplication() throws Exception {
+    public void  launchApplicationTest() throws Exception {
         WaitForAsyncUtils.waitForFxEvents();
         Button gitinit = (Button)scene.lookup("#gitinit");
         Assert.assertEquals("\uf04b",gitinit.getText());
         Button gitclone = (Button)scene.lookup("#gitclone");
         Assert.assertEquals("\uF0C5",gitclone.getText());
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        scene=stage.getScene();
     }
 }
