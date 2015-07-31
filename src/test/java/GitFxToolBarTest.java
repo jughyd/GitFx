@@ -31,7 +31,7 @@ import org.testfx.util.WaitForAsyncUtils;
 /**
  * Created by rvvaidya on 31/07/15.
  */
-public class GitFxTestToolBar  extends ApplicationTest {
+public class GitFxToolBarTest  extends ApplicationTest {
     Stage stage;
     Scene scene;
 
