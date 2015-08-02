@@ -38,7 +38,7 @@
                                               <AnchorPane fx:id="historyContainer" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                    <children>
                                                       <Label fx:id="commits" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                                                      <ScrollPane fx:id="historyScrollPane" fitToHeight="true" fitToWidth="true" layoutY="38.0" pannable="true" prefViewportWidth="224.0" prefWidth="146.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                      <ScrollPane fx:id="historyScrollPane" fitToWidth="true" layoutY="38.0" pannable="true" prefViewportWidth="224.0" prefWidth="146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                                          <content>
                                                             <Accordion fx:id="historyAccordion" layoutX="-6.0" layoutY="-1.0" />
                                                          </content>
