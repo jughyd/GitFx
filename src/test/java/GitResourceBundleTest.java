@@ -13,8 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.github.gitfx;
 
+import io.github.gitfx.GitResourceBundle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import org.junit.After;
@@ -49,8 +49,8 @@ public class GitResourceBundleTest {
 
     @Test
     public void testDefaultRBProperty() {
-        ResourceBundle bundle = ResourceBundle.getBundle("GitResourceBundle",
-                Locale.US);
+        ResourceBundle bundle = new GitResourceBundle().getBundle();
+        
         assertNotNull(bundle);
         assert ("Open Repository".equals(bundle.getString("openRepo")));
         assert ("Choose the Repository Path"

@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -52,11 +53,11 @@ public class GitFxDialog implements GitDialog {
 
     private GitFxDialogResponse response;
     private String tempResponse;
-    private GitResourceBundle resourceBundle;
+    private ResourceBundle resourceBundle;
     Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
 
     public GitFxDialog() {
-        resourceBundle = new GitResourceBundle();
+        resourceBundle = new GitResourceBundle().getBundle();
     }
     /*
      *Implementaiton of Generic Information dialog

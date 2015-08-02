@@ -85,7 +85,7 @@ public class GitFxController implements Initializable {
     private GitFxDialog dialog;
     // Reference to the main application
     private GitFxApp gitFxApp;
-    private GitResourceBundle resourceBundle;
+    private ResourceBundle resourceBundle;
 
     /**
      * Reference to GitFxApp.
@@ -94,7 +94,7 @@ public class GitFxController implements Initializable {
      */
     public void setMainApp(GitFxApp gitFxApp) {
         this.gitFxApp = gitFxApp;
-        resourceBundle = new GitResourceBundle();
+        resourceBundle = new GitResourceBundle().getBundle();
     }
 
     @Override
