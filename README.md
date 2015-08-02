@@ -17,13 +17,7 @@ Prerequisiste
 4. Change directory to your clone location ```cd GitFx``` 
 5. Build using ```mvn clean install``` 
 
-##Using NetBeans IDE
-1. File -> Open Project 
-2. Select the Projects cloned folder GitFx<br/><img src='http://s14.postimg.org/z9dxp8yc1/Select_Git_Fx_Netbeans.png' border='0' alt="Select Git Fx Netbeans" /> 
-3. Clean Build the Project and Run</br><img src='http://s27.postimg.org/fq7gssgbn/Build_Netbeans.png' border='0' alt="Build Netbeans" />
-4. [Optional Step]You can skip tests while building. Right click on Project and select Properties. Click on Actions. Set the properties Skip Tests. </br><img src='http://s1.postimg.org/o73gcp3ov/Skiptests_Netbeans.png' border='0' alt="Skiptests Netbeans" />
-
-Note: IntelliJ and Eclipse can be used to build GitFx. However SceneBuilder works well with NetBeans to build JavaFX pages. 
+Refer [Project Wiki](https://github.com/jughyd/GitFx/wiki) for more information on the Project. 
 
 #License
 GitFx source is available under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License Version 2.0 </a> 
