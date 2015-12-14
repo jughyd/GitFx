@@ -216,7 +216,7 @@ public class GitFxController implements Initializable {
         for (String str : list) {
             ListView<String> changedFiles = new ListView<>();
             changedFiles.autosize();
-            changedFiles.setItems(FXCollections.observableArrayList(commitFiles.get(i)));
+            changedFiles.setItems(FXCollections.observableArrayList(commitFiles.get(i++)));
             changedFiles.maxHeight(Double.MAX_VALUE);
             pane = new TitledPane(str, changedFiles);
             //Specifying a height here as without height repo's with more commits
