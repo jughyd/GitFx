@@ -17,13 +17,16 @@ package io.github.gitfx.data;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import java.util.List;
+
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.RawTextComparator;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.io.DisabledOutputStream;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -39,13 +42,16 @@ public class GitRepoMetaData {
     RevCommit commit;
     RevWalk walk;
     ArrayList<String> shortMessage;
-    ArrayList<ArrayList<String>> changedFile;
+    ArrayList<ArrayList<String>> commitHistory;
+    ArrayList<String> tempCommitHistory;
+
     //There should be a better way to get this count
     int commitCount = 0;
 
     public GitRepoMetaData() {
         shortMessage = new ArrayList<>();
-        changedFile = new ArrayList<>();
+        commitHistory = new ArrayList<ArrayList<String>>();
+        tempCommitHistory = new ArrayList<>();
     }
 
     public void setRevWalk(RevWalk walk) {
@@ -60,35 +66,40 @@ public class GitRepoMetaData {
         this.commit = commit;
     }
 
+    //Gets the short messages to be printed on Titled Pane
+    //Also populates the commitHistory container to show history in the accordion
     public ArrayList<String> getShortMessage() {
         for (RevCommit revision : walk) {
             shortMessage.add(revision.getShortMessage());
-            commitCount++;
-            try {
-                RevTree tree = revision.getTree();
-                TreeWalk treeWalk = new TreeWalk(repository);
-                treeWalk.addTree(tree);
-                treeWalk.setRecursive(true);
-                ArrayList<String> commitFiles = new ArrayList<>();
-                while (treeWalk.next()) {
-                    //System.out.println(treeWalk.getPathString());
-                    commitFiles.add(treeWalk.getPathString());
+            logger.debug(revision.getShortMessage());
+            DiffFormatter df = new DiffFormatter(DisabledOutputStream.INSTANCE);
+            df.setRepository(repository);
+            df.setDiffComparator(RawTextComparator.DEFAULT);
+            df.setDetectRenames(true);
+            RevCommit parent = null;
+            if(revision.getParentCount()!=0) {
+                try {
+                    parent = walk.parseCommit(revision.getParent(0).getId());
+                    RevTree tree = revision.getTree();
+                    List<DiffEntry> diffs = df.scan(parent.getTree(), revision.getTree());
+                    for (DiffEntry diff : diffs) {
+                        logger.debug(diff.getChangeType().name());
+                            logger.debug(diff.getNewPath());
+                            tempCommitHistory.add(diff.getNewPath());
+                    }
+                }catch (IOException ex) {
+                    logger.debug("IOException", ex);
                 }
-                changedFile.add(commitFiles);
-            } catch (IncorrectObjectTypeException ex) {
-                logger.debug("IncorrectObjectTypeException", ex);
-            } catch (CorruptObjectException ex) {
-                logger.debug("CorruptObjectException", ex);
-            } catch (IOException ex) {
-                logger.debug("IOException", ex);
             }
+            commitHistory.add(commitCount++,new ArrayList<String>(tempCommitHistory));
+            tempCommitHistory.clear();
         }
         walk.reset();
         return shortMessage;
     }
 
     public ArrayList<ArrayList<String>> getCommitFiles() {
-        return changedFile;
+        return commitHistory;
     }
 
     public String getRepoName() {
