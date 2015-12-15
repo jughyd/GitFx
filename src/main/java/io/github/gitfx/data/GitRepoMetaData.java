@@ -17,6 +17,7 @@ package io.github.gitfx.data;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.eclipse.jgit.diff.DiffEntry;
@@ -44,7 +45,9 @@ public class GitRepoMetaData {
     ArrayList<String> shortMessage;
     ArrayList<ArrayList<String>> commitHistory;
     ArrayList<String> tempCommitHistory;
-
+    final String ADD = "ADD";
+    final String MODIFY= "MODIFY";
+    final String DEL ="DEL";
     //There should be a better way to get this count
     int commitCount = 0;
 
@@ -83,9 +86,13 @@ public class GitRepoMetaData {
                     RevTree tree = revision.getTree();
                     List<DiffEntry> diffs = df.scan(parent.getTree(), revision.getTree());
                     for (DiffEntry diff : diffs) {
-                        logger.debug(diff.getChangeType().name());
+                        String changeType = diff.getChangeType().name();
+                        if(changeType.equals(ADD)|| changeType.equals(MODIFY))
+                        {
+                            logger.debug(diff.getChangeType().name());
                             logger.debug(diff.getNewPath());
                             tempCommitHistory.add(diff.getNewPath());
+                        }
                     }
                 }catch (IOException ex) {
                     logger.debug("IOException", ex);
