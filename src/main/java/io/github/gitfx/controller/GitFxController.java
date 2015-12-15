@@ -25,6 +25,7 @@ import io.github.gitfx.data.RepositoryData;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javafx.scene.layout.Pane;
@@ -80,6 +82,10 @@ public class GitFxController implements Initializable {
     private AnchorPane treeContainer;
     @FXML
     private AnchorPane historyContainer;
+    @FXML
+    private AnchorPane diffContainer;
+    @FXML
+    private TextArea diffArea;
 
     private ProgressIndicator pi;
     private GitFxDialog dialog;
@@ -200,34 +206,48 @@ public class GitFxController implements Initializable {
      *  Given the GitRepoMetaData load the accordion with the repository 
      *  commit history
      */
-    private void initializeHistoryAccordion(GitRepoMetaData metaData) {
+    private void initializeHistoryAccordion(GitRepoMetaData metaData)  {
         ObservableList<TitledPane> panes = historyAccordion.getPanes();
+        historyAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
+            @Override
+            public void changed(ObservableValue<? extends TitledPane> observable, TitledPane oldValue, TitledPane newValue) {
+               if(newValue!=null) {
+                   try {
+                       logger.debug("Accordion expanded with oldvalue" + newValue.getId());
+                       diffArea.setWrapText(true);
+                       diffArea.setText(metaData.getDiffBetweenCommits(Integer.parseInt(newValue.getId())));
+                   }catch(GitAPIException | IOException ex){
+                       logger.debug("Something went wrong in getting commit history");
+                   }
+               }
+            }
+        });
         if (panes != null) {
             historyAccordion.getPanes().removeAll(panes);
         }
         if(metaData == null){
-        commits.setText("Empty Repository!");    
+            commits.setText("Empty Repository!");
         }
         else{
-        ArrayList<String> list = metaData.getShortMessage();
-        ArrayList<ArrayList<String>> commitFiles = metaData.getCommitFiles();
-        TitledPane pane;
-        int i = 0;
-        for (String str : list) {
-            ListView<String> changedFiles = new ListView<>();
-            changedFiles.autosize();
-            changedFiles.setItems(FXCollections.observableArrayList(commitFiles.get(i++)));
-            changedFiles.maxHeight(Double.MAX_VALUE);
-            pane = new TitledPane(str, changedFiles);
-            //Specifying a height here as without height repo's with more commits
-            //were not expanding to show commits
-            pane.setMaxHeight(50);
-            historyAccordion.getPanes().add(pane);
+            ArrayList<String> list = metaData.getShortMessage();
+            ArrayList<ArrayList<String>> commitFiles = metaData.getCommitFiles();
+            TitledPane pane;
+            int i = 0;
+            for (String str : list) {
+                ListView<String> changedFiles = new ListView<>();
+                changedFiles.autosize();
+                pane = new TitledPane(str, changedFiles);
+                pane.setId(String.valueOf(i));
+                changedFiles.setItems(FXCollections.observableArrayList(commitFiles.get(i++)));
+                changedFiles.maxHeight(Double.MAX_VALUE);
+                //Specifying a height here as without height repo's with more commits
+                //were not expanding to show commits
+                pane.setMaxHeight(50);
+                historyAccordion.getPanes().add(pane);
+            }
+            //Show number of commits on top of history accordion
+            commits.setText(metaData.getCommitCount() + " commits");
         }
-        //Show number of commits on top of history accordion
-        commits.setText(metaData.getCommitCount() + " commits");
-        }
-        
     }
 
     @FXML
@@ -338,8 +358,6 @@ public class GitFxController implements Initializable {
             );
          }
         dialog.gitFxInformationListDialog(resourceBundle.getString("syncRepo"), resourceBundle.getString("repo"),null,list);
-        
-                
     }
 
 }

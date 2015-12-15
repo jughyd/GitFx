@@ -45,7 +45,10 @@
                                                       </ScrollPane>
                                                    </children>
                                                 </AnchorPane>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="497.0" prefWidth="932.0" />
+                                              <AnchorPane fx:id="diffContainer" minHeight="0.0" minWidth="0.0" prefHeight="517.0" prefWidth="273.0">
+                                                   <children>
+                                                      <TextArea fx:id="diffArea" prefHeight="517.0" prefWidth="343.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children></AnchorPane>
                                             </items>
                                           </SplitPane>
                                        </children></AnchorPane>
