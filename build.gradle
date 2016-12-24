@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'application'
+mainClassName = "io.github.gitfx.GitFxApp"
+
+repositories{
+    maven {url "https://oss.sonatype.org/content/repositories/snapshots"}
+    maven {url "https://repo.eclipse.org/content/groups/releases/"}
+    mavenCentral()
+}
+
+dependencies{
+    compile 'junit:junit:5.0-SNAPSHOT'
+    compile 'org.testfx:testfx-junit:4.0.1-alpha'
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.google.code.gson:gson:1.7.1'
+    compile 'org.slf4j:slf4j-api:1.7.9'
+    compile 'ch.qos.logback:logback-classic:1.1.2'
+    compile 'ch.qos.logback:logback-core:1.1.2'
+    compile 'com.airhacks:afterburner.fx:1.6.1'
+    compile 'org.controlsfx:controlsfx:8.20.8'
+    compile 'org.eclipse.jgit:org.eclipse.jgit:3.7.0.201502260915-r'
+    compile 'org.eclipse.jgit:org.eclipse.jgit.http.server:3.7.0.201502260915-r'
+    compile 'org.eclipse.jgit:org.eclipse.jgit.ui:3.7.0.201502260915-r'
+    compile 'org.eclipse.jgit:org.eclipse.jgit.junit:3.7.0.201502260915-r'
+}
