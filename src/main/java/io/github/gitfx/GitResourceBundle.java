@@ -18,11 +18,14 @@ package io.github.gitfx;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import com.jcabi.aspects.Loggable;
+
 /**
  * Resource Bundle for GitFx Application
  *
  * @author rvvaidya
  */
+@Loggable
 public class GitResourceBundle{
     private Locale locale;
     public GitResourceBundle() {

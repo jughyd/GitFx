@@ -44,17 +44,20 @@ import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jcabi.aspects.Loggable;
+
 /**
  * Concrete class which does GitDialog implementation
  *
  * @author rvvaidya
  */
+@Loggable
 public class GitFxDialog implements GitDialog {
 
     private GitFxDialogResponse response;
     private String tempResponse;
     private ResourceBundle resourceBundle;
-    Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
+//[LOG]    Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
 
     public GitFxDialog() {
         resourceBundle = new GitResourceBundle().getBundle();
@@ -91,7 +94,7 @@ public class GitFxDialog implements GitDialog {
                 @Override
                 public void changed(ObservableValue observable, Object oldValue,
                         Object newValue) {
-                  logger.debug(newValue.toString());        
+//[LOG]                  logger.debug(newValue.toString());        
                 }
          });
         alert.showAndWait();
@@ -201,7 +204,7 @@ public class GitFxDialog implements GitDialog {
             if (dialogButton == okButton) {
                 String filePath = repository.getText();
                 //filePath = filePath.concat("/.git");
-                logger.debug(filePath);
+//[LOG]                logger.debug(filePath);
                 if (!filePath.isEmpty() && new File(filePath).exists()) {
                     setResponse(GitFxDialogResponse.OK);
                     return new Pair<>(repository.getText(), GitFxDialogResponse.OK);
@@ -213,7 +216,7 @@ public class GitFxDialog implements GitDialog {
 
             }
             if (dialogButton == cancelButton) {
-                logger.debug("Cancel clicked");
+//[LOG]                logger.debug("Cancel clicked");
                 setResponse(GitFxDialogResponse.CANCEL);
                 return new Pair<>(null, GitFxDialogResponse.CANCEL);
             }
@@ -223,7 +226,7 @@ public class GitFxDialog implements GitDialog {
         Optional<Pair<String, GitFxDialogResponse>> result = dialog.showAndWait();
 
         result.ifPresent(repoPath -> {
-            logger.debug(repoPath.getKey() + " " + repoPath.getValue().toString());
+//[LOG]            logger.debug(repoPath.getKey() + " " + repoPath.getValue().toString());
         });
 
         Pair<String, GitFxDialogResponse> temp = null;
@@ -270,9 +273,9 @@ public class GitFxDialog implements GitDialog {
             if (dialogButton == initRepo) {
                 setResponse(GitFxDialogResponse.INITIALIZE);
                 String path = localPath.getText();
-                logger.debug( "path" + path + path.isEmpty());
+//[LOG]                logger.debug( "path" + path + path.isEmpty());
                 if (new File(path).exists()) {
-                   logger.debug(path.substring(localPath.getText().lastIndexOf(File.separator)));
+//[LOG]                   logger.debug(path.substring(localPath.getText().lastIndexOf(File.separator)));
                    String projectName= path.substring(localPath.getText().lastIndexOf(File.separator)+1);
                     return new Pair<>(projectName, localPath.getText());
                 } else {
@@ -323,7 +326,7 @@ public class GitFxDialog implements GitDialog {
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == chooseButtonType) {
-                logger.debug("Choose clicked");
+//[LOG]                logger.debug("Choose clicked");
                 chooser.setTitle(resourceBundle.getString("cloneRepo"));
                 File cloneRepo = chooser.showDialog(dialog.getOwner());
                 localPath.setText(cloneRepo.getPath());
@@ -343,7 +346,7 @@ public class GitFxDialog implements GitDialog {
                 }
             }
             if (dialogButton == cancelButtonType) {
-                logger.debug("Cancel clicked");
+//[LOG]                logger.debug("Cancel clicked");
                 setResponse(GitFxDialogResponse.CANCEL);
                 return new Pair<>(null, null);
             }

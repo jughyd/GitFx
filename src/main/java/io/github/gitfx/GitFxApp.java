@@ -16,24 +16,27 @@
 package io.github.gitfx;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
+// import static javafx.application.Application.launch;		 removing this redundant import as GitFxApp itself is Application(subclass), launch can be used without importing
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import static io.github.gitfx.util.WorkbenchUtil.initializeWorkbench;
 import io.github.gitfx.controller.GitFxController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
+import com.jcabi.aspects.Loggable;
+
+@Loggable
 public class GitFxApp extends Application {
 
-    Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
+    // Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName()); // Removed as adding new AOP Lines
     private Stage stage;
 
     @Override
     public void start(Stage stage) throws Exception {
-        logger.debug("Application Starting...");
+        //logger.debug("Application Starting...");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GitFx.fxml"));
         Parent root = loader.load();
         this.stage = stage;

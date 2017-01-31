@@ -18,6 +18,8 @@ package io.github.gitfx.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import com.google.gson.Gson;
+import com.jcabi.aspects.Loggable;
+
 import io.github.gitfx.dialog.GitFxDialog;
 import io.github.gitfx.data.GitRepoMetaData;
 import io.github.gitfx.data.RepositoryData;
@@ -41,9 +43,10 @@ import org.slf4j.Logger;
  *
  * @author rvvaidya
  */
+@Loggable
 public final class GitFXGsonUtil {
 
-    static Logger logger = LoggerFactory.getLogger(GitFXGsonUtil.class.getName());
+//    static Logger logger = LoggerFactory.getLogger(GitFXGsonUtil.class.getName());
     //public static final String GitFxRepo = "GitFxRepo.json";
     /*
      *  Passivate the String JSON to a file on disk to store repository 
@@ -65,7 +68,7 @@ public final class GitFXGsonUtil {
             outputStream.flush();
             outputStream.close();
         } catch (Exception e) {
-            logger.debug("Error Passivating JSON", e);
+//[LOG]            logger.debug("Error Passivating JSON", e);
         }
     }
     /*
@@ -100,7 +103,7 @@ public final class GitFXGsonUtil {
         git.close();
         }
         catch(GitAPIException e){
-            logger.debug("Error creating Git repository",e.getMessage());
+//[LOG]            logger.debug("Error creating Git repository",e.getMessage());
         }
     }
     public static boolean cloneGitRepository(String repoURL,String localPath){
@@ -113,7 +116,7 @@ public final class GitFXGsonUtil {
         return true;
         }
         catch(GitAPIException e){
-            logger.debug("Error creating Git repository",e.getMessage());
+//[LOG]            logger.debug("Error creating Git repository",e.getMessage());
             return false;
         }
     }
@@ -137,8 +140,7 @@ public final class GitFXGsonUtil {
                 return repoMetaData;
             }
         } catch (IOException e) {
-
-            logger.debug("IOException", e);
+//[LOG]            logger.debug("IOException", e);
         }
         return null;
     }
@@ -186,7 +188,7 @@ public final class GitFXGsonUtil {
             gitMetaData.setRevWalk(walk);
             return gitMetaData;
         } catch (IOException exception) {
-            logger.debug("IOException getGitRepositoryMetaData", exception);
+//[LOG]            logger.debug("IOException getGitRepositoryMetaData", exception);
         };
         return null;
     }
