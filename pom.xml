@@ -129,12 +129,12 @@
     	</dependency>
         
         <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjtools -->
-		<dependency>
-		    <groupId>org.aspectj</groupId>
-		    <artifactId>aspectjtools</artifactId>
-		    <version>1.8.6</version>
-		</dependency>
-		        
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.8.6</version>
+        </dependency>
+                
     </dependencies>
     
     <repositories>
@@ -218,14 +218,14 @@
                     <execution>
                         <id>default-cli</id>
                         <goals>
-                            <goal>exec</goal>                            
+                            <goal>exec</goal>
                         </goals>
                         <configuration>
                             <executable>${java.home}/bin/java</executable>
                             <commandlineArgs>${runfx.args}</commandlineArgs>
                         </configuration>
                     </execution>
-                </executions>  
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -254,60 +254,59 @@
             
             
             <!-- For AspectJ Automation:
-            	It is used in com.jcabi:parent POM project in order to automate certain build operations. 
-            	source:- http://plugin.jcabi.com/usage.html 
-            	-->
+                It is used in com.jcabi:parent POM project in order to automate certain build operations. 
+                source:- http://plugin.jcabi.com/usage.html 
+                -->
             <plugin>
-        		<groupId>com.jcabi</groupId>
-        		<artifactId>jcabi-maven-plugin</artifactId>
-        		<version>0.14</version>
-        		<executions>
-          			<execution>
-			            <goals>
-              				<goal>ajc</goal>
-            			</goals>
-          			</execution>
-        		</executions>
-      		</plugin>
-      		
+                <groupId>com.jcabi</groupId>
+                <artifactId>jcabi-maven-plugin</artifactId>
+                <version>0.14</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>ajc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
         </plugins>
         
         
         <!-- This added to solve the Error in the execution element of the jcabi-maven-plugin:
-        	 # Plugin execution not covered by lifecycle configuration: com.jcabi:jcabi-maven-plugin:0.9.2:ajc (execution: default, phase: process-classes)
-        	 source:- http://aspects.jcabi.com/example-weaving-eclipse.html
-        	 		  http://aspects.jcabi.com/example-weaving.html
-        	 -->
-        <pluginManagement>
-	    <plugins>
-	    <!--This plugin's configuration is used to store Eclipse m2e settings
-	      only. It has no influence on the Maven build itself. -->
-	    <plugin>
-	      <groupId>org.eclipse.m2e</groupId>
-	      <artifactId>lifecycle-mapping</artifactId>
-	      <version>1.0.0</version>
-	      <configuration>
-	        <lifecycleMappingMetadata>
-	          <pluginExecutions>
-	            <pluginExecution>
-	              <pluginExecutionFilter>
-	                <groupId>com.jcabi</groupId>
-	                <artifactId>jcabi-maven-plugin</artifactId>
-	                <versionRange>[0.0,)</versionRange>
-	                <goals>
-	                  <goal>ajc</goal>
-	                </goals>
-	              </pluginExecutionFilter>
-	              <action>
-	                <execute />
-	              </action>
-	            </pluginExecution>
-	          </pluginExecutions>
-	        </lifecycleMappingMetadata>
-	      </configuration>
-	    </plugin>
-	  </plugins>
-	  </pluginManagement>
-        
+             # Plugin execution not covered by lifecycle configuration: com.jcabi:jcabi-maven-plugin:0.9.2:ajc (execution: default, phase: process-classes)
+             source:- http://aspects.jcabi.com/example-weaving-eclipse.html
+             http://aspects.jcabi.com/example-weaving.html
+             -->
+       <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings
+                    only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                    <lifecycleMappingMetadata>
+                    <pluginExecutions>
+                        <pluginExecution>
+                            <pluginExecutionFilter>
+                                <groupId>com.jcabi</groupId>
+                                <artifactId>jcabi-maven-plugin</artifactId>
+                                <versionRange>[0.0,)</versionRange>
+                                <goals>
+                                    <goal>ajc</goal>
+                                </goals>
+                            </pluginExecutionFilter>
+                            <action>
+                                <execute />
+                            </action>
+                        </pluginExecution>
+                    </pluginExecutions>
+                    </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+       </pluginManagement>
     </build>
 </project>
