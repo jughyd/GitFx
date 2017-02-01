@@ -17,14 +17,15 @@ package io.github.gitfx.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+
+import com.jcabi.aspects.Loggable;
 
 /**
  * POJO class that maintains the repository metadata
  *
  * @author rvvaidya
  */
+@Loggable
 public class RepositoryData {
 
     String serverName;
