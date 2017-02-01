@@ -15,10 +15,13 @@
  */
 package io.github.gitfx.data;
 
+import com.jcabi.aspects.Loggable;
+
 /**
  *
  * @author rvvaidya
  */
+@Loggable
 public class ProjectData {
 
     String projectName;

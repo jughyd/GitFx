@@ -33,3 +33,7 @@ build/
 target/
 config/
 tests/target/
+
+#folder conatining logs
+logs/
+>>>>>>> 834b8d3f0dd091cf4608cb6b496ff469a1905652

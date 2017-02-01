@@ -32,8 +32,10 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+
+import com.jcabi.aspects.Loggable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,9 +46,10 @@ import java.util.List;
  *
  * @author rvvaidya
  */
+@Loggable
 public class GitRepoMetaData {
 
-    Logger logger = LoggerFactory.getLogger(GitRepoMetaData.class.getName());
+//[LOG] Logger logger = LoggerFactory.getLogger(GitRepoMetaData.class.getName());
 
     Repository repository;
     RevCommit commit;
@@ -86,7 +89,7 @@ public class GitRepoMetaData {
     public ArrayList<String> getShortMessage() {
         for (RevCommit revision : walk) {
             shortMessage.add(revision.getShortMessage());
-            logger.debug(revision.getShortMessage());
+//[LOG]            logger.debug(revision.getShortMessage());
             DiffFormatter df = new DiffFormatter(DisabledOutputStream.INSTANCE);
             df.setRepository(repository);
             df.setDiffComparator(RawTextComparator.DEFAULT);
@@ -101,13 +104,13 @@ public class GitRepoMetaData {
                         String changeType = diff.getChangeType().name();
                         if(changeType.equals(ADD)|| changeType.equals(MODIFY))
                         {
-                            logger.debug(diff.getChangeType().name());
-                            logger.debug(diff.getNewPath());
+//[LOG]                            logger.debug(diff.getChangeType().name());
+//[LOG]                            logger.debug(diff.getNewPath());
                             tempCommitHistory.add(diff.getNewPath());
                         }
                     }
                 }catch (IOException ex) {
-                    logger.debug("IOException", ex);
+//[LOG]                    logger.debug("IOException", ex);
                 }
             }
             commitSHA.add(commitCount,revision.name());
