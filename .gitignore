@@ -31,3 +31,6 @@ dist/
 build/
 target/
 tests/target/
+
+#folder conatining logs
+logs/

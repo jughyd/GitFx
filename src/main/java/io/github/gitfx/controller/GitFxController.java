@@ -38,25 +38,29 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.event.EventHandler;
-import javafx.event.Event;
+//import javafx.event.EventHandler;
+//import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.effect.BlendMode;
+//import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
+//import javafx.scene.layout.Background;
+//import javafx.scene.layout.Region;
+//import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.jcabi.aspects.Loggable;
+
+//[LOG] import org.slf4j.Logger;
+//[LOG] import org.slf4j.LoggerFactory;
 import javafx.scene.layout.Pane;
 
+@Loggable
 public class GitFxController implements Initializable {
 
-    Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
+    // Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
 
     @FXML
     private Button gitclone;
@@ -73,7 +77,7 @@ public class GitFxController implements Initializable {
     @FXML
     private MenuButton gitsync;
     @FXML
-    private TreeView<String> RepositoryTree;
+    private TreeView<String> RepositoryTree;		// Shouldn't we rename this name to repositoryTree
     @FXML
     private Accordion historyAccordion;
     @FXML
@@ -87,6 +91,7 @@ public class GitFxController implements Initializable {
     @FXML
     private TextArea diffArea;
 
+    //[DOUBT] Shouldn't we either remove this or the duplicate declaration in the addProgressIndiactor()
     private ProgressIndicator pi;
     private GitFxDialog dialog;
     // Reference to the main application
@@ -96,7 +101,7 @@ public class GitFxController implements Initializable {
     /**
      * Reference to GitFxApp.
      *
-     * @param gitFxApp
+     * @param gitFxApp]'
      */
     public void setMainApp(GitFxApp gitFxApp) {
         this.gitFxApp = gitFxApp;
@@ -106,16 +111,19 @@ public class GitFxController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Font.loadFont(GitFxController.class.getResource("/fonts/fontawesome-webfont.ttf").toExternalForm(), 12);
-        gitinit.setText('\uf04b' + "");
+        
+        //[CHANGE] I think we should use some common resource from where all these values are fetched...
+        gitinit.setText('\uf04b' + "");		
         gitopen.setText('\uf07c' + "");
         gitsettings.setText('\uf013' + "");
         gitsync.setText('\uf021' + "");
         gitclone.setText('\uf0c5' + "");
+        
         RepositoryTree.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     TreeItem<String> selectedItem = (TreeItem<String>) newValue;
                     if (selectedItem != null) {
-                        logger.debug("Selected Text" + selectedItem.getValue());
+//[LOG]					logger.debug("Selected Text" + selectedItem.getValue());
                         addProgressIndicator(historyContainer);
                         if (!selectedItem.getValue().equals("github"))
                             initializeHistoryAccordion(selectedItem.getValue());
@@ -152,7 +160,7 @@ public class GitFxController implements Initializable {
         container.getChildren().add(pi);
         pi.setLayoutX(container.getWidth() / 2 - 20);
         pi.setLayoutY(container.getHeight() / 2) ;
-        logger.debug(String.valueOf(container.getWidth()));
+//[LOG]        logger.debug(String.valueOf(container.getWidth()));
         pi.setPrefSize(50, 50);
         delayProgressIndicator(pi);
     }
@@ -166,7 +174,7 @@ public class GitFxController implements Initializable {
                     pi.setVisible(true);
                     Thread.sleep(500);
                 } catch (InterruptedException exception) {
-                  logger.debug("Interruped Exception"+exception.getMessage());
+//[LOG]                  logger.debug("Interruped Exception"+exception.getMessage());
                 } finally {
                     Platform.runLater(new Runnable() {
                         public void run() {
@@ -213,11 +221,11 @@ public class GitFxController implements Initializable {
             public void changed(ObservableValue<? extends TitledPane> observable, TitledPane oldValue, TitledPane newValue) {
                if(newValue!=null) {
                    try {
-                       logger.debug("Accordion expanded with oldvalue" + newValue.getId());
+//[LOG]                logger.debug("Accordion expanded with oldvalue" + newValue.getId());
                        diffArea.setWrapText(true);
                        diffArea.setText(metaData.getDiffBetweenCommits(Integer.parseInt(newValue.getId())));
                    }catch(GitAPIException | IOException ex){
-                       logger.debug("Something went wrong in getting commit history");
+//[LOG]             	logger.debug("Something went wrong in getting commit history");
                    }
                }
             }
@@ -258,33 +266,40 @@ public class GitFxController implements Initializable {
     public void onGitCloneClicked(ActionEvent event) {
         dialog = new GitFxDialog();
         Pair<String, String> clonedRepo = dialog.gitCloneDialog(resourceBundle.getString("cloneRepo"),
-                resourceBundle.getString("cloneRepo"),
-                null);
+                resourceBundle.getString("cloneRepo"), null);
+        
         if (dialog.getResponse() == GitFxDialogResponse.CLONE && clonedRepo != null) {
-            logger.debug("Response Ok Repo Path");
+//[LOG]     logger.debug("Response Ok Repo Path");
             String repoURL =clonedRepo.getKey();
             String repoName="";
-            if(repoURL.contains(".git"))
-             repoName = repoURL.substring(repoURL.lastIndexOf("/")+1,repoURL.indexOf(".git"));
-            else
-             repoName = repoURL.substring(repoURL.lastIndexOf("/")+1);   
+            
+            if(repoURL.contains(".git")) {
+            	repoName = repoURL.substring(repoURL.lastIndexOf("/")+1,repoURL.indexOf(".git"));
+            }
+            else {
+            	repoName = repoURL.substring(repoURL.lastIndexOf("/")+1);
+            }
+            
             String localPath = clonedRepo.getValue();
             localPath = localPath +File.separator+repoName;
-            logger.debug("Clone URL" + repoURL );
-            logger.debug("Local Path" + localPath);
-            if(GitFXGsonUtil.cloneGitRepository(repoURL,localPath)){
-            GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(localPath);    
-            initializeHistoryAccordion(metaData);
-            GitFXGsonUtil.saveRepositoryInformation("github", repoName,localPath);
-            initializeTree();
+
+//[LOG]     logger.debug("Clone URL" + repoURL );
+//[LOG]     logger.debug("Local Path" + localPath);
+            
+            if(GitFXGsonUtil.cloneGitRepository(repoURL,localPath)) {
+	            GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(localPath);    
+	            initializeHistoryAccordion(metaData);
+	            GitFXGsonUtil.saveRepositoryInformation("github", repoName,localPath);
+	            initializeTree();
             }
-            else{
-                logger.debug("Its not a Valid URL");
-            }
+//[LOG]     else{
+//[LOG]			logger.debug("Its not a Valid URL");
+//[LOG]		}
                 
-        } else {
-            logger.debug("Response Cancel");
-        }
+        } 
+//[LOG] else {
+//[LOG]		logger.debug("Response Cancel");
+//[LOG]	}
     }
 
     @FXML
@@ -294,21 +309,22 @@ public class GitFxController implements Initializable {
                 resourceBundle.getString("chooseRepo"),
                 resourceBundle.getString("repo"));
         if (dialog.getResponse() == GitFxDialogResponse.OK) {
-            logger.debug("Response Ok Repo Path" + repoPath);
+//[LOG]		logger.debug("Response Ok Repo Path" + repoPath);
             GitRepoMetaData metaData = GitFXGsonUtil.getGitRepositoryMetaData(repoPath);
             initializeHistoryAccordion(metaData);
             String repoName =repoPath.substring(repoPath.lastIndexOf(File.separator)+1);
             GitFXGsonUtil.saveRepositoryInformation("github", repoName,
                     repoPath);
             initializeTree();
-        } else {
-            logger.debug("Response Cancel");
-        }
+        } 
+//[LOG] else {
+//[LOG]		logger.debug("Response Cancel");
+//[LOG] }
     }
 
     @FXML
     public void onGitSyncClicked(ActionEvent event) {
-       logger.debug("Sync particular repository");
+//[LOG] logger.debug("Sync particular repository");
     }
     
     @FXML
@@ -317,11 +333,13 @@ public class GitFxController implements Initializable {
         dialog.gitConfirmationDialog(resourceBundle.getString("sync"),
                 resourceBundle.getString("syncAll"),
                 resourceBundle.getString("syncAllDesc"));
+        
         if (dialog.getResponse() == GitFxDialogResponse.OK) {
-            logger.debug("Sync all clicked");
-        } else {
-            logger.debug("Cancelled");
-        }
+//[LOG]		logger.debug("Sync all clicked");
+        } 
+//[LOG]        else {
+//[LOG]            logger.debug("Cancelled");
+//[LOG]        }
     }
 
     @FXML
@@ -331,23 +349,25 @@ public class GitFxController implements Initializable {
                 resourceBundle.getString("initRepo"),
                 null);
         if (dialog.getResponse() == GitFxDialogResponse.INITIALIZE && newRepo != null) {
-            logger.debug("Git init clicked");
-            logger.debug("Project Name" + newRepo.getKey());
-            logger.debug("Local Path" + newRepo.getValue());
+//[LOG]            logger.debug("Git init clicked");
+//[LOG]            logger.debug("Project Name" + newRepo.getKey());
+//[LOG]            logger.debug("Local Path" + newRepo.getValue());
 
+        	// [NOT USED]
             String path = WorkbenchUtil.getGitFxWorkbenchPath();
             GitFXGsonUtil.saveRepositoryInformation("github", newRepo.getKey(),
                     newRepo.getValue());
             //Call a utility method to intitilize a repository
             initializeTree();
-        } else {
-            logger.debug("Cancelled");
-        }
+        } 
+//[LOG]        else {
+//[LOG]            logger.debug("Cancelled");
+//[LOG]        }
     }
 
     @FXML
     public void onGitParticularRepositoryClicked(ActionEvent event) {
-        logger.debug("Git Particular Repository clicked");
+//[LOG]        logger.debug("Git Particular Repository clicked");
         dialog = new GitFxDialog();
         RepositoryData metaData = GitFXGsonUtil.getRepositoryMetaData();
         List<String> list = new ArrayList<>();
