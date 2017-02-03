@@ -57,6 +57,7 @@ public class GitFxDialog implements GitDialog {
     private GitFxDialogResponse response;
     private String tempResponse;
     private ResourceBundle resourceBundle;
+    private static final String EMPTY_STRING = "";
 //[LOG]    Logger logger = LoggerFactory.getLogger(GitFxApp.class.getName());
 
     public GitFxDialog() {
@@ -75,7 +76,7 @@ public class GitFxDialog implements GitDialog {
         alert.showAndWait();
         return alert;
     }
-   
+
     /*
      *Implementaiton of Information List Dialog
      *A dialog box which returns the selected items once clicked on Ok
@@ -86,17 +87,13 @@ public class GitFxDialog implements GitDialog {
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(label);
-        ListView<String> listView = new ListView<String>();
+        ListView<String> listView = new ListView<>();
         listView.setItems(FXCollections.observableArrayList(list));
         alert.getDialogPane().setContent(listView);
         listView.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue,
-                        Object newValue) {
-//[LOG]                  logger.debug(newValue.toString());        
-                }
-         });
+                (observable, oldValue, newValue) -> {
+//[LOG]                  logger.debug(newValue.toString());
+                });
         alert.showAndWait();
         //TODO Need to return the logged newValue for further JGit code to sync
         //a repository
@@ -161,7 +158,7 @@ public class GitFxDialog implements GitDialog {
         alert.showAndWait();
     }
     /*
-     * Implementation of Git Open Dialog. 
+     * Implementation of Git Open Dialog.
      */
 
     @Override
@@ -175,7 +172,7 @@ public class GitFxDialog implements GitDialog {
 
         ButtonType chooseButtonType = new ButtonType("Choose");
         ButtonType okButton = new ButtonType("Ok");
-        ButtonType cancelButton = new ButtonType("Canel");
+        ButtonType cancelButton = new ButtonType("Cancel");
 
         dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType, okButton, cancelButton);
 
@@ -196,10 +193,9 @@ public class GitFxDialog implements GitDialog {
                 File path = chooser.showDialog(dialog.getOwner());
                 if (path != null) {
                     repository.setText(path.getPath());
+                    chooser.setTitle(resourceBundle.getString("repo"));
+                    setResponse(GitFxDialogResponse.CHOOSE);
                 }
-                chooser.setTitle(resourceBundle.getString("repo"));
-                setResponse(GitFxDialogResponse.CHOOSE);
-                return null;
             }
             if (dialogButton == okButton) {
                 String filePath = repository.getText();
@@ -233,11 +229,16 @@ public class GitFxDialog implements GitDialog {
         if (result.isPresent()) {
             temp = result.get();
         }
-        return temp.getKey();// + "/.git";
+
+        if(temp != null){
+            return temp.getKey();// + "/.git";
+        }
+        return EMPTY_STRING;
+
     }
 
     /*
-     * Implementation of Git Open Dialog. 
+     * Implementation of Git Open Dialog.
      */
     @Override
     public Pair<String, String> gitInitDialog(String title, String header, String content) {
@@ -265,10 +266,11 @@ public class GitFxDialog implements GitDialog {
                 DirectoryChooser chooser = new DirectoryChooser();
                 chooser.setTitle(resourceBundle.getString("selectRepo"));
                 File initialRepo = chooser.showDialog(dialog.getOwner());
-                localPath.setText(initialRepo.getPath());
-                dialog.getDialogPane();
-                setResponse(GitFxDialogResponse.CHOOSE);
-                return null;
+                if(initialRepo != null){
+                    localPath.setText(initialRepo.getPath());
+                    dialog.getDialogPane();
+                    setResponse(GitFxDialogResponse.CHOOSE);
+                }
             }
             if (dialogButton == initRepo) {
                 setResponse(GitFxDialogResponse.INITIALIZE);
@@ -276,7 +278,7 @@ public class GitFxDialog implements GitDialog {
 //[LOG]                logger.debug( "path" + path + path.isEmpty());
                 if (new File(path).exists()) {
 //[LOG]                   logger.debug(path.substring(localPath.getText().lastIndexOf(File.separator)));
-                   String projectName= path.substring(localPath.getText().lastIndexOf(File.separator)+1);
+                    String projectName= path.substring(localPath.getText().lastIndexOf(File.separator)+1);
                     return new Pair<>(projectName, localPath.getText());
                 } else {
                     this.gitErrorDialog(resourceBundle.getString("errorInit"),
@@ -300,7 +302,7 @@ public class GitFxDialog implements GitDialog {
 
     @Override
     public Pair<String, String> gitCloneDialog(String title, String header,
-            String content) {
+                                               String content) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         DirectoryChooser chooser = new DirectoryChooser();
         dialog.setTitle(title);
@@ -329,9 +331,10 @@ public class GitFxDialog implements GitDialog {
 //[LOG]                logger.debug("Choose clicked");
                 chooser.setTitle(resourceBundle.getString("cloneRepo"));
                 File cloneRepo = chooser.showDialog(dialog.getOwner());
-                localPath.setText(cloneRepo.getPath());
-                setResponse(GitFxDialogResponse.CHOOSE);
-                return null;
+                if(cloneRepo != null){
+                    localPath.setText(cloneRepo.getPath());
+                    setResponse(GitFxDialogResponse.CHOOSE);
+                }
             }
             if (dialogButton == cloneButtonType) {
                 setResponse(GitFxDialogResponse.CLONE);
