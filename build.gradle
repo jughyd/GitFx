@@ -22,4 +22,7 @@ dependencies{
     compile 'org.eclipse.jgit:org.eclipse.jgit.http.server:3.7.0.201502260915-r'
     compile 'org.eclipse.jgit:org.eclipse.jgit.ui:3.7.0.201502260915-r'
     compile 'org.eclipse.jgit:org.eclipse.jgit.junit:3.7.0.201502260915-r'
+    compile 'com.jcabi:jcabi-aspects:0.22.5'
+    compile 'org.aspectj:aspectjtools:1.8.6'
+    compile 'org.aspectj:aspectjrt:1.6.12'
 }
