@@ -89,7 +89,7 @@ public class GitFxAppTest extends ApplicationTest {
     }
 
     @Test
-    public void testBehaviorWhenFileIsNullInFileDialog() {
+    public void testNoExceptionOccursWhenFileIsNullInFileDialog() {
         gitFxDialog = new GitFxDialog();
         TextField textField = new TextField();
         gitFxDialog.getFileAndSeText(textField,null);
