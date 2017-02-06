@@ -373,7 +373,7 @@ public class GitFxController implements Initializable {
         List<String> list = new ArrayList<>();
         if(metaData!=null){  
         List<ProjectData> projectData = metaData.getRepositories();
-            projectData.stream().forEach((project) -> 
+            projectData.stream().forEach(project ->
                 list.add(project.getProjectName())
             );
          }
