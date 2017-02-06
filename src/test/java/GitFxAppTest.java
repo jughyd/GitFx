@@ -89,9 +89,12 @@ public class GitFxAppTest extends ApplicationTest {
     }
 
     @Test
-    public void testNoExceptionOccursWhenFileIsNullInFileDialog() {
+    // Test Fails when any exception occurs
+    public void testBehaviorWhenFileIsNullInFileDialog() {
         gitFxDialog = new GitFxDialog();
         TextField textField = new TextField();
         gitFxDialog.getFileAndSeText(textField,null);
+        File file = new File(getClass().getResource("/test.txt").getFile());
+        gitFxDialog.getFileAndSeText(textField,file);
     }
 }
