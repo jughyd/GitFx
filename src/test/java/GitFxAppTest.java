@@ -16,12 +16,10 @@
 import io.github.gitfx.GitFxApp;
 import java.io.File;
 
-import javafx.scene.Scene;
+import io.github.gitfx.dialog.GitFxDialog;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.util.WaitForAsyncUtils;
 /**
@@ -31,7 +29,7 @@ import org.testfx.util.WaitForAsyncUtils;
 public class GitFxAppTest extends ApplicationTest {
     File metaDataJSON;
     Stage stage;
-    Scene scene;
+    GitFxDialog gitFxDialog;
     @Override
     public void init()
             throws Exception{
@@ -88,5 +86,15 @@ public class GitFxAppTest extends ApplicationTest {
         clickOn("Others");
         clickOn("Changes");
         clickOn("History");*/
+    }
+
+    @Test
+    // Test Fails when any exception occurs
+    public void testBehaviorWhenFileIsNullInFileDialog() {
+        gitFxDialog = new GitFxDialog();
+        TextField textField = new TextField();
+        gitFxDialog.getFileAndSeText(textField,null);
+        File file = new File(getClass().getResource("/test.txt").getFile());
+        gitFxDialog.getFileAndSeText(textField,file);
     }
 }
