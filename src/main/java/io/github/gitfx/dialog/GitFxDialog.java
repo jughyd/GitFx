@@ -191,11 +191,8 @@ public class GitFxDialog implements GitDialog {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == chooseButtonType) {
                 File path = chooser.showDialog(dialog.getOwner());
-                if (path != null) {
-                    repository.setText(path.getPath());
-                    chooser.setTitle(resourceBundle.getString("repo"));
-                    setResponse(GitFxDialogResponse.CHOOSE);
-                }
+                getFileAndSeText(repository,path);
+                chooser.setTitle(resourceBundle.getString("repo"));
             }
             if (dialogButton == okButton) {
                 String filePath = repository.getText();
@@ -266,11 +263,8 @@ public class GitFxDialog implements GitDialog {
                 DirectoryChooser chooser = new DirectoryChooser();
                 chooser.setTitle(resourceBundle.getString("selectRepo"));
                 File initialRepo = chooser.showDialog(dialog.getOwner());
-                if(initialRepo != null){
-                    localPath.setText(initialRepo.getPath());
-                    dialog.getDialogPane();
-                    setResponse(GitFxDialogResponse.CHOOSE);
-                }
+                getFileAndSeText(localPath, initialRepo);
+                dialog.getDialogPane();
             }
             if (dialogButton == initRepo) {
                 setResponse(GitFxDialogResponse.INITIALIZE);
@@ -331,10 +325,7 @@ public class GitFxDialog implements GitDialog {
 //[LOG]                logger.debug("Choose clicked");
                 chooser.setTitle(resourceBundle.getString("cloneRepo"));
                 File cloneRepo = chooser.showDialog(dialog.getOwner());
-                if(cloneRepo != null){
-                    localPath.setText(cloneRepo.getPath());
-                    setResponse(GitFxDialogResponse.CHOOSE);
-                }
+                getFileAndSeText(localPath, cloneRepo);
             }
             if (dialogButton == cloneButtonType) {
                 setResponse(GitFxDialogResponse.CLONE);
@@ -361,6 +352,13 @@ public class GitFxDialog implements GitDialog {
             temp = result.get();
         }
         return temp;
+    }
+
+    public void getFileAndSeText(TextField localPath, File cloneRepo) {
+        if(cloneRepo != null){
+            localPath.setText(cloneRepo.getPath());
+            setResponse(GitFxDialogResponse.CHOOSE);
+        }
     }
 
     /*
