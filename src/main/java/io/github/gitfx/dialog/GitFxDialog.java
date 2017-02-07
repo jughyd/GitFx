@@ -90,10 +90,6 @@ public class GitFxDialog implements GitDialog {
         ListView<String> listView = new ListView<>();
         listView.setItems(FXCollections.observableArrayList(list));
         alert.getDialogPane().setContent(listView);
-        listView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-//[LOG]                  logger.debug(newValue.toString());
-                });
         alert.showAndWait();
         //TODO Need to return the logged newValue for further JGit code to sync
         //a repository
