@@ -19,6 +19,7 @@ impl/coverage.ec
 *.iws
 *.swp
 .idea
+*.class
 nb-configuration.xml
 nbactions.xml
 
@@ -30,6 +31,7 @@ nbactions.xml
 dist/
 build/
 target/
+config/
 tests/target/
 
 #folder conatining logs
