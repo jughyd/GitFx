@@ -7,94 +7,167 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gitfx.controller.GitFxController">
-   <children>
-      <AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <SplitPane dividerPositions="0.22970903522205208" layoutY="35.0" prefHeight="554.0" prefWidth="1445.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
-               <items>
-                  <AnchorPane fx:id="treeContainer" opacity="0.59" prefHeight="543.0" prefWidth="252.0">
-                     <children>
-                        <TreeView fx:id="RepositoryTree" layoutX="14.0" layoutY="22.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="552.0" prefWidth="252.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                     <effect>
-                        <Lighting bumpInput="$null" diffuseConstant="1.19" specularConstant="0.01" surfaceScale="2.81">
-                           <light>
-                              <Light.Distant color="#f0f0fc" />
-                           </light>
-                        </Lighting>
-                     </effect>
-                  </AnchorPane>
-                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="552.0" prefWidth="1183.0">
-                     <children>
-                        <TabPane prefHeight="510.0" prefWidth="279.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <tabs>
-                            <Tab fx:id="historyTab" text="History">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <SplitPane dividerPositions="0.30181086519114686" layoutX="1.0" prefHeight="499.0" prefWidth="1183.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <items>
-                                              <AnchorPane fx:id="historyContainer" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                                   <children>
-                                                      <Label fx:id="commits" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                                                      <ScrollPane fx:id="historyScrollPane" fitToWidth="true" layoutY="38.0" pannable="true" prefViewportWidth="224.0" prefWidth="146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-                                                         <content>
-                                                            <Accordion fx:id="historyAccordion" layoutX="-6.0" layoutY="-1.0" />
-                                                         </content>
-                                                      </ScrollPane>
-                                                   </children>
-                                                </AnchorPane>
-                                              <AnchorPane fx:id="diffContainer" minHeight="0.0" minWidth="0.0" prefHeight="517.0" prefWidth="273.0">
-                                                   <children>
-                                                      <TextArea fx:id="diffArea" prefHeight="517.0" prefWidth="343.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                   </children></AnchorPane>
-                                            </items>
-                                          </SplitPane>
-                                       </children></AnchorPane>
-                              </content>
-                            </Tab>
-                            <Tab fx:id="changesTab" text="Changes">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="307.0" />
-                              </content>
-                            </Tab>
-                              <Tab fx:id="othersTab" text="Others">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="1183.0" />
-                                </content>
-                              </Tab>
-                          </tabs>
-                        </TabPane>
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <ToolBar fx:id="gitToolBar" prefHeight="26.0" prefWidth="1445.0" snapToPixel="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <Button id="gitinit" fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked" prefHeight="26.0" prefWidth="40.0" text="Initialize" />
-                  <Button id="gitclone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitCloneClicked" prefHeight="26.0" prefWidth="40.0" text="Clone" />
-                  <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false" onAction="#onGitOpenClicked" prefHeight="26.0" prefWidth="40.0" text="Open" />
-                <Button id="setting" fx:id="gitsettings" mnemonicParsing="false" onAction="#onGitSettingsClicked" prefHeight="26.0" prefWidth="40.0" text="Settings" />
-                  <MenuButton id="gitsync" fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0" prefWidth="51.0" text="Sync">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.gitfx.controller.GitFxController">
+    <children>
+        <AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <SplitPane dividerPositions="0.22970903522205208" layoutY="35.0" prefHeight="554.0" prefWidth="1445.0"
+                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                           AnchorPane.topAnchor="35.0">
                     <items>
-                      <MenuItem fx:id="syncEveryThing" mnemonicParsing="false" onAction="#syncEveryThingClicked" text="Sync Everything" />
-                      <MenuItem fx:id="gitSpecific" mnemonicParsing="false" onAction="#onGitParticularRepositoryClicked" text="Particular Repository" />
+                        <AnchorPane fx:id="treeContainer" opacity="0.59" prefHeight="543.0" prefWidth="252.0">
+                            <children>
+                                <TreeView fx:id="RepositoryTree" layoutX="14.0" layoutY="22.0"
+                                          maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                          prefHeight="552.0" prefWidth="252.0" AnchorPane.bottomAnchor="0.0"
+                                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                          AnchorPane.topAnchor="0.0"/>
+                            </children>
+                            <effect>
+                                <Lighting bumpInput="$null" diffuseConstant="1.19" specularConstant="0.01"
+                                          surfaceScale="2.81">
+                                    <light>
+                                        <Light.Distant color="#f0f0fc"/>
+                                    </light>
+                                </Lighting>
+                            </effect>
+                        </AnchorPane>
+                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    prefHeight="552.0" prefWidth="1183.0">
+                            <children>
+                                <TabPane prefHeight="510.0" prefWidth="279.0" tabClosingPolicy="UNAVAILABLE"
+                                         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <tabs>
+                                        <Tab fx:id="historyTab" text="History">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                                            prefWidth="200.0">
+                                                    <children>
+                                                        <SplitPane dividerPositions="0.30181086519114686" layoutX="1.0"
+                                                                   prefHeight="499.0" prefWidth="1183.0"
+                                                                   AnchorPane.bottomAnchor="0.0"
+                                                                   AnchorPane.leftAnchor="0.0"
+                                                                   AnchorPane.rightAnchor="0.0"
+                                                                   AnchorPane.topAnchor="0.0">
+                                                            <items>
+                                                                <AnchorPane fx:id="historyContainer" minHeight="0.0"
+                                                                            minWidth="0.0" prefHeight="160.0"
+                                                                            prefWidth="100.0">
+                                                                    <children>
+                                                                        <Label fx:id="commits" minHeight="-Infinity"
+                                                                               minWidth="-Infinity" prefHeight="31.0"
+                                                                               prefWidth="230.0"
+                                                                               AnchorPane.leftAnchor="0.0"
+                                                                               AnchorPane.rightAnchor="0.0"/>
+                                                                        <ScrollPane fx:id="historyScrollPane"
+                                                                                    fitToWidth="true" layoutY="38.0"
+                                                                                    pannable="true"
+                                                                                    prefViewportWidth="224.0"
+                                                                                    prefWidth="146.0"
+                                                                                    AnchorPane.bottomAnchor="0.0"
+                                                                                    AnchorPane.leftAnchor="0.0"
+                                                                                    AnchorPane.rightAnchor="0.0"
+                                                                                    AnchorPane.topAnchor="30.0">
+                                                                            <content>
+                                                                                <Accordion fx:id="historyAccordion"
+                                                                                           layoutX="-6.0"
+                                                                                           layoutY="-1.0"/>
+                                                                            </content>
+                                                                        </ScrollPane>
+                                                                    </children>
+                                                                </AnchorPane>
+                                                                <AnchorPane fx:id="diffContainer" minHeight="0.0"
+                                                                            minWidth="0.0" prefHeight="517.0"
+                                                                            prefWidth="273.0">
+                                                                    <children>
+                                                                        <TextArea fx:id="diffArea" prefHeight="517.0"
+                                                                                  prefWidth="343.0"
+                                                                                  AnchorPane.bottomAnchor="0.0"
+                                                                                  AnchorPane.leftAnchor="0.0"
+                                                                                  AnchorPane.rightAnchor="0.0"
+                                                                                  AnchorPane.topAnchor="0.0"/>
+                                                                    </children>
+                                                                </AnchorPane>
+                                                            </items>
+                                                        </SplitPane>
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </Tab>
+                                        <Tab fx:id="changesTab" text="Changes">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0"
+                                                            prefWidth="307.0"/>
+                                            </content>
+                                        </Tab>
+                                        <Tab fx:id="othersTab" text="Others">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0"
+                                                            prefWidth="1183.0"/>
+                                            </content>
+                                        </Tab>
+                                    </tabs>
+                                </TabPane>
+                            </children>
+                        </AnchorPane>
                     </items>
-                  </MenuButton>
-              </items>
-               <effect>
-                  <Lighting diffuseConstant="1.19" specularConstant="0.01" surfaceScale="2.81">
-                     <bumpInput>
-                        <Blend />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant color="#f6f6ff" />
-                     </light>
-                  </Lighting>
-               </effect>
-            </ToolBar>
-         </children>
-      </AnchorPane>
-   </children>
+                </SplitPane>
+                <ToolBar fx:id="gitToolBar" prefHeight="26.0" prefWidth="1445.0" snapToPixel="false"
+                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <Button id="gitinit" fx:id="gitinit" mnemonicParsing="false" onAction="#onGitInitClicked"
+                                prefHeight="26.0" prefWidth="40.0" text="Initialize">
+                            <tooltip>
+                                <Tooltip text="Initialize repository"/>
+                            </tooltip>
+                        </Button>
+                        <Button id="gitclone" fx:id="gitclone" layoutX="10.0" layoutY="11.0" mnemonicParsing="false"
+                                onAction="#onGitCloneClicked" prefHeight="26.0" prefWidth="40.0" text="Clone">
+                            <tooltip>
+                                <Tooltip text="Clone"/>
+                            </tooltip>
+                        </Button>
+                        <Button id="open" fx:id="gitopen" layoutX="53.0" layoutY="11.0" mnemonicParsing="false"
+                                onAction="#onGitOpenClicked" prefHeight="26.0" prefWidth="40.0" text="Open">
+                            <tooltip>
+                                <Tooltip text="Open"/>
+                            </tooltip>
+                        </Button>
+                        <Button id="setting" fx:id="gitsettings" mnemonicParsing="false"
+                                onAction="#onGitSettingsClicked" prefHeight="26.0" prefWidth="40.0" text="Settings">
+                            <tooltip>
+                                <Tooltip text="Settings"/>
+                            </tooltip>
+                        </Button>
+                        <MenuButton id="gitsync" fx:id="gitsync" mnemonicParsing="false" prefHeight="26.0"
+                                    prefWidth="51.0" text="Sync">
+                            <items>
+                                <MenuItem fx:id="syncEveryThing" mnemonicParsing="false"
+                                          onAction="#syncEveryThingClicked" text="Sync Everything"/>
+                                <MenuItem fx:id="gitSpecific" mnemonicParsing="false"
+                                          onAction="#onGitParticularRepositoryClicked" text="Particular Repository"/>
+                            </items>
+
+                            <tooltip>
+                                <Tooltip text="Sync"/>
+                            </tooltip>
+                        </MenuButton>
+                    </items>
+                    <effect>
+                        <Lighting diffuseConstant="1.19" specularConstant="0.01" surfaceScale="2.81">
+                            <bumpInput>
+                                <Blend/>
+                            </bumpInput>
+                            <light>
+                                <Light.Distant color="#f6f6ff"/>
+                            </light>
+                        </Lighting>
+                    </effect>
+                </ToolBar>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>
