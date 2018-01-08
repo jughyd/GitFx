@@ -30,17 +30,22 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -156,6 +161,7 @@ public class GitFxDialog implements GitDialog {
         alert.getDialogPane().setExpandableContent(expContent);
         alert.showAndWait();
     }
+
     /*
      * Implementation of Git Open Dialog.
      */
@@ -165,15 +171,14 @@ public class GitFxDialog implements GitDialog {
         String repo;
         DirectoryChooser chooser = new DirectoryChooser();
         Dialog<Pair<String, GitFxDialogResponse>> dialog = new Dialog<>();
+        //Dialog<Pair<String, GitFxDialogResponse>> dialog = getCostumeDialog();
         dialog.setTitle(title);
         dialog.setHeaderText(header);
         dialog.setContentText(content);
 
         ButtonType okButton = new ButtonType("Ok");
         ButtonType cancelButton = new ButtonType("Cancel");
-        
         dialog.getDialogPane().getButtonTypes().addAll(okButton, cancelButton);
-
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -184,9 +189,18 @@ public class GitFxDialog implements GitDialog {
         repository.setPromptText("Repo");
         grid.add(new Label("Repository:"), 0, 0);
         grid.add(repository, 1, 0);
+        
         /////////////////////Modification of choose Button////////////////////////
         Button chooseButtonType = new Button("Choose");
         grid.add(chooseButtonType, 2, 0);
+//			        Button btnCancel1 = new Button("Cancel");
+//			        btnCancel1.setPrefWidth(90.0);
+//			        Button btnOk1 = new Button("Ok");
+//			        btnOk1.setPrefWidth(90.0);
+//			        HBox hbox = new HBox(4);
+//			        hbox.getChildren().addAll(btnOk1,btnCancel1);
+//			        hbox.setPadding(new Insets(2));
+//			        grid.add(hbox, 1, 1);
         chooseButtonType.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                // label.setText("Accepted");
@@ -195,6 +209,12 @@ public class GitFxDialog implements GitDialog {
                 chooser.setTitle(resourceBundle.getString("repo"));
             }
         });
+//        btnCancel1.setOnAction(new EventHandler<ActionEvent>(){ 
+//        	@Override public void handle(ActionEvent e) {
+//        	System.out.println("Shyam : Testing");
+//        	setResponse(GitFxDialogResponse.CANCEL);
+//             }
+//		});
         //////////////////////////////////////////////////////////////////////
         dialog.getDialogPane().setContent(grid);
 
