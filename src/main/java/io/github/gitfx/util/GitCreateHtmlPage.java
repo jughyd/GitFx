@@ -35,20 +35,20 @@ public class GitCreateHtmlPage {
             }
             htmlStringBuilder.append("</html>");
             //write html string content to a file
-            WriteToFile(htmlStringBuilder.toString(),"testfile.html");
+            WriteToFile(htmlStringBuilder.toString(),"diffWebViewHtmlPage.html");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public static void WriteToFile(String fileContent, String fileName) throws IOException {
         String projectPath = System.getProperty("user.dir");
-        String tempFile = projectPath + File.separator+fileName;
+        String tempFile = projectPath + File.separator+ "src\\main\\resources\\" + fileName;
         System.out.println(tempFile);
         File file = new File(tempFile);
         // if file does exists, then delete and create a new file
         if (file.exists()) {
             try {
-                File newFileName = new File(projectPath + File.separator+ "backup_"+fileName);
+                File newFileName = new File(projectPath + File.separator+ "src\\main\\resources\\" + "backup_"+fileName);
                 file.renameTo(newFileName);
                 file.createNewFile();
             } catch (IOException e) {

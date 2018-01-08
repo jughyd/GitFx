@@ -93,7 +93,7 @@
                                                                                     AnchorPane.rightAnchor="0.0"
                                                                                     AnchorPane.topAnchor="30.0">
                                                                             <content>
-                                                                                <Group fx:id="webViewAccordion"
+                                                                                <Group fx:id="webViewGroup"
                                                                                            layoutX="-6.0"
                                                                                            layoutY="-1.0"/>
                                                                             </content>

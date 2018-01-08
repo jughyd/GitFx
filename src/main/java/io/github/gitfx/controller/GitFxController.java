@@ -106,7 +106,7 @@ public class GitFxController implements Initializable {
     @FXML
     private AnchorPane diffContainer;
     @FXML
-    private Group webViewAccordion;
+    private Group webViewGroup;
 
 
 
@@ -245,13 +245,7 @@ public class GitFxController implements Initializable {
 //[LOG]                logger.debug("Accordion expanded with oldvalue" + newValue.getId());
                        String diffData = metaData.getDiffBetweenCommits(Integer.parseInt(newValue.getId()));                       
                        GitCreateHtmlPage.parseDiffData(diffData);
-//                       ScrollPane s1 = new ScrollPane();
-//                       s1.setPannable(true);
-//                       s1.setPrefSize(320, 500);
-//                       s1.autosize();
-//                       s1.setContent(new Browser());
-//                       diffContainer.getChildren().addAll(s1); 
-                       webViewAccordion.getChildren().addAll(new Browser());
+                       webViewGroup.getChildren().addAll(new Browser());
                    }catch(GitAPIException | IOException ex){
 //[LOG]             	logger.debug("Something went wrong in getting commit history");
                    }
@@ -420,7 +414,8 @@ class Browser extends Region {
         getStyleClass().add("browser");
         // load the web page
         String projectPath = System.getProperty("user.dir");
-        String tempFile = projectPath + File.separator+ "testfile.html";
+        String tempFile = projectPath + File.separator+ "src\\main\\resources\\diffWebViewHtmlPage.html";
+        System.out.println(tempFile);
         webEngine.load("file:///" + tempFile );
         //add the web view to the scene
         ScrollPane scrollPane = new ScrollPane();
