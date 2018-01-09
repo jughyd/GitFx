@@ -82,13 +82,23 @@
                                                                 <AnchorPane fx:id="diffContainer" minHeight="0.0"
                                                                             minWidth="0.0" prefHeight="517.0"
                                                                             prefWidth="273.0">
-                                                                    <children>
-                                                                        <TextArea fx:id="diffArea" prefHeight="517.0"
-                                                                                  prefWidth="343.0"
-                                                                                  AnchorPane.bottomAnchor="0.0"
-                                                                                  AnchorPane.leftAnchor="0.0"
-                                                                                  AnchorPane.rightAnchor="0.0"
-                                                                                  AnchorPane.topAnchor="0.0"/>
+                                                                    <children>                                                                      
+                                                                        <ScrollPane fx:id="historyScrollPane"
+                                                                                    fitToWidth="true" layoutY="38.0"
+                                                                                    pannable="true"
+                                                                                    prefViewportWidth="224.0"
+                                                                                    prefWidth="146.0"
+                                                                                    AnchorPane.bottomAnchor="0.0"
+                                                                                    AnchorPane.leftAnchor="0.0"
+                                                                                    AnchorPane.rightAnchor="0.0"
+                                                                                    AnchorPane.topAnchor="30.0">
+                                                                            <content>
+                                                                                <Group fx:id="webViewGroup"
+                                                                                           layoutX="-6.0"
+                                                                                           layoutY="-1.0"/>
+                                                                            </content>
+                                                                        </ScrollPane>
+                                                                    
                                                                     </children>
                                                                 </AnchorPane>
                                                             </items>

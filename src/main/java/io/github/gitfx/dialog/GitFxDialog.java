@@ -27,17 +27,25 @@ import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -153,6 +161,7 @@ public class GitFxDialog implements GitDialog {
         alert.getDialogPane().setExpandableContent(expContent);
         alert.showAndWait();
     }
+
     /*
      * Implementation of Git Open Dialog.
      */
@@ -162,34 +171,54 @@ public class GitFxDialog implements GitDialog {
         String repo;
         DirectoryChooser chooser = new DirectoryChooser();
         Dialog<Pair<String, GitFxDialogResponse>> dialog = new Dialog<>();
+        //Dialog<Pair<String, GitFxDialogResponse>> dialog = getCostumeDialog();
         dialog.setTitle(title);
         dialog.setHeaderText(header);
         dialog.setContentText(content);
 
-        ButtonType chooseButtonType = new ButtonType("Choose");
         ButtonType okButton = new ButtonType("Ok");
         ButtonType cancelButton = new ButtonType("Cancel");
-
-        dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType, okButton, cancelButton);
-
+        dialog.getDialogPane().getButtonTypes().addAll(okButton, cancelButton);
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField repository = new TextField();
+        repository.setPrefWidth(250.0);
         repository.setPromptText("Repo");
         grid.add(new Label("Repository:"), 0, 0);
         grid.add(repository, 1, 0);
-
-        dialog.getDialogPane().setContent(grid);
-
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == chooseButtonType) {
-                File path = chooser.showDialog(dialog.getOwner());
+        
+        /////////////////////Modification of choose Button////////////////////////
+        Button chooseButtonType = new Button("Choose");
+        grid.add(chooseButtonType, 2, 0);
+//			        Button btnCancel1 = new Button("Cancel");
+//			        btnCancel1.setPrefWidth(90.0);
+//			        Button btnOk1 = new Button("Ok");
+//			        btnOk1.setPrefWidth(90.0);
+//			        HBox hbox = new HBox(4);
+//			        hbox.getChildren().addAll(btnOk1,btnCancel1);
+//			        hbox.setPadding(new Insets(2));
+//			        grid.add(hbox, 1, 1);
+        chooseButtonType.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               // label.setText("Accepted");
+            	File path = chooser.showDialog(dialog.getOwner());
                 getFileAndSeText(repository,path);
                 chooser.setTitle(resourceBundle.getString("repo"));
             }
+        });
+//        btnCancel1.setOnAction(new EventHandler<ActionEvent>(){ 
+//        	@Override public void handle(ActionEvent e) {
+//        	System.out.println("Shyam : Testing");
+//        	setResponse(GitFxDialogResponse.CANCEL);
+//             }
+//		});
+        //////////////////////////////////////////////////////////////////////
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
             if (dialogButton == okButton) {
                 String filePath = repository.getText();
                 //filePath = filePath.concat("/.git");
@@ -246,22 +275,29 @@ public class GitFxDialog implements GitDialog {
         grid.setPadding(new Insets(20, 150, 10, 10));
         TextField localPath = new TextField();
         localPath.setPromptText("Local Path");
+        localPath.setPrefWidth(250.0);
         grid.add(new Label("Local Path:"), 0, 0);
         grid.add(localPath, 1,0);
-        ButtonType chooseButtonType = new ButtonType("Choose");
         ButtonType initRepo = new ButtonType("Initialize Repository");
         ButtonType cancelButtonType = new ButtonType("Cancel");
         dialog.getDialogPane().setContent(grid);
-        dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType, initRepo, cancelButtonType);
-
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == chooseButtonType) {
+        dialog.getDialogPane().getButtonTypes().addAll( initRepo, cancelButtonType);
+        
+        /////////////////////Modification of choose Button////////////////////////
+        Button chooseButtonType = new Button("Choose");
+        grid.add(chooseButtonType, 2, 0);
+        chooseButtonType.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
                 DirectoryChooser chooser = new DirectoryChooser();
                 chooser.setTitle(resourceBundle.getString("selectRepo"));
                 File initialRepo = chooser.showDialog(dialog.getOwner());
                 getFileAndSeText(localPath, initialRepo);
                 dialog.getDialogPane();
             }
+        });
+        //////////////////////////////////////////////////////////////////////
+
+        dialog.setResultConverter(dialogButton -> {
             if (dialogButton == initRepo) {
                 setResponse(GitFxDialogResponse.INITIALIZE);
                 String path = localPath.getText();
@@ -303,26 +339,33 @@ public class GitFxDialog implements GitDialog {
         grid.setPadding(new Insets(20, 150, 10, 10));
         TextField remoteRepo = new TextField();
         remoteRepo.setPromptText("Remote Repo URL");
+        remoteRepo.setPrefWidth(250.0);
         TextField localPath = new TextField();
         localPath.setPromptText("Local Path");
+        localPath.setPrefWidth(250.0);
         grid.add(new Label("Remote Repo URL:"), 0, 0);
         grid.add(remoteRepo, 1, 0);
         grid.add(new Label("Local Path:"), 0, 1);
         grid.add(localPath, 1, 1);
-        ButtonType chooseButtonType = new ButtonType("Choose");
+        //ButtonType chooseButtonType = new ButtonType("Choose");
         ButtonType cloneButtonType = new ButtonType("Clone");
         ButtonType cancelButtonType = new ButtonType("Cancel");
-        dialog.getDialogPane().setContent(grid);
-        dialog.getDialogPane().getButtonTypes().addAll(chooseButtonType,
-                cloneButtonType, cancelButtonType);
-
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == chooseButtonType) {
-//[LOG]                logger.debug("Choose clicked");
-                chooser.setTitle(resourceBundle.getString("cloneRepo"));
+        /////////////////////Modification of choose Button////////////////////////
+        Button chooseButtonType = new Button("Choose");
+        grid.add(chooseButtonType, 2, 1);
+        chooseButtonType.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+            	chooser.setTitle(resourceBundle.getString("cloneRepo"));
                 File cloneRepo = chooser.showDialog(dialog.getOwner());
                 getFileAndSeText(localPath, cloneRepo);
             }
+        });
+        //////////////////////////////////////////////////////////////////////
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().getButtonTypes().addAll(
+                cloneButtonType, cancelButtonType);
+
+        dialog.setResultConverter(dialogButton -> {
             if (dialogButton == cloneButtonType) {
                 setResponse(GitFxDialogResponse.CLONE);
                 String remoteRepoURL = remoteRepo.getText();

@@ -22,6 +22,7 @@ import io.github.gitfx.GitResourceBundle;
 import io.github.gitfx.data.GitRepoMetaData;
 import io.github.gitfx.data.ProjectData;
 import io.github.gitfx.data.RepositoryData;
+import io.github.gitfx.util.GitCreateHtmlPage;
 import io.github.gitfx.util.GitFXGsonUtil;
 import io.github.gitfx.util.WorkbenchUtil;
 import java.io.File;
@@ -41,13 +42,24 @@ import javafx.fxml.FXML;
 //import javafx.event.EventHandler;
 //import javafx.event.Event;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.VPos;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 //import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 //import javafx.scene.layout.Background;
 //import javafx.scene.layout.Region;
 //import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.util.Pair;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
@@ -56,6 +68,11 @@ import com.jcabi.aspects.Loggable;
 //[LOG] import org.slf4j.Logger;
 //[LOG] import org.slf4j.LoggerFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 @Loggable
 public class GitFxController implements Initializable {
@@ -89,7 +106,11 @@ public class GitFxController implements Initializable {
     @FXML
     private AnchorPane diffContainer;
     @FXML
-    private TextArea diffArea;
+    private Group webViewGroup;
+
+
+
+    
 
     //[DOUBT] Shouldn't we either remove this or the duplicate declaration in the addProgressIndiactor()
     private ProgressIndicator pi;
@@ -222,8 +243,9 @@ public class GitFxController implements Initializable {
                if(newValue!=null) {
                    try {
 //[LOG]                logger.debug("Accordion expanded with oldvalue" + newValue.getId());
-                       diffArea.setWrapText(true);
-                       diffArea.setText(metaData.getDiffBetweenCommits(Integer.parseInt(newValue.getId())));
+                       String diffData = metaData.getDiffBetweenCommits(Integer.parseInt(newValue.getId()));                       
+                       GitCreateHtmlPage.parseDiffData(diffData);
+                       webViewGroup.getChildren().addAll(new Browser());
                    }catch(GitAPIException | IOException ex){
 //[LOG]             	logger.debug("Something went wrong in getting commit history");
                    }
@@ -380,4 +402,44 @@ public class GitFxController implements Initializable {
         dialog.gitFxInformationListDialog(resourceBundle.getString("syncRepo"), resourceBundle.getString("repo"),null,list);
     }
 
+}
+
+class Browser extends Region {
+	 
+    final WebView browser = new WebView();
+    final WebEngine webEngine = browser.getEngine();
+     
+    public Browser() {
+        //apply the styles
+        getStyleClass().add("browser");
+        // load the web page
+        String projectPath = System.getProperty("user.dir");
+        String tempFile = projectPath + File.separator+ "src\\main\\resources\\diffWebViewHtmlPage.html";
+        System.out.println(tempFile);
+        webEngine.load("file:///" + tempFile );
+        //add the web view to the scene
+        ScrollPane scrollPane = new ScrollPane();
+       // scrollPane.setContent(browser);
+        getChildren().addAll(browser,scrollPane);
+ 
+    }
+    private Node createSpacer() {
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        return spacer;
+    }
+ 
+    @Override protected void layoutChildren() {
+        double w = getWidth();
+        double h = getHeight();
+        layoutInArea(browser,0,0,w,h,0, HPos.CENTER, VPos.CENTER);
+    }
+ 
+    @Override protected double computePrefWidth(double height) {
+        return 750;
+    }
+ 
+    @Override protected double computePrefHeight(double width) {
+        return 500;
+    }
 }

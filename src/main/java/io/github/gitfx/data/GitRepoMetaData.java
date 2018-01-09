@@ -35,6 +35,7 @@ import org.eclipse.jgit.util.io.DisabledOutputStream;
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
+
 import com.jcabi.aspects.Loggable;
 
 import java.io.ByteArrayOutputStream;
@@ -156,6 +157,8 @@ public class GitRepoMetaData {
                 formatter.setRepository(repository);
                 formatter.format(entry);
             }
+       // System.out.println(byteStream.toString());
+        String diffContent = byteStream.toString();
         return byteStream.toString();
     }
 
